@@ -1,0 +1,165 @@
+@import "tailwindcss";
+
+@theme {
+  /* Times New Roman — classic serif for all main headings */
+  --font-header: "Times New Roman", Times, serif;
+  /* DM Sans — clean, readable body text */
+  --font-sans: var(--font-sans), sans-serif;
+
+  --color-brand-copper: #C28667;
+  --color-brand-navy: #14253E;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+}
+
+@layer base {
+  :root {
+    --background: #ffffff;
+    --foreground: #14253E;
+    /* Navy as primary foreground */
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --background: #0a0a0a;
+      --foreground: #ededed;
+    }
+  }
+
+  body {
+    font-family: var(--font-sans);
+    color: var(--foreground);
+    background: var(--background);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-header);
+    font-weight: 700;
+  }
+}
+
+/* ── Premium Button Classes ──────────────────────────────── */
+
+/* Primary: Copper gradient + sweep shimmer */
+.btn-primary {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, #C28667 0%, #E8C97A 50%, #C28667 100%);
+  background-size: 200% 100%;
+  color: #14253E;
+  font-weight: 900;
+  font-size: 0.625rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  border-radius: 0.75rem;
+  padding: 1rem 2rem;
+  border: none;
+  cursor: pointer;
+  transition: background-position 0.4s ease, transform 0.15s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 20px rgba(194, 134, 103, 0.35);
+}
+
+.btn-primary::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 35%, rgba(255, 255, 255, 0.4) 50%, transparent 65%);
+  transform: translateX(-100%);
+  transition: transform 0.55s ease;
+}
+
+.btn-primary:hover {
+  background-position: 100% 0;
+  box-shadow: 0 8px 35px rgba(194, 134, 103, 0.5);
+  transform: translateY(-2px);
+}
+
+.btn-primary:hover::after {
+  transform: translateX(100%);
+}
+
+.btn-primary:active {
+  transform: translateY(0px) scale(0.98);
+  box-shadow: 0 2px 10px rgba(194, 134, 103, 0.3);
+}
+
+/* Secondary: Ghost border with glow on hover */
+.btn-ghost {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: transparent;
+  color: white;
+  font-weight: 900;
+  font-size: 0.625rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  border-radius: 0.75rem;
+  padding: 1rem 2rem;
+  cursor: pointer;
+  border: 1.5px solid rgba(194, 134, 103, 0.4);
+  transition: all 0.3s ease;
+}
+
+.btn-ghost:hover {
+  border-color: #C28667;
+  background: rgba(194, 134, 103, 0.08);
+  box-shadow: 0 0 20px rgba(194, 134, 103, 0.15), inset 0 0 20px rgba(194, 134, 103, 0.05);
+  color: #C28667;
+  transform: translateY(-1px);
+}
+
+/* Dark filled button (navy bg variant) */
+.btn-dark {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: #14253E;
+  color: white;
+  font-weight: 900;
+  font-size: 0.625rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  border-radius: 0.75rem;
+  padding: 1rem 2rem;
+  border: 1.5px solid rgba(255, 255, 255, 0.08);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-dark::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 35%, rgba(255, 255, 255, 0.07) 50%, transparent 65%);
+  transform: translateX(-100%);
+  transition: transform 0.55s ease;
+}
+
+.btn-dark:hover {
+  background: #1e375a;
+  border-color: rgba(194, 134, 103, 0.3);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  transform: translateY(-2px);
+}
+
+.btn-dark:hover::after {
+  transform: translateX(100%);
+}

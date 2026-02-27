@@ -1,0 +1,312 @@
+'use client';
+
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Globe, Building2, Banknote, ArrowRight, Phone, CheckCircle2, MessageCircle } from 'lucide-react';
+
+const highlights = [
+    { icon: Globe, text: "Trade Freely", color: "text-blue-500" },
+    { icon: Building2, text: "Flexible Office", color: "text-purple-500" },
+    { icon: Banknote, text: "0% Tax", color: "text-amber-500" },
+];
+
+
+export default function HeroSection() {
+    const [formData, setFormData] = useState({
+        fullName: '',
+        email: '',
+        countryCode: '+971',
+        whatsapp: '',
+        lookingTo: ''
+    });
+    const [tickerIndex, setTickerIndex] = useState(0);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [submitted, setSubmitted] = useState(false);
+
+    const tickerMessages = [
+        "🔴 78% of new investors use our guide before choosing a free zone.",
+        "🔴 Over 5,000+ companies formed successfully",
+        "🔴 Average setup time: 3-5 business days",
+    ];
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setTickerIndex((prev) => (prev + 1) % tickerMessages.length);
+        }, 4000);
+        return () => clearInterval(interval);
+    }, []);
+
+    // Auto-detect visitor's country calling code
+    useEffect(() => {
+        fetch('https://ipapi.co/json/')
+            .then(res => res.json())
+            .then(data => {
+                if (data?.country_calling_code) {
+                    setFormData(prev => ({ ...prev, countryCode: data.country_calling_code }));
+                }
+            })
+            .catch(() => { /* silently fall back to +971 */ });
+    }, []);
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setIsSubmitting(true);
+        await new Promise(resolve => setTimeout(resolve, 1500));
+        setIsSubmitting(false);
+        setSubmitted(true);
+    };
+
+    return (
+        <section className="relative min-h-[92vh] bg-brand-navy overflow-hidden flex items-center">
+            {/* Background Elements */}
+            <div className="absolute inset-0">
+                <div
+                    className="absolute inset-0"
+                    style={{
+                        backgroundImage: 'radial-gradient(circle at 50% 50%, rgba(194,134,103,0.1) 0%, transparent 70%)'
+                    }}
+                />
+                {/* Abstract grid */}
+                <svg className="absolute inset-0 w-full h-full opacity-5" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <pattern id="grid-hero" width="60" height="60" patternUnits="userSpaceOnUse">
+                            <path d="M 60 0 L 0 0 0 60" fill="none" stroke="var(--color-brand-copper)" strokeWidth="0.5" />
+                        </pattern>
+                    </defs>
+                    <rect width="100%" height="100%" fill="url(#grid-hero)" />
+                </svg>
+            </div>
+
+            <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-24 w-full">
+                <div className="grid lg:grid-cols-2 gap-16 items-center">
+                    {/* Left Content */}
+                    <motion.div
+                        initial={{ opacity: 0, x: -30 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.8 }}
+                        className="text-white"
+                    >
+                        <div className="inline-flex items-center gap-2 bg-white/5 border border-brand-copper/20 rounded-full px-4 py-2 mb-8 shadow-sm">
+                            <span className="w-2 h-2 bg-brand-copper rounded-full animate-pulse" />
+                            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white/80">Authorized DED & Free Zone Channel Partner</span>
+                        </div>
+
+                        <h1
+                            className="mb-6 font-header text-white"
+                            style={{ fontSize: 'clamp(2.2rem, 5vw, 4rem)', fontWeight: 900, lineHeight: 1.05 }}
+                        >
+                            Your Business in Dubai{' '}
+                            <span
+                                className="inline-block"
+                                style={{
+                                    background: 'linear-gradient(135deg, var(--color-brand-copper), #E8C97A)',
+                                    WebkitBackgroundClip: 'text',
+                                    WebkitTextFillColor: 'transparent',
+                                    backgroundClip: 'text'
+                                }}
+                            >
+                                Set Up, Sorted, Protected.
+
+                            </span>
+                        </h1>
+
+                        <p className="text-lg text-white/60 mb-10 leading-relaxed max-w-xl font-medium">
+                            You focus on your vision. We handle every signature, every submission, every government interaction. From first consultation to your first day of business.
+
+
+                        </p>
+
+                        {/* Highlights Bar */}
+                        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
+                            {highlights.map((item, index) => (
+                                <div key={index} className="flex items-center gap-2 bg-white/5 border border-white/10 rounded-xl px-4 py-3 shadow-lg">
+                                    <item.icon className="w-4 h-4 text-brand-copper" />
+                                    <span className="text-[10px] font-black uppercase tracking-widest text-white/80">{item.text}</span>
+                                </div>
+                            ))}
+                        </div>
+
+                        {/* Live Ticker */}
+                        <div className="h-14 mb-12 relative overflow-hidden bg-brand-copper/5 border-l-4 border-brand-copper rounded-r-xl">
+                            <AnimatePresence mode="wait">
+                                <motion.div
+                                    key={tickerIndex}
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: -20 }}
+                                    transition={{ duration: 0.5 }}
+                                    className="absolute inset-0 flex items-center px-6"
+                                >
+                                    <p className="text-sm font-bold text-white tracking-tight italic">{tickerMessages[tickerIndex]}</p>
+                                </motion.div>
+                            </AnimatePresence>
+                        </div>
+
+                        {/* Trust Indicators */}
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 pt-8 border-t border-white/5">
+                            {[
+                                { value: "5,000+", label: "Companies Formed" },
+                                { value: "10+", label: "Years Experience" },
+                                { value: "4.9★", label: "Google Rating" },
+                                { value: "3-5", label: "Days Setup" },
+                            ].map((stat, index) => (
+                                <div key={index} className="text-left">
+                                    <div className="text-2xl font-header font-black text-brand-copper tracking-tighter">
+                                        {stat.value}
+                                    </div>
+                                    <div className="text-[9px] font-bold uppercase tracking-widest text-white/30 mt-1">{stat.label}</div>
+                                </div>
+                            ))}
+                        </div>
+                    </motion.div>
+
+                    {/* Right - Contact Form */}
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.8, delay: 0.2 }}
+                    >
+                        <div className="relative">
+                            {/* Decorative Glow */}
+                            <div className="absolute -inset-4 bg-brand-copper/10 rounded-[40px] blur-3xl -z-10" />
+
+                            <div id="hero-form" className="relative bg-[#1a2b45]/80 backdrop-blur-xl border border-white/10 rounded-[32px] p-8 sm:p-10 shadow-2xl overflow-hidden">
+                                <div className="text-center mb-10 pb-6 border-b border-white/5">
+                                    <h3 className="text-2xl font-header font-black text-white mb-2 tracking-tight uppercase">Get Expert Help Now</h3>
+                                    <p className="text-brand-copper text-[10px] font-black uppercase tracking-widest">Your advisor will contact you in 10 minutes</p>
+                                </div>
+
+                                {submitted ? (
+                                    <motion.div
+                                        initial={{ opacity: 0, scale: 0.9 }}
+                                        animate={{ opacity: 1, scale: 1 }}
+                                        className="text-center py-16"
+                                    >
+                                        <div className="w-20 h-20 bg-brand-copper rounded-full flex items-center justify-center mx-auto mb-6 shadow-2xl shadow-brand-copper/30">
+                                            <CheckCircle2 className="w-10 h-10 text-brand-navy" />
+                                        </div>
+                                        <h4 className="text-2xl font-header font-black text-white mb-2 tracking-tight uppercase">Success!</h4>
+                                        <p className="text-white/60 text-[10px] font-bold uppercase tracking-widest">Your advisor will contact you in 10 minutes.</p>
+                                    </motion.div>
+                                ) : (
+                                    <form onSubmit={handleSubmit} className="space-y-4">
+                                        <div className="group relative">
+                                            <input
+                                                type="text"
+                                                placeholder="Full Name"
+                                                value={formData.fullName}
+                                                onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+                                                required
+                                                className="w-full h-14 px-6 bg-white/5 border border-white/10 text-white placeholder:text-white/20 rounded-xl outline-none focus:border-brand-copper transition-all text-sm font-medium"
+                                            />
+                                        </div>
+                                        <div className="group relative">
+                                            <input
+                                                type="email"
+                                                placeholder="Email Address"
+                                                value={formData.email}
+                                                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                                                required
+                                                className="w-full h-14 px-6 bg-white/5 border border-white/10 text-white placeholder:text-white/20 rounded-xl outline-none focus:border-brand-copper transition-all text-sm font-medium"
+                                            />
+                                        </div>
+                                        <div className="space-y-1">
+                                            <label className="text-[9px] font-black uppercase tracking-widest text-white/30 ml-1">
+                                                WhatsApp Number
+                                            </label>
+                                            <div className="flex gap-2">
+                                                <select
+                                                    value={formData.countryCode}
+                                                    onChange={(e) => setFormData({ ...formData, countryCode: e.target.value })}
+                                                    className="h-14 px-3 bg-white/5 border border-white/10 text-white rounded-xl outline-none focus:border-brand-copper transition-all text-sm font-black appearance-none cursor-pointer text-center"
+                                                    style={{ minWidth: '90px' }}
+                                                >
+                                                    <option value="+971" className="bg-brand-navy">🇦🇪 +971</option>
+                                                    <option value="+91" className="bg-brand-navy">🇮🇳 +91</option>
+                                                    <option value="+92" className="bg-brand-navy">🇵🇰 +92</option>
+                                                    <option value="+966" className="bg-brand-navy">🇸🇦 +966</option>
+                                                    <option value="+44" className="bg-brand-navy">🇬🇧 +44</option>
+                                                    <option value="+1" className="bg-brand-navy">🇺🇸 +1</option>
+                                                    <option value="+20" className="bg-brand-navy">🇪🇬 +20</option>
+                                                    <option value="+968" className="bg-brand-navy">🇴🇲 +968</option>
+                                                    <option value="+974" className="bg-brand-navy">🇶🇦 +974</option>
+                                                    <option value="+965" className="bg-brand-navy">🇰🇼 +965</option>
+                                                    <option value="+973" className="bg-brand-navy">🇧🇭 +973</option>
+                                                    <option value="+880" className="bg-brand-navy">🇧🇩 +880</option>
+                                                    <option value="+94" className="bg-brand-navy">🇱🇰 +94</option>
+                                                    <option value="+63" className="bg-brand-navy">🇵🇭 +63</option>
+                                                    <option value="+7" className="bg-brand-navy">🇷🇺 +7</option>
+                                                    <option value="+33" className="bg-brand-navy">🇫🇷 +33</option>
+                                                    <option value="+49" className="bg-brand-navy">🇩🇪 +49</option>
+                                                    <option value="+86" className="bg-brand-navy">🇨🇳 +86</option>
+                                                </select>
+                                                <input
+                                                    type="tel"
+                                                    placeholder="50 123 4567"
+                                                    value={formData.whatsapp}
+                                                    onChange={(e) => setFormData({ ...formData, whatsapp: e.target.value })}
+                                                    required
+                                                    className="flex-1 h-14 px-6 bg-white/5 border border-white/10 text-white placeholder:text-white/20 rounded-xl outline-none focus:border-brand-copper transition-all text-sm font-medium"
+                                                />
+                                            </div>
+                                        </div>
+
+                                        <div className="space-y-1">
+                                            <label className="text-[9px] font-black uppercase tracking-widest text-white/30 ml-1">I'm looking to:</label>
+                                            <select
+                                                value={formData.lookingTo}
+                                                onChange={(e) => setFormData({ ...formData, lookingTo: e.target.value })}
+                                                required
+                                                className="w-full h-14 px-6 bg-white/5 border border-white/10 text-white rounded-xl outline-none focus:border-brand-copper transition-all text-sm font-medium appearance-none cursor-pointer"
+                                            >
+                                                <option value="" disabled className="bg-brand-navy">Select one</option>
+                                                <option value="llc" className="bg-brand-navy">Set up an LLC for liability protection</option>
+                                                <option value="freezone" className="bg-brand-navy">Start a Free Zone company</option>
+                                                <option value="compare" className="bg-brand-navy">Compare costs and options</option>
+                                                <option value="license" className="bg-brand-navy">Get a trade license / e-commerce license</option>
+                                                <option value="guidance" className="bg-brand-navy">I need expert guidance — not sure yet</option>
+                                            </select>
+                                        </div>
+
+                                        <motion.button
+                                            type="submit"
+                                            disabled={isSubmitting}
+                                            whileHover={{ scale: 1.02, y: -2, boxShadow: '0 16px 40px rgba(255,190,163,0.45)' }}
+                                            whileTap={{ scale: 0.97, y: 0 }}
+                                            transition={{ type: 'spring', stiffness: 400, damping: 20 }}
+                                            className="relative overflow-hidden w-full h-16 mt-6 rounded-xl font-black text-[10px] uppercase tracking-[0.3em] flex items-center justify-center gap-2 shadow-2xl group"
+                                            style={{ background: 'linear-gradient(135deg, #FFBEA3 0%, #ffd4c2e0 50%, #FFBEA3 100%)', color: '#14253E' }}
+                                        >
+                                            {/* Shimmer sweep */}
+                                            <span className="absolute inset-0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 bg-gradient-to-r from-transparent via-white/40 to-transparent pointer-events-none" />
+                                            {isSubmitting ? 'Processing...' : (
+                                                <><span>Get My Setup Plan</span> <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" /></>
+                                            )}
+                                        </motion.button>
+                                    </form>
+                                )}
+
+                                <div className="mt-10 flex items-center justify-center gap-4 text-white/30 text-[9px] font-black uppercase tracking-widest border-t border-white/5 pt-8">
+                                    <Phone className="w-3 h-3 text-brand-copper" />
+                                    <span>Call: +971 4 553 1546</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Partner Logos */}
+                        <div className="mt-12 text-center">
+                            <p className="text-white/20 text-[9px] font-black uppercase tracking-[0.3em] mb-6">Preferred Free Zone Partners</p>
+                            <div className="flex flex-wrap justify-center gap-8 grayscale opacity-20 hover:opacity-100 transition-all duration-700">
+                                {['DMCC', 'IFZA', 'JAFZA', 'SHAMS', 'RAK'].map((partner) => (
+                                    <div key={partner} className="text-xs font-black tracking-tighter text-white border-b-2 border-brand-copper/20 pb-1">
+                                        {partner}
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </motion.div>
+                </div>
+            </div>
+        </section>
+    );
+}
