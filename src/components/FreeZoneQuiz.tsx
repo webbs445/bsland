@@ -129,7 +129,7 @@ export default function FreeZoneQuiz() {
                                     style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}>
                                     <div className="w-10 h-10 rounded-xl flex items-center justify-center"
                                         style={{ background: 'rgba(204,134,103,0.12)', border: '1px solid rgba(204,134,103,0.2)' }}>
-                                        <Icon size={18} style={{ color: '#CC8667' }} />
+                                        <Icon size={18} style={{ color: '#ffffffff' }} />
                                     </div>
                                     <p className="text-white/40 text-[9px] font-black uppercase tracking-widest">Step {i + 1}</p>
                                     <p className="text-white/70 text-[9px] font-black uppercase tracking-widest">{label}</p>

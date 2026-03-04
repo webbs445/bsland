@@ -45,11 +45,11 @@ export default function StickyNav() {
             <div className="max-w-7xl mx-auto px-6 lg:px-8 flex items-center justify-between h-20">
                 {/* Logo */}
                 <a href="#contact">
-                    <img src="/logo.webp" alt="Best Solution" className="h-9 w-auto" />
+                    <img src="/whiteLogo.webp" alt="Best Solution" className="h-12 w-auto" />
                 </a>
 
                 {/* Desktop Links */}
-                <div className="hidden md:flex items-center space-x-10 text-[9px] font-black tracking-[0.2em] uppercase text-white/60">
+                <div className="hidden md:flex items-center space-x-10 text-sm font-black tracking-[0.2em] uppercase text-white/60">
                     {navLinks.map(link => (
                         <a
                             key={link.href}
@@ -61,12 +61,14 @@ export default function StickyNav() {
                     ))}
                 </div>
 
-                <a
-                    href="#hero-form"
-                    className="hidden md:inline-flex btn-primary"
-                >
-                    Get Started
-                </a>
+                <div className="hidden md:block">
+                    <a
+                        href="#hero-form"
+                        className="btn-primary"
+                    >
+                        Get Started
+                    </a>
+                </div>
 
                 {/* Mobile Menu Toggle */}
                 <button
@@ -98,7 +100,7 @@ export default function StickyNav() {
                     <a
                         href="#hero-form"
                         onClick={() => setMobileOpen(false)}
-                        className="block w-full text-center py-4 bg-brand-copper text-brand-navy text-[10px] font-black uppercase tracking-widest rounded-xl mt-4"
+                        className="btn-primary w-full mt-4 justify-center"
                     >
                         Get Started Free
                     </a>

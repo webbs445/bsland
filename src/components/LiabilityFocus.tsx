@@ -1,11 +1,12 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { motion } from 'framer-motion';
-import { ShieldAlert, UserPlus, Globe, Layers, Check } from 'lucide-react';
-
-const scrollToForm = () =>
-    document.getElementById('hero-form')?.scrollIntoView({ behavior: 'smooth' });
+import { createPortal } from 'react-dom';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ShieldAlert, UserPlus, Globe, Layers, Check, X, CheckCircle2, ArrowRight } from 'lucide-react';
+import 'react-phone-number-input/style.css';
+import PhoneInput, { parsePhoneNumber } from 'react-phone-number-input';
+import { submitLeadAction } from '@/app/actions/lead';
 
 const benefits = [
     {
@@ -48,6 +49,56 @@ export default function LiabilityFocus() {
     const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
     const [isHovered, setIsHovered] = useState(false);
 
+    // Modal State
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [mounted, setMounted] = useState(false);
+    const [formData, setFormData] = useState({
+        firstName: '',
+        lastName: '',
+        email: '',
+        whatsapp: '',
+    });
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [submitted, setSubmitted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setIsSubmitting(true);
+        try {
+            let countryName = 'United Arab Emirates';
+            if (formData.whatsapp) {
+                try {
+                    const parsed = parsePhoneNumber(formData.whatsapp);
+                    if (parsed && parsed.country) {
+                        const regionNames = new Intl.DisplayNames(['en'], { type: 'region' });
+                        countryName = regionNames.of(parsed.country) || parsed.country;
+                    }
+                } catch (e) {
+                    console.error("Could not parse phone country code", e);
+                }
+            }
+
+            await submitLeadAction({
+                first_name: formData.firstName,
+                last_name: formData.lastName,
+                custom_service_enquired: "Business Setup",
+                custom_client_profile: `[Liability Focus] Selected Path: Setup LLC`,
+                email_id: formData.email,
+                mobile_no: formData.whatsapp,
+                country: countryName
+            });
+            setSubmitted(true);
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+
     const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
         if (!cardRef.current) return;
         const rect = cardRef.current.getBoundingClientRect();
@@ -76,53 +127,31 @@ export default function LiabilityFocus() {
 
                     {/* ── LEFT ── */}
                     <div>
-                        {/* Eyebrow */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 10 }}
+                        <motion.span
+                            initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
-                            transition={{ duration: 0.5 }}
-                            className="flex items-center gap-3 mb-5"
+                            className="text-sm font-bold uppercase tracking-[0.2em] text-[#c28867] mb-5 block"
                         >
-                            <span className="block w-8 h-px bg-brand-copper" />
-                            <span className="text-[9px] font-black uppercase tracking-[0.4em] text-brand-copper">
-                                LLC — Liability Protection
-                            </span>
-                        </motion.div>
-
-                        {/* Headline */}
+                            LLC — Liability Protection
+                        </motion.span>
                         <motion.h2
-                            initial={{ opacity: 0, y: 14 }}
+                            initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
-                            transition={{ duration: 0.6, delay: 0.1 }}
-                            className="font-header font-black tracking-tighter uppercase text-brand-navy mb-6"
-                            style={{ fontSize: 'clamp(2.6rem, 4.5vw, 4rem)', lineHeight: 0.95, letterSpacing: '0.02em' }}
+                            transition={{ delay: 0.1 }}
+                            className="mt-4 mb-6 text-4xl md:text-5xl font-bold text-gray-900 uppercase leading-[1.2] tracking-wide"
                         >
-                            YOUR BUSINESS TAKES RISKS.
-                            <br />
-                            <span
-                                style={{
-                                    background: 'linear-gradient(135deg, #C28667, #d4957a)',
-                                    WebkitBackgroundClip: 'text',
-                                    WebkitTextFillColor: 'transparent',
-                                    backgroundClip: 'text',
-                                }}
-                            >
-                                YOUR PERSONAL LIFE SHOULDN'T.
-                            </span>
+                            Your Business Takes Risks. Your Personal Life Shouldn't.
                         </motion.h2>
-
-                        {/* Body */}
                         <motion.p
-                            initial={{ opacity: 0, y: 10 }}
+                            initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
-                            transition={{ duration: 0.5, delay: 0.2 }}
-                            className="text-brand-navy/60 font-medium mb-12 leading-relaxed max-w-lg text-sm"
+                            transition={{ delay: 0.2 }}
+                            className="mt-4 mb-12 text-lg text-gray-600 max-w-lg"
                         >
-                            An LLC creates a legal wall between your company and your personal assets.
-                            Your home, your savings, your family's security — all ring-fenced.
+                            An LLC creates a legal wall between your company and your personal assets. Your home, your savings, your family's security — all ring-fenced.
                         </motion.p>
 
                         {/* Benefits grid */}
@@ -283,7 +312,10 @@ export default function LiabilityFocus() {
 
                             {/* CTA */}
                             <button
-                                onClick={scrollToForm}
+                                onClick={() => {
+                                    setSubmitted(false);
+                                    setIsModalOpen(true);
+                                }}
                                 className="group relative w-full overflow-hidden rounded-[16px] py-[18px] px-7 font-header font-black tracking-widest uppercase text-white transition-all duration-300 hover:-translate-y-[2px] z-10"
                                 style={{
                                     background: '#0d1b2a',
@@ -330,6 +362,132 @@ export default function LiabilityFocus() {
 
                 </div>
             </div>
+
+            {/* Popup Modal */}
+            {mounted && createPortal(
+                <AnimatePresence>
+                    {isModalOpen && (
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            className="fixed inset-0 z-[99999] flex items-center justify-center p-4 bg-[#0d1b2a]/80 backdrop-blur-sm"
+                            onClick={() => setIsModalOpen(false)}
+                        >
+                            <motion.div
+                                initial={{ scale: 0.95, opacity: 0, y: 20 }}
+                                animate={{ scale: 1, opacity: 1, y: 0 }}
+                                exit={{ scale: 0.95, opacity: 0, y: 20 }}
+                                onClick={(e) => e.stopPropagation()}
+                                className="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl relative overflow-hidden"
+                                style={{ borderTop: `4px solid #C28667` }}
+                            >
+                                <button
+                                    onClick={() => setIsModalOpen(false)}
+                                    className="absolute top-4 right-4 p-2 text-[#0d1b2a]/40 hover:text-[#0d1b2a] hover:bg-slate-100 rounded-full transition-colors"
+                                >
+                                    <X size={20} />
+                                </button>
+
+                                {submitted ? (
+                                    <div className="text-center py-10">
+                                        <div
+                                            className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 shadow-2xl"
+                                            style={{ background: '#C28667', boxShadow: `0 20px 40px rgba(194, 134, 103, 0.4)` }}
+                                        >
+                                            <CheckCircle2 className="w-10 h-10 text-white" />
+                                        </div>
+                                        <h4 className="text-2xl font-black text-[#0d1b2a] mb-2 uppercase tracking-tight">Success!</h4>
+                                        <p className="text-[#0d1b2a]/60 text-xs font-bold uppercase tracking-widest leading-relaxed">
+                                            Your LLC setup request is received.<br />A specialist will contact you shortly.
+                                        </p>
+                                        <button
+                                            onClick={() => setIsModalOpen(false)}
+                                            className="mt-8 text-sm font-bold tracking-widest uppercase hover:underline"
+                                            style={{ color: '#C28667' }}
+                                        >
+                                            Close Window
+                                        </button>
+                                    </div>
+                                ) : (
+                                    <>
+                                        <div className="mb-8">
+                                            <h3 className="text-2xl font-black text-[#0d1b2a] uppercase tracking-tight mb-2">
+                                                Set Up Your LLC
+                                            </h3>
+                                            <p className="text-[#0d1b2a]/50 text-sm font-medium">
+                                                Enter your details below to get a customized quote for your Mainland LLC.
+                                            </p>
+                                        </div>
+
+                                        <form onSubmit={handleSubmit} className="space-y-4">
+                                            <div className="flex gap-3">
+                                                <input
+                                                    type="text"
+                                                    placeholder="First Name"
+                                                    value={formData.firstName}
+                                                    onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
+                                                    required
+                                                    className="w-full h-14 px-5 bg-slate-50 border border-slate-200 text-[#0d1b2a] placeholder:text-[#0d1b2a]/40 rounded-xl outline-none focus:border-[#C28667] focus:ring-1 focus:ring-[#C28667] transition-all text-sm font-medium"
+                                                />
+                                                <input
+                                                    type="text"
+                                                    placeholder="Last Name"
+                                                    value={formData.lastName}
+                                                    onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
+                                                    required
+                                                    className="w-full h-14 px-5 bg-slate-50 border border-slate-200 text-[#0d1b2a] placeholder:text-[#0d1b2a]/40 rounded-xl outline-none focus:border-[#C28667] focus:ring-1 focus:ring-[#C28667] transition-all text-sm font-medium"
+                                                />
+                                            </div>
+                                            <input
+                                                type="email"
+                                                placeholder="Email Address"
+                                                value={formData.email}
+                                                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                                                required
+                                                className="w-full h-14 px-5 bg-slate-50 border border-slate-200 text-[#0d1b2a] placeholder:text-[#0d1b2a]/40 rounded-xl outline-none focus:border-[#C28667] focus:ring-1 focus:ring-[#C28667] transition-all text-sm font-medium"
+                                            />
+                                            <div className="space-y-1.5 pb-2">
+                                                <label className="text-[10px] font-black uppercase tracking-widest text-[#0d1b2a]/40 ml-1">
+                                                    WhatsApp Number
+                                                </label>
+                                                <PhoneInput
+                                                    international
+                                                    defaultCountry="AE"
+                                                    value={formData.whatsapp}
+                                                    onChange={(value) => setFormData({ ...formData, whatsapp: value?.toString() || '' })}
+                                                    className="phone-input-custom text-[#0d1b2a] w-full h-14 px-5 bg-slate-50 border border-slate-200 rounded-xl focus-within:border-[#C28667] focus-within:ring-1 focus-within:ring-[#C28667] transition-all text-sm font-medium"
+                                                    placeholder="WhatsApp Number"
+                                                />
+                                            </div>
+
+                                            <button
+                                                type="submit"
+                                                disabled={isSubmitting}
+                                                className="w-full h-14 rounded-xl font-black uppercase tracking-widest text-sm transition-all duration-300 hover:scale-[1.02] flex items-center justify-center gap-2"
+                                                style={{
+                                                    background: '#C28667',
+                                                    color: '#fff',
+                                                    boxShadow: `0 10px 30px rgba(194, 134, 103, 0.3)`,
+                                                    opacity: isSubmitting ? 0.7 : 1
+                                                }}
+                                            >
+                                                {isSubmitting ? 'Processing...' : (
+                                                    <>Set Up LLC <ArrowRight size={16} /></>
+                                                )}
+                                            </button>
+                                            <p className="text-center text-[10px] text-[#0d1b2a]/40 font-bold uppercase tracking-widest mt-4">
+                                                100% Secure • Fast Response
+                                            </p>
+                                        </form>
+                                    </>
+                                )}
+                            </motion.div>
+                        </motion.div>
+                    )}
+                </AnimatePresence>,
+                document.body
+            )}
         </section>
     );
 }

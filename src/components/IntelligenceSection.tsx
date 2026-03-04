@@ -153,14 +153,33 @@ export default function IntelligenceSection() {
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-brand-copper/5 blur-[100px] pointer-events-none rounded-full" />
 
             <div className="max-w-6xl mx-auto relative z-10">
-                <div className="text-center mb-12">
-                    <div className="text-[9px] font-black uppercase tracking-[0.4em] text-brand-copper mb-3">Interactive Tools</div>
-                    <h2 className="text-3xl md:text-5xl font-header font-black tracking-tighter uppercase mb-4 leading-tight">
-                        Don't Take Anyone's Word For It — <br /> <span className="text-brand-copper italic">See For Yourself.</span>
-                    </h2>
-                    <p className="text-white/50 text-sm font-medium max-w-xl mx-auto leading-relaxed mb-6">
+                <div className="text-center mb-16">
+                    <motion.span
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="text-sm font-bold uppercase tracking-[0.2em] text-[#c28867]"
+                    >
+                        Interactive Tools
+                    </motion.span>
+                    <motion.h2
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.1 }}
+                        className="mt-4 text-4xl md:text-5xl font-bold text-white"
+                    >
+                        Don't Take Anyone's Word For It — See For Yourself.
+                    </motion.h2>
+                    <motion.p
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.2 }}
+                        className="mt-4 text-lg text-white/70 max-w-2xl mx-auto"
+                    >
                         Use our free tools to calculate costs, check eligibility, see the process, and compare structures.
-                    </p>
+                    </motion.p>
                     <div className="inline-flex bg-white/5 p-1 rounded-xl border border-white/10 mb-4 mt-2">
                         <button
                             onClick={() => setActiveTab("quiz")}

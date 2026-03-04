@@ -64,7 +64,7 @@ export default function FloatingCTA() {
                                     </a>
                                     <button
                                         onClick={scrollToForm}
-                                        className="flex items-center gap-3 bg-brand-copper text-brand-navy px-5 py-3 rounded-2xl shadow-2xl shadow-brand-copper/30 text-[11px] font-black uppercase tracking-widest hover:bg-white transition-all"
+                                        className="btn-primary"
                                     >
                                         <ArrowRight className="w-4 h-4" />
                                         Get Free Consultation
@@ -117,7 +117,7 @@ export default function FloatingCTA() {
                         </a>
                         <button
                             onClick={scrollToForm}
-                            className="flex-1 flex items-center justify-center gap-2 bg-brand-copper text-brand-navy py-4 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-lg"
+                            className="btn-primary flex-1 py-4"
                         >
                             <ArrowRight className="w-4 h-4" />
                             Get Started

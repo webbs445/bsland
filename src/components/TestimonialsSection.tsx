@@ -6,51 +6,51 @@ import { Star, Quote } from 'lucide-react';
 
 const testimonials = [
     {
-        name: 'Sarah Mitchell',
-        company: 'TechVenture Solutions',
+        name: 'Harris Maheen',
+        company: 'Abzter',
         role: 'CEO',
-        text: 'The team made our Dubai business setup incredibly smooth. From license to visa, everything was handled professionally. Highly recommend their services!',
-        image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&auto=format&fit=crop',
+        text: 'Our mainland license process was smooth and transparent. Vipin guided us through every step. Highly recommended.',
+        image: '/clients/Abzter-_-Haris-Maheen.webp',
         rating: 5
     },
     {
-        name: 'Mohammed Al-Rashid',
+        name: 'Chandra Mohan',
         company: 'Gulf Trading Group',
-        role: 'Managing Director',
-        text: 'Exceptional service and attention to detail. They guided us through every step of establishing our mainland company. Worth every dirham.',
-        image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop',
+        role: 'Business Development Manager',
+        text: 'No hidden charges, no surprises. Exactly what was promised — delivered on time.',
+        image: '/clients/chandra-mohan_Prism-Advertising.webp',
         rating: 5
     },
     {
-        name: 'Elena Petrova',
-        company: 'Design Studio ME',
-        role: 'Founder',
-        text: 'As a first-time entrepreneur in Dubai, I was nervous about the process. They made it effortless and got my free zone license in just 3 days!',
-        image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&auto=format&fit=crop',
+        name: 'Michael Doherty',
+        company: 'Doherty Capital',
+        role: 'CEO',
+        text: '25+ years in banking and corporate services, and Best Solution truly stands apart. From day one, I knew I was in safe hands.',
+        image: '/clients/Michael-Doherty.webp',
         rating: 5
     },
     {
-        name: 'James Chen',
-        company: 'Global Consulting Partners',
-        role: 'Partner',
-        text: 'Professional, efficient, and knowledgeable. Their expertise in UAE business law saved us time and money. Best business setup consultants in Dubai.',
-        image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&auto=format&fit=crop',
+        name: 'Hadi Hamedi',
+        company: 'Soft & Miller International',
+        role: 'CEO',
+        text: 'Everything became structured, professional, and stress-free after switching to Best Solution.',
+        image: '/clients/Hameed.webp',
         rating: 5
     },
     {
-        name: 'Fatima Al-Mansouri',
+        name: 'Carlos Freyre',
         company: 'Emirates Fashion House',
         role: 'Owner',
-        text: 'From company formation to bank account opening, they handled everything seamlessly. Their follow-up and customer service is outstanding.',
-        image: 'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=200&auto=format&fit=crop',
+        text: 'La mejor compañía de servicios para crear tu empresa en Dubai. Rápidos, responsables y siempre disponibles.',
+        image: '/clients/Carlos-Freyre.webp',
         rating: 5
     },
     {
-        name: 'David Kumar',
-        company: 'Innovation Labs FZ',
-        role: 'Co-Founder',
-        text: 'They understood our unique requirements and provided tailored solutions. The golden visa processing was particularly impressive. Truly expert advisors.',
-        image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&auto=format&fit=crop',
+        name: 'Nassem Richani',
+        company: 'Bonne Apartments',
+        role: 'Business Head Manager',
+        text: 'VIP medical, EID & biometrics completed in ONE day. Since then, all PRO services are handled by Best Solution.',
+        image: '/clients/Nassem-Bonne-apart.webp',
         rating: 5
     }
 ];
@@ -158,31 +158,7 @@ export default function TestimonialsSection() {
                     ))}
                 </div>
 
-                {/* Stats Bar */}
-                <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.5 }}
-                    className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6"
-                >
-                    <div className="text-center">
-                        <div className="text-4xl font-bold text-[#c28867] mb-2">4.9/5</div>
-                        <div className="text-sm text-gray-600">Average Rating</div>
-                    </div>
-                    <div className="text-center">
-                        <div className="text-4xl font-bold text-[#c28867] mb-2">523+</div>
-                        <div className="text-sm text-gray-600">Google Reviews</div>
-                    </div>
-                    <div className="text-center">
-                        <div className="text-4xl font-bold text-[#c28867] mb-2">5,000+</div>
-                        <div className="text-sm text-gray-600">Happy Clients</div>
-                    </div>
-                    <div className="text-center">
-                        <div className="text-4xl font-bold text-[#c28867] mb-2">98%</div>
-                        <div className="text-sm text-gray-600">Satisfaction Rate</div>
-                    </div>
-                </motion.div>
+
             </div>
         </section>
     );

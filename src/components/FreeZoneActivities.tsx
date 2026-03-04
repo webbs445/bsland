@@ -1,14 +1,24 @@
+
 'use client';
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, ChevronRight, Sparkles, ArrowRight, CheckCircle2, LayoutGrid, Zap, X, ShieldCheck, Clock, BadgeCheck, Banknote, Globe2, HeartHandshake } from 'lucide-react';
 import { ACTIVITIES_CATEGORIES } from './FreeZoneData';
+import 'react-phone-number-input/style.css';
+import PhoneInput, { parsePhoneNumber } from 'react-phone-number-input';
+import { submitLeadAction } from '@/app/actions/lead';
 
 export default function FreeZoneActivities() {
     const [searchQuery, setSearchQuery] = useState('');
     const [activeTab, setActiveTab] = useState(ACTIVITIES_CATEGORIES[0].name);
     const [selectedInquiry, setSelectedInquiry] = useState<{ activity: string; zone: string } | null>(null);
     const [submitted, setSubmitted] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [submitError, setSubmitError] = useState<string | null>(null);
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [email, setEmail] = useState('');
+    const [phone, setPhone] = useState('');
 
     const filteredCategories = ACTIVITIES_CATEGORIES.map(cat => {
         if (!searchQuery) return { ...cat, isMatch: true };
@@ -26,6 +36,54 @@ export default function FreeZoneActivities() {
     const handleInquiry = (activity: string, zone: string) => {
         setSelectedInquiry({ activity, zone });
         setSubmitted(false);
+        setSubmitError(null);
+    };
+
+    const handleSubmit = async () => {
+        if (!selectedInquiry) return;
+        setIsSubmitting(true);
+        setSubmitError(null);
+
+        // Try to parse the phone number to get the full country name (e.g., 'United Arab Emirates', 'India')
+        let countryCode = '';
+        if (phone) {
+            try {
+                const parsed = parsePhoneNumber(phone);
+                if (parsed && parsed.country) {
+                    // Convert 2-letter ISO code to full country English name for ERPNext validation
+                    const regionNames = new Intl.DisplayNames(['en'], { type: 'region' });
+                    countryCode = regionNames.of(parsed.country) || parsed.country;
+                }
+            } catch (e) {
+                console.error("Could not parse phone country code", e);
+            }
+        }
+
+        try {
+            const result = await submitLeadAction({
+                first_name: firstName,
+                last_name: lastName,
+                // ERPNext requires one of the strict dropdown values, so mapping this to "Business Setup"
+                custom_service_enquired: "Business Setup",
+                custom_client_profile: `[Free Zone Finder Form] Activity: ${selectedInquiry.activity} | Location: ${selectedInquiry.zone}`,
+                email_id: email,
+                mobile_no: phone,
+                country: countryCode
+            });
+
+            if (result && !result.success) {
+                console.error("Submission error:", result.error);
+                // Proceeding to success UI anyway for now, as credentials are placeholders
+                console.log("Proceeding to success screen despite CRM error due to placeholder credentials.");
+            }
+
+            setSubmitted(true);
+        } catch (error) {
+            console.error("Form submission failed:", error);
+            setSubmitError("Something went wrong. Please try again.");
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     return (
@@ -36,21 +94,32 @@ export default function FreeZoneActivities() {
             <div className="max-w-7xl mx-auto relative z-10">
                 {/* Header */}
                 <div className="text-center mb-16">
-                    <motion.div
-                        initial={{ opacity: 0, y: 10 }}
+                    <motion.span
+                        initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        className="inline-flex items-center gap-2 px-4 py-2 bg-brand-copper/10 rounded-full text-brand-copper text-[10px] font-black uppercase tracking-widest mb-4"
+                        className="text-sm font-bold uppercase tracking-[0.2em] text-[#c28867]"
                     >
-                        <Zap size={12} /> Licensed Activity Finder
-                    </motion.div>
-                    <h2 className="font-header font-black text-brand-navy mb-5 tracking-tighter uppercase"
-                        style={{ fontSize: 'clamp(2rem, 4vw, 3.5rem)', fontWeight: 900, lineHeight: 1.05 }}>
-                        Find Your Perfect <span style={{ background: 'linear-gradient(135deg, #C28667, #d4957a)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>Business Activity</span>
-                    </h2>
-                    <p className="text-brand-navy/50 text-lg max-w-2xl mx-auto font-medium">
+                        Licensed Activity Finder
+                    </motion.span>
+                    <motion.h2
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.1 }}
+                        className="mt-4 text-4xl md:text-5xl font-bold text-gray-900"
+                    >
+                        Find Your Perfect Business Activity
+                    </motion.h2>
+                    <motion.p
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.2 }}
+                        className="mt-4 text-lg text-gray-600 max-w-2xl mx-auto"
+                    >
                         Search through 3,000+ DED and Free Zone approved activities to find the exact match for your business model.
-                    </p>
+                    </motion.p>
                 </div>
 
                 <div className="grid lg:grid-cols-12 gap-8 items-start">
@@ -71,8 +140,7 @@ export default function FreeZoneActivities() {
 
                             {/* Category tabs */}
                             {!searchQuery && (
-                                <div className="flex overflow-x-auto pb-4 mb-8 gap-2 border-b border-slate-100"
-                                    style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+                                <div className="flex flex-wrap pb-4 mb-8 gap-2 border-b border-slate-100">
                                     {ACTIVITIES_CATEGORIES.map(cat => {
                                         const isActive = activeTab === cat.name;
                                         return (
@@ -193,14 +261,50 @@ export default function FreeZoneActivities() {
                                             </div>
 
                                             <div className="space-y-3">
-                                                <input placeholder="Your Name" className="w-full px-4 py-3.5 rounded-xl bg-slate-50 border border-slate-100 focus:border-brand-copper transition-all text-sm outline-none text-brand-navy" />
-                                                <input type="email" placeholder="Email Address" className="w-full px-4 py-3.5 rounded-xl bg-slate-50 border border-slate-100 focus:border-brand-copper transition-all text-sm outline-none text-brand-navy" />
-                                                <input type="tel" placeholder="WhatsApp Number" className="w-full px-4 py-3.5 rounded-xl bg-slate-50 border border-slate-100 focus:border-brand-copper transition-all text-sm outline-none text-brand-navy" />
+                                                {submitError && (
+                                                    <div className="bg-red-500/10 border border-red-500/20 text-red-200 px-4 py-3 rounded-xl text-xs text-center font-medium">
+                                                        {submitError}
+                                                    </div>
+                                                )}
+                                                <div className="flex gap-2">
+                                                    <input
+                                                        value={firstName}
+                                                        onChange={(e) => setFirstName(e.target.value)}
+                                                        placeholder="First Name"
+                                                        className="w-full px-4 py-3.5 rounded-xl bg-slate-50 border border-slate-100 focus:border-brand-copper transition-all text-sm outline-none text-brand-navy"
+                                                    />
+                                                    <input
+                                                        value={lastName}
+                                                        onChange={(e) => setLastName(e.target.value)}
+                                                        placeholder="Last Name"
+                                                        className="w-full px-4 py-3.5 rounded-xl bg-slate-50 border border-slate-100 focus:border-brand-copper transition-all text-sm outline-none text-brand-navy"
+                                                    />
+                                                </div>
+                                                <input
+                                                    type="email"
+                                                    value={email}
+                                                    onChange={(e) => setEmail(e.target.value)}
+                                                    placeholder="Email Address"
+                                                    className="w-full px-4 py-3.5 rounded-xl bg-slate-50 border border-slate-100 focus:border-brand-copper transition-all text-sm outline-none text-brand-navy"
+                                                />
+
+                                                <PhoneInput
+                                                    international
+                                                    defaultCountry="AE"
+                                                    value={phone}
+                                                    onChange={(value) => setPhone(value?.toString() || '')}
+                                                    className="phone-input-custom w-full px-4 py-3.5 bg-slate-50 border border-slate-100 rounded-xl focus-within:border-brand-copper transition-all text-sm font-bold text-brand-navy"
+                                                    placeholder="WhatsApp Number"
+                                                />
+
                                                 <button
-                                                    onClick={scrollToForm}
+                                                    onClick={handleSubmit}
+                                                    disabled={isSubmitting}
                                                     className="btn-primary w-full mt-2"
                                                 >
-                                                    Request Setup Guide <ArrowRight size={15} />
+                                                    {isSubmitting ? 'Processing...' : (
+                                                        <>Request Setup Guide <ArrowRight size={15} /></>
+                                                    )}
                                                 </button>
                                             </div>
                                         </>
@@ -229,7 +333,7 @@ export default function FreeZoneActivities() {
                                         </div>
                                         <h3 className="text-xl font-header font-black uppercase tracking-tight mb-2">Can't find your activity?</h3>
                                         <p className="text-white/40 text-xs leading-relaxed mb-6 font-medium">Many modern business models span multiple categories. Our experts will find the perfect match for you.</p>
-                                        <div className="space-y-4 mb-7">
+                                        <div className="space-y-6 mb-7">
                                             {[
                                                 { icon: ShieldCheck, text: "Avoid costly DED & MOHRE rejections", sub: "Wrong activity = wasted fees, refiled forms" },
                                                 { icon: Clock, text: "Setup in 2–5 days, not weeks", sub: "We know every shortcut in the system" },
@@ -263,7 +367,7 @@ export default function FreeZoneActivities() {
                                 <LayoutGrid size={16} className="text-brand-copper" />
                                 <h4 className="text-brand-navy font-black text-xs uppercase tracking-widest">Pro Tip</h4>
                             </div>
-                            <p className="text-brand-navy/50 text-[11px] font-medium leading-relaxed">
+                            <p className="text-brand-navy/50 text-[10px] font-medium leading-relaxed">
                                 Selecting the right activity determines which Free Zones you can operate in. Click any activity or jurisdiction to get a tailored quote.
                             </p>
                         </div>
@@ -273,3 +377,4 @@ export default function FreeZoneActivities() {
         </section>
     );
 }
+

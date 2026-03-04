@@ -3,6 +3,9 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Globe, Building2, Banknote, ArrowRight, Phone, CheckCircle2, MessageCircle } from 'lucide-react';
+import { submitLeadAction } from '@/app/actions/lead';
+import 'react-phone-number-input/style.css';
+import PhoneInput, { parsePhoneNumber } from 'react-phone-number-input';
 
 const highlights = [
     { icon: Globe, text: "Trade Freely", color: "text-blue-500" },
@@ -13,7 +16,8 @@ const highlights = [
 
 export default function HeroSection() {
     const [formData, setFormData] = useState({
-        fullName: '',
+        firstName: '',
+        lastName: '',
         email: '',
         countryCode: '+971',
         whatsapp: '',
@@ -24,10 +28,10 @@ export default function HeroSection() {
     const [submitted, setSubmitted] = useState(false);
 
     const tickerMessages = [
-        "🔴 78% of new investors use our guide before choosing a free zone.",
-        "🔴 Over 5,000+ companies formed successfully",
-        "🔴 Average setup time: 3-5 business days",
-    ];
+        "78% of new investors use our guide before choosing a free zone.",
+        "Over 5,000+ companies formed successfully",
+        "Average setup time: 3-5 business days", "Golden Visa accquired by investors in UAE",
+        "Free Zone companies are tax exempt",];
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -51,9 +55,49 @@ export default function HeroSection() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsSubmitting(true);
-        await new Promise(resolve => setTimeout(resolve, 1500));
-        setIsSubmitting(false);
-        setSubmitted(true);
+        try {
+            const countryMap: Record<string, string> = {
+                '+971': 'United Arab Emirates', '+91': 'India', '+92': 'Pakistan', '+966': 'Saudi Arabia',
+                '+44': 'United Kingdom', '+1': 'United States', '+20': 'Egypt', '+968': 'Oman',
+                '+974': 'Qatar', '+965': 'Kuwait', '+973': 'Bahrain', '+880': 'Bangladesh',
+                '+94': 'Sri Lanka', '+63': 'Philippines', '+7': 'Russia', '+33': 'France',
+                '+49': 'Germany', '+86': 'China'
+            };
+
+            const serviceMap: Record<string, string> = {
+                'llc': 'Business Setup', 'freezone': 'Business Setup',
+                'compare': 'Business Setup', 'license': 'Business Setup',
+                'guidance': 'Business Setup'
+            };
+
+            let countryName = 'United Arab Emirates';
+            if (formData.whatsapp) {
+                try {
+                    const parsed = parsePhoneNumber(formData.whatsapp);
+                    if (parsed && parsed.country) {
+                        const regionNames = new Intl.DisplayNames(['en'], { type: 'region' });
+                        countryName = regionNames.of(parsed.country) || parsed.country;
+                    }
+                } catch (e) {
+                    console.error("Could not parse phone country code", e);
+                }
+            }
+
+            await submitLeadAction({
+                first_name: formData.firstName,
+                last_name: formData.lastName,
+                custom_service_enquired: serviceMap[formData.lookingTo] || "Business Setup",
+                custom_client_profile: `Services Looking For: ${formData.lookingTo}`,
+                email_id: formData.email,
+                mobile_no: formData.whatsapp,
+                country: countryName
+            });
+            setSubmitted(true);
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     return (
@@ -137,7 +181,10 @@ export default function HeroSection() {
                                     transition={{ duration: 0.5 }}
                                     className="absolute inset-0 flex items-center px-6"
                                 >
-                                    <p className="text-sm font-bold text-white tracking-tight italic">{tickerMessages[tickerIndex]}</p>
+                                    <div className="flex items-center gap-2">
+                                        <CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0" />
+                                        <p className="text-sm font-bold text-white tracking-tight italic">{tickerMessages[tickerIndex]}</p>
+                                    </div>
                                 </motion.div>
                             </AnimatePresence>
                         </div>
@@ -190,15 +237,27 @@ export default function HeroSection() {
                                     </motion.div>
                                 ) : (
                                     <form onSubmit={handleSubmit} className="space-y-4">
-                                        <div className="group relative">
-                                            <input
-                                                type="text"
-                                                placeholder="Full Name"
-                                                value={formData.fullName}
-                                                onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                                                required
-                                                className="w-full h-14 px-6 bg-white/5 border border-white/10 text-white placeholder:text-white/20 rounded-xl outline-none focus:border-brand-copper transition-all text-sm font-medium"
-                                            />
+                                        <div className="flex gap-2">
+                                            <div className="group relative w-1/2">
+                                                <input
+                                                    type="text"
+                                                    placeholder="First Name"
+                                                    value={formData.firstName}
+                                                    onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
+                                                    required
+                                                    className="w-full h-14 px-4 sm:px-6 bg-white/5 border border-white/10 text-white placeholder:text-white/20 rounded-xl outline-none focus:border-brand-copper transition-all text-sm font-medium"
+                                                />
+                                            </div>
+                                            <div className="group relative w-1/2">
+                                                <input
+                                                    type="text"
+                                                    placeholder="Last Name"
+                                                    value={formData.lastName}
+                                                    onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
+                                                    required
+                                                    className="w-full h-14 px-4 sm:px-6 bg-white/5 border border-white/10 text-white placeholder:text-white/20 rounded-xl outline-none focus:border-brand-copper transition-all text-sm font-medium"
+                                                />
+                                            </div>
                                         </div>
                                         <div className="group relative">
                                             <input
@@ -214,41 +273,14 @@ export default function HeroSection() {
                                             <label className="text-[9px] font-black uppercase tracking-widest text-white/30 ml-1">
                                                 WhatsApp Number
                                             </label>
-                                            <div className="flex gap-2">
-                                                <select
-                                                    value={formData.countryCode}
-                                                    onChange={(e) => setFormData({ ...formData, countryCode: e.target.value })}
-                                                    className="h-14 px-3 bg-white/5 border border-white/10 text-white rounded-xl outline-none focus:border-brand-copper transition-all text-sm font-black appearance-none cursor-pointer text-center"
-                                                    style={{ minWidth: '90px' }}
-                                                >
-                                                    <option value="+971" className="bg-brand-navy">🇦🇪 +971</option>
-                                                    <option value="+91" className="bg-brand-navy">🇮🇳 +91</option>
-                                                    <option value="+92" className="bg-brand-navy">🇵🇰 +92</option>
-                                                    <option value="+966" className="bg-brand-navy">🇸🇦 +966</option>
-                                                    <option value="+44" className="bg-brand-navy">🇬🇧 +44</option>
-                                                    <option value="+1" className="bg-brand-navy">🇺🇸 +1</option>
-                                                    <option value="+20" className="bg-brand-navy">🇪🇬 +20</option>
-                                                    <option value="+968" className="bg-brand-navy">🇴🇲 +968</option>
-                                                    <option value="+974" className="bg-brand-navy">🇶🇦 +974</option>
-                                                    <option value="+965" className="bg-brand-navy">🇰🇼 +965</option>
-                                                    <option value="+973" className="bg-brand-navy">🇧🇭 +973</option>
-                                                    <option value="+880" className="bg-brand-navy">🇧🇩 +880</option>
-                                                    <option value="+94" className="bg-brand-navy">🇱🇰 +94</option>
-                                                    <option value="+63" className="bg-brand-navy">🇵🇭 +63</option>
-                                                    <option value="+7" className="bg-brand-navy">🇷🇺 +7</option>
-                                                    <option value="+33" className="bg-brand-navy">🇫🇷 +33</option>
-                                                    <option value="+49" className="bg-brand-navy">🇩🇪 +49</option>
-                                                    <option value="+86" className="bg-brand-navy">🇨🇳 +86</option>
-                                                </select>
-                                                <input
-                                                    type="tel"
-                                                    placeholder="50 123 4567"
-                                                    value={formData.whatsapp}
-                                                    onChange={(e) => setFormData({ ...formData, whatsapp: e.target.value })}
-                                                    required
-                                                    className="flex-1 h-14 px-6 bg-white/5 border border-white/10 text-white placeholder:text-white/20 rounded-xl outline-none focus:border-brand-copper transition-all text-sm font-medium"
-                                                />
-                                            </div>
+                                            <PhoneInput
+                                                international
+                                                defaultCountry="AE"
+                                                value={formData.whatsapp}
+                                                onChange={(value) => setFormData({ ...formData, whatsapp: value?.toString() || '' })}
+                                                className="phone-input-custom-hero w-full h-14 px-6 bg-white/5 border border-white/10 rounded-xl focus-within:border-brand-copper transition-all text-sm font-medium text-white"
+                                                placeholder="WhatsApp Number"
+                                            />
                                         </div>
 
                                         <div className="space-y-1">
@@ -260,11 +292,11 @@ export default function HeroSection() {
                                                 className="w-full h-14 px-6 bg-white/5 border border-white/10 text-white rounded-xl outline-none focus:border-brand-copper transition-all text-sm font-medium appearance-none cursor-pointer"
                                             >
                                                 <option value="" disabled className="bg-brand-navy">Select one</option>
-                                                <option value="llc" className="bg-brand-navy">Set up an LLC for liability protection</option>
-                                                <option value="freezone" className="bg-brand-navy">Start a Free Zone company</option>
-                                                <option value="compare" className="bg-brand-navy">Compare costs and options</option>
-                                                <option value="license" className="bg-brand-navy">Get a trade license / e-commerce license</option>
-                                                <option value="guidance" className="bg-brand-navy">I need expert guidance — not sure yet</option>
+                                                <option value="Set up an LLC for liability protection" className="bg-brand-navy">Set up an LLC for liability protection</option>
+                                                <option value="Start a Free Zone company" className="bg-brand-navy">Start a Free Zone company</option>
+                                                <option value="Compare costs and options" className="bg-brand-navy">Compare costs and options</option>
+                                                <option value="Get a trade license / e-commerce license" className="bg-brand-navy">Get a trade license / e-commerce license</option>
+                                                <option value="I need expert guidance — not sure yet" className="bg-brand-navy">I need expert guidance — not sure yet</option>
                                             </select>
                                         </div>
 
@@ -274,7 +306,7 @@ export default function HeroSection() {
                                             whileHover={{ scale: 1.02, y: -2, boxShadow: '0 16px 40px rgba(255,190,163,0.45)' }}
                                             whileTap={{ scale: 0.97, y: 0 }}
                                             transition={{ type: 'spring', stiffness: 400, damping: 20 }}
-                                            className="relative overflow-hidden w-full h-16 mt-6 rounded-xl font-black text-[10px] uppercase tracking-[0.3em] flex items-center justify-center gap-2 shadow-2xl group"
+                                            className="relative overflow-hidden w-full h-16 mt-6 rounded-xl font-black text-[16px] uppercase tracking-[0.2em] flex items-center justify-center gap-2 shadow-2xl group"
                                             style={{ background: 'linear-gradient(135deg, #FFBEA3 0%, #ffd4c2e0 50%, #FFBEA3 100%)', color: '#14253E' }}
                                         >
                                             {/* Shimmer sweep */}
@@ -306,7 +338,7 @@ export default function HeroSection() {
                         </div>
                     </motion.div>
                 </div>
-            </div>
-        </section>
+            </div >
+        </section >
     );
 }

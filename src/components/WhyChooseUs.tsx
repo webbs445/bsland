@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { ShieldCheck, UserCheck, Zap, LayoutGrid, BadgeCheck, Search } from 'lucide-react';
+import Image from 'next/image';
 
 export default function WhyChooseUs() {
     const features = [
@@ -37,29 +38,46 @@ export default function WhyChooseUs() {
             <div className="max-w-7xl mx-auto">
                 <div className="grid lg:grid-cols-2 gap-20 items-start">
                     <div>
-                        <div className="text-[10px] font-black uppercase tracking-[0.4em] text-brand-copper mb-4">Why Best Solution®</div>
-                        <h2 className="font-header font-black leading-[1.05] tracking-tighter uppercase mb-8"
-                            style={{ fontSize: 'clamp(2rem, 4vw, 3.5rem)', fontWeight: 900, lineHeight: 1.05 }}>
-                            WE DON'T JUST ADVISE — <br /> <span style={{ background: 'linear-gradient(135deg, #C28667, #d4957a)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>WE ACT ON YOUR BEHALF</span>
-                        </h2>
-                        <p className="text-white/60 font-medium mb-12 max-w-lg leading-relaxed">
+                        <motion.span
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            className="text-sm font-bold uppercase tracking-[0.2em] text-[#c28867]"
+                        >
+                            Why Best Solution®
+                        </motion.span>
+                        <motion.h2
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.1 }}
+                            className="mt-4 text-4xl md:text-5xl font-bold text-white uppercase"
+                        >
+                            We Don't Just Advise , We Act On Your Behalf
+                        </motion.h2>
+                        <motion.p
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.2 }}
+                            className="mt-4 mb-12 text-lg text-white/70 max-w-lg"
+                        >
                             Every concern you have about setting up in Dubai? We've already solved it — 2,500 times.
-                        </p>
+                        </motion.p>
 
-                        <div className="bg-white/5 border border-white/10 p-10 rounded-3xl relative group">
-                            <div className="absolute -top-4 -right-4 w-12 h-12 bg-brand-copper rounded-full flex items-center justify-center text-brand-navy font-black text-xs uppercase animate-pulse">
-                                New
-                            </div>
-                            <div className="text-brand-copper text-4xl font-header font-black italic mb-6">"Their transparent pricing won me over."</div>
-                            <p className="text-white/60 text-sm font-medium italic mb-8">
-                                "Every fee was explained before I paid a single dirham. The free zone setup was faster than expected. Finally, a company that does what they promise."
-                            </p>
-                            <div className="flex items-center gap-4">
-                                <div className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center font-bold text-brand-copper italic">S</div>
-                                <div>
-                                    <div className="text-white font-bold tracking-tight">Sarah K.</div>
-                                    <div className="text-[9px] uppercase tracking-widest text-white/40">E-Commerce — United Kingdom</div>
-                                </div>
+                        <div className="relative w-full aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl group border border-white/10">
+                            <div className="absolute inset-0 bg-brand-copper/20 group-hover:bg-transparent transition-colors duration-500 z-10 mix-blend-overlay"></div>
+                            <Image
+                                src="/team.webp"
+                                alt="Best Solution Management Team"
+                                fill
+                                className="object-cover object-center group-hover:scale-105 transition-transform duration-700"
+                            />
+                            {/* Decorative Elements */}
+                            <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-brand-copper/20 blur-3xl rounded-full z-0"></div>
+                            <div className="absolute bottom-4 right-4 bg-white/10 backdrop-blur-md border border-white/20 px-4 py-2 rounded-full z-20 flex items-center gap-2">
+                                <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                                <span className="text-[10px] font-black uppercase tracking-widest text-white">Dubai Headquarters</span>
                             </div>
                         </div>
                     </div>

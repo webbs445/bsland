@@ -1,6 +1,6 @@
-'use client';
-
-import { useState } from 'react';
+"use client";
+import { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
     ArrowRight,
@@ -16,10 +16,11 @@ import {
     Star,
     MapPin,
     ChevronRight,
+    X
 } from 'lucide-react';
-
-const scrollToForm = () =>
-    document.getElementById('hero-form')?.scrollIntoView({ behavior: 'smooth' });
+import 'react-phone-number-input/style.css';
+import PhoneInput, { parsePhoneNumber } from 'react-phone-number-input';
+import { submitLeadAction } from '@/app/actions/lead';
 
 const options = [
     {
@@ -95,6 +96,54 @@ const options = [
 
 export default function SetupOptions() {
     const [hovered, setHovered] = useState(options[1]);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [mounted, setMounted] = useState(false);
+    const [formData, setFormData] = useState({
+        firstName: '',
+        lastName: '',
+        email: '',
+        whatsapp: '',
+    });
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [submitted, setSubmitted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setIsSubmitting(true);
+        try {
+            let countryName = 'United Arab Emirates';
+            if (formData.whatsapp) {
+                try {
+                    const parsed = parsePhoneNumber(formData.whatsapp);
+                    if (parsed && parsed.country) {
+                        const regionNames = new Intl.DisplayNames(['en'], { type: 'region' });
+                        countryName = regionNames.of(parsed.country) || parsed.country;
+                    }
+                } catch (e) {
+                    console.error("Could not parse phone country code", e);
+                }
+            }
+
+            await submitLeadAction({
+                first_name: formData.firstName,
+                last_name: formData.lastName,
+                custom_service_enquired: "Business Setup",
+                custom_client_profile: `[Setup Options] Selected Path: ${hovered.title}`,
+                email_id: formData.email,
+                mobile_no: formData.whatsapp,
+                country: countryName
+            });
+            setSubmitted(true);
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
 
     return (
         <section className="relative py-28 px-6 bg-gradient-to-b from-white to-[#f7f8fa] overflow-hidden">
@@ -104,22 +153,33 @@ export default function SetupOptions() {
             <div className="max-w-7xl mx-auto relative z-10">
 
                 {/* Header */}
-                <div className="mb-20 max-w-3xl">
-                    <div className="text-[10px] font-black uppercase tracking-[0.4em] text-[#CC8667] mb-5">
+                <div className="text-center mb-16">
+                    <motion.span
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="text-sm font-bold uppercase tracking-[0.2em] text-[#c28867]"
+                    >
                         Your Setup Options
-                    </div>
-
-                    <h2 className="font-black tracking-tight leading-[1.05] mb-6 text-[#14253E] text-4xl md:text-6xl">
-                        Three Paths to{' '}
-                        <span className="bg-gradient-to-r from-[#C28667] to-[#e3a98d] bg-clip-text text-transparent">
-                            Business in Dubai
-                        </span>
-                    </h2>
-
-                    <p className="text-[#14253E]/60 text-base leading-relaxed">
-                        Every business is different. Explore your options and choose the
-                        structure that fits your ambition.
-                    </p>
+                    </motion.span>
+                    <motion.h2
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.1 }}
+                        className="mt-4 text-4xl md:text-5xl font-bold text-gray-900"
+                    >
+                        Three Paths to Business in Dubai
+                    </motion.h2>
+                    <motion.p
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.2 }}
+                        className="mt-4 text-lg text-gray-600 max-w-2xl mx-auto"
+                    >
+                        Every business is different. Explore your options and choose the structure that fits your ambition.
+                    </motion.p>
                 </div>
 
                 <div className="grid lg:grid-cols-5 gap-8 lg:gap-12 items-start">
@@ -267,7 +327,10 @@ export default function SetupOptions() {
                                     </div>
 
                                     <button
-                                        onClick={scrollToForm}
+                                        onClick={() => {
+                                            setSubmitted(false);
+                                            setIsModalOpen(true);
+                                        }}
                                         className="w-full py-4 rounded-2xl font-black uppercase tracking-widest text-sm transition-all duration-300 hover:scale-[1.02] flex items-center justify-center gap-2"
                                         style={{
                                             background: hovered.accentColor,
@@ -283,6 +346,132 @@ export default function SetupOptions() {
                     </div>
                 </div>
             </div>
+
+            {/* Popup Modal */}
+            {mounted && createPortal(
+                <AnimatePresence>
+                    {isModalOpen && (
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            className="fixed inset-0 z-[99999] flex items-center justify-center p-4 bg-[#14253E]/80 backdrop-blur-sm"
+                            onClick={() => setIsModalOpen(false)}
+                        >
+                            <motion.div
+                                initial={{ scale: 0.95, opacity: 0, y: 20 }}
+                                animate={{ scale: 1, opacity: 1, y: 0 }}
+                                exit={{ scale: 0.95, opacity: 0, y: 20 }}
+                                onClick={(e) => e.stopPropagation()}
+                                className="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl relative overflow-hidden"
+                                style={{ borderTop: `4px solid ${hovered.accentColor}` }}
+                            >
+                                <button
+                                    onClick={() => setIsModalOpen(false)}
+                                    className="absolute top-4 right-4 p-2 text-[#14253E]/40 hover:text-[#14253E] hover:bg-slate-100 rounded-full transition-colors"
+                                >
+                                    <X size={20} />
+                                </button>
+
+                                {submitted ? (
+                                    <div className="text-center py-10">
+                                        <div
+                                            className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 shadow-2xl"
+                                            style={{ background: hovered.accentColor, boxShadow: `0 20px 40px ${hovered.accentColor}40` }}
+                                        >
+                                            <CheckCircle2 className="w-10 h-10 text-white" />
+                                        </div>
+                                        <h4 className="text-2xl font-black text-[#14253E] mb-2 uppercase tracking-tight">Success!</h4>
+                                        <p className="text-[#14253E]/60 text-xs font-bold uppercase tracking-widest leading-relaxed">
+                                            Your {hovered.title} setup guide is on its way.<br />A specialist will contact you shortly.
+                                        </p>
+                                        <button
+                                            onClick={() => setIsModalOpen(false)}
+                                            className="mt-8 text-sm font-bold tracking-widest uppercase hover:underline"
+                                            style={{ color: hovered.accentColor }}
+                                        >
+                                            Close Window
+                                        </button>
+                                    </div>
+                                ) : (
+                                    <>
+                                        <div className="mb-8">
+                                            <h3 className="text-2xl font-black text-[#14253E] uppercase tracking-tight mb-2">
+                                                Start Your {hovered.title}
+                                            </h3>
+                                            <p className="text-[#14253E]/50 text-sm font-medium">
+                                                Enter your details below and we'll send you the full breakdown and exact pricing.
+                                            </p>
+                                        </div>
+
+                                        <form onSubmit={handleSubmit} className="space-y-4">
+                                            <div className="flex gap-3">
+                                                <input
+                                                    type="text"
+                                                    placeholder="First Name"
+                                                    value={formData.firstName}
+                                                    onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
+                                                    required
+                                                    className="w-full h-14 px-5 bg-slate-50 border border-slate-200 text-[#14253E] placeholder:text-[#14253E]/40 rounded-xl outline-none focus:border-[#CC8667] focus:ring-1 focus:ring-[#CC8667] transition-all text-sm font-medium"
+                                                />
+                                                <input
+                                                    type="text"
+                                                    placeholder="Last Name"
+                                                    value={formData.lastName}
+                                                    onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
+                                                    required
+                                                    className="w-full h-14 px-5 bg-slate-50 border border-slate-200 text-[#14253E] placeholder:text-[#14253E]/40 rounded-xl outline-none focus:border-[#CC8667] focus:ring-1 focus:ring-[#CC8667] transition-all text-sm font-medium"
+                                                />
+                                            </div>
+                                            <input
+                                                type="email"
+                                                placeholder="Email Address"
+                                                value={formData.email}
+                                                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                                                required
+                                                className="w-full h-14 px-5 bg-slate-50 border border-slate-200 text-[#14253E] placeholder:text-[#14253E]/40 rounded-xl outline-none focus:border-[#CC8667] focus:ring-1 focus:ring-[#CC8667] transition-all text-sm font-medium"
+                                            />
+                                            <div className="space-y-1.5 pb-2">
+                                                <label className="text-[10px] font-black uppercase tracking-widest text-[#14253E]/40 ml-1">
+                                                    WhatsApp Number
+                                                </label>
+                                                <PhoneInput
+                                                    international
+                                                    defaultCountry="AE"
+                                                    value={formData.whatsapp}
+                                                    onChange={(value) => setFormData({ ...formData, whatsapp: value?.toString() || '' })}
+                                                    className="phone-input-custom text-[#14253E] w-full h-14 px-5 bg-slate-50 border border-slate-200 rounded-xl focus-within:border-[#CC8667] focus-within:ring-1 focus-within:ring-[#CC8667] transition-all text-sm font-medium"
+                                                    placeholder="WhatsApp Number"
+                                                />
+                                            </div>
+
+                                            <button
+                                                type="submit"
+                                                disabled={isSubmitting}
+                                                className="w-full h-14 rounded-xl font-black uppercase tracking-widest text-sm transition-all duration-300 hover:scale-[1.02] flex items-center justify-center gap-2"
+                                                style={{
+                                                    background: hovered.accentColor,
+                                                    color: '#fff',
+                                                    boxShadow: `0 10px 30px ${hovered.accentColor}30`,
+                                                    opacity: isSubmitting ? 0.7 : 1
+                                                }}
+                                            >
+                                                {isSubmitting ? 'Processing...' : (
+                                                    <>Get Setup Guide <ArrowRight size={16} /></>
+                                                )}
+                                            </button>
+                                            <p className="text-center text-[10px] text-[#14253E]/40 font-bold uppercase tracking-widest mt-4">
+                                                100% Secure • Fast Response
+                                            </p>
+                                        </form>
+                                    </>
+                                )}
+                            </motion.div>
+                        </motion.div>
+                    )}
+                </AnimatePresence>,
+                document.body
+            )}
         </section>
     );
 }
