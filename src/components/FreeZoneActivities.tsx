@@ -199,25 +199,7 @@ export default function FreeZoneActivities() {
                         isMobile={true}
                     />
 
-                    {/* Sticky mobile CTA when nothing selected */}
-                    <AnimatePresence>
-                        {!selectedInquiry && (
-                            <motion.div
-                                initial={{ y: 80, opacity: 0 }}
-                                animate={{ y: 0, opacity: 1 }}
-                                exit={{ y: 80, opacity: 0 }}
-                                transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-                                className="fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200 px-4 py-3 shadow-xl"
-                            >
-                                <button onClick={scrollToForm} className="btn-primary w-full text-sm py-3.5">
-                                    Get Free Consultation <ArrowRight size={15} />
-                                </button>
-                                <p className="text-center text-[9px] text-brand-navy/30 font-bold uppercase tracking-widest mt-2">
-                                    Click any activity to get a tailored quote
-                                </p>
-                            </motion.div>
-                        )}
-                    </AnimatePresence>
+
 
                     {/* Mobile bottom sheet for inquiry form */}
                     <AnimatePresence>

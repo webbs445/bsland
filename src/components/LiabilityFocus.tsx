@@ -316,12 +316,12 @@ export default function LiabilityFocus() {
                                     setSubmitted(false);
                                     setIsModalOpen(true);
                                 }}
-                                className="group relative w-full overflow-hidden rounded-[16px] py-[18px] px-7 font-header font-black tracking-widest uppercase text-white transition-all duration-300 hover:-translate-y-[2px] z-10"
+                                className="group relative w-full overflow-hidden rounded-[16px] py-[18px] px-4 sm:px-7 font-header font-black tracking-widest uppercase text-white transition-all duration-300 hover:-translate-y-[2px] z-10"
                                 style={{
                                     background: '#0d1b2a',
                                     fontFamily: "'Bebas Neue', sans-serif",
-                                    fontSize: '1.05rem',
-                                    letterSpacing: '0.1em',
+                                    fontSize: 'clamp(0.72rem, 2.2vw, 1.05rem)',
+                                    letterSpacing: '0.08em',
                                     boxShadow: '0 4px 20px rgba(13,27,42,0.15)',
                                 }}
                                 onMouseEnter={e => {
@@ -336,11 +336,13 @@ export default function LiabilityFocus() {
                                     className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                                     style={{ background: 'linear-gradient(135deg, #C28667, #d4957a)' }}
                                 />
-                                <span className="relative z-10">Protect My Assets — Set Up LLC →</span>
+                                {/* Responsive label: abbreviated on small screens, full on sm+ */}
+                                <span className="relative z-10 sm:hidden">Protect My Assets →</span>
+                                <span className="relative z-10 hidden sm:inline">Protect My Assets — Set Up LLC →</span>
                             </button>
 
                             {/* Trust micro-row */}
-                            <div className="flex items-center justify-center gap-5 mt-4 relative z-10">
+                            <div className="flex items-center justify-center gap-3 sm:gap-5 mt-4 relative z-10 flex-wrap">
                                 {trustItems.map((item, i) => (
                                     <div key={i} className="flex items-center gap-[5px]">
                                         <span
@@ -348,7 +350,7 @@ export default function LiabilityFocus() {
                                             style={{ background: '#C28667' }}
                                         />
                                         <span
-                                            className="text-[8.5px] font-bold uppercase tracking-[0.12em]"
+                                            className="text-[8px] sm:text-[8.5px] font-bold uppercase tracking-[0.12em]"
                                             style={{ color: 'rgba(13,27,42,0.35)' }}
                                         >
                                             {item}

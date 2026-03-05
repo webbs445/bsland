@@ -26,7 +26,7 @@ export default function Footer() {
     const currentYear = new Date().getFullYear();
 
     const services = [
-        { id: 'mainland', label: 'Mainland LLC Setup', icon: Building2 },
+        { id: 'mainland', label: 'Mainland Setup', icon: Building2 },
         { id: 'freezone', label: 'Free Zone Setup', icon: Globe },
         { id: 'golden-visa', label: 'Golden Visa', icon: IdCard },
         { id: 'pro', label: 'PRO Services', icon: FileText },
@@ -107,7 +107,7 @@ export default function Footer() {
                     </div>
                     <button
                         onClick={openModal}
-                        className="group flex items-center gap-4 bg-brand-copper hover:bg-white text-[#070E1A] px-6 py-4 md:px-8 md:py-5 rounded-full font-black uppercase tracking-widest transition-all duration-300 shadow-[0_0_40px_rgba(194,134,103,0.3)] hover:shadow-[0_0_60px_rgba(255,255,255,0.5)] flex-shrink-0 relative z-10 text-xs md:text-sm"
+                        className="group flex items-center gap-4 bg-brand-copper hover:bg-white text-white hover:text-brand-navy px-6 py-4 md:px-8 md:py-5 rounded-full font-black uppercase tracking-widest transition-all duration-300 shadow-[0_0_40px_rgba(194,134,103,0.3)] hover:shadow-[0_0_60px_rgba(255,255,255,0.5)] flex-shrink-0 relative z-10 text-xs md:text-sm"
                     >
                         Speak to an Expert
                         <div className="w-8 h-8 rounded-full bg-[#070E1A]/10 flex items-center justify-center group-hover:bg-[#070E1A]/20 transition-colors">

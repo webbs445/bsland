@@ -197,7 +197,7 @@ export default function IntelligenceSection() {
     };
 
     return (
-        <section className="py-16 px-8 bg-brand-navy text-white overflow-hidden relative">
+        <section className="py-12 md:py-16 px-4 sm:px-8 bg-brand-navy text-white overflow-hidden relative">
             {/* Decorative Glows */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-brand-copper/5 blur-[100px] pointer-events-none rounded-full" />
 
@@ -260,214 +260,217 @@ export default function IntelligenceSection() {
                             setActiveTab("calculator");
                         }} />
                     ) : (
-                        <div className="grid lg:grid-cols-5 gap-10 items-start">
-                            <div className="lg:col-span-3 space-y-8">
-                                <div>
-                                    <SectionLabel>Setup Structure</SectionLabel>
-                                    <div className="grid grid-cols-3 gap-3">
-                                        {companyTypes.map((ct) => (
-                                            <OptionCard
-                                                key={ct.id}
-                                                selected={companyType === ct.id}
-                                                onClick={() => setCompanyType(ct.id)}
-                                                color={ct.color}
-                                            >
-                                                <div className="flex flex-col items-center gap-3 text-center">
-                                                    <ct.icon size={20} style={{ color: companyType === ct.id ? '#fff' : ct.color }} />
-                                                    <div className="text-sm font-semibold text-white">{ct.label}</div>
-                                                </div>
-                                            </OptionCard>
-                                        ))}
-                                    </div>
-                                </div>
-
-                                {companyType === "freezone" && (
-                                    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-                                        <SectionLabel>Choose Authority</SectionLabel>
-                                        <div className="grid sm:grid-cols-2 gap-2">
-                                            {freeZones.map((fz) => (
-                                                <button
-                                                    key={fz.id}
-                                                    onClick={() => setSelectedFZ(fz.id)}
-                                                    className={`p-3 rounded-lg border text-left flex justify-between items-center transition-all ${selectedFZ === fz.id ? 'bg-white/10 border-brand-copper' : 'bg-white/5 border-white/5 opacity-50'}`}
+                        <>
+                            <div className="flex flex-col lg:flex-row gap-8 lg:gap-10 items-start">
+                                <div className="w-full lg:flex-[3] space-y-8">
+                                    <div>
+                                        <SectionLabel>Setup Structure</SectionLabel>
+                                        <div className="grid grid-cols-3 gap-2 sm:gap-3">
+                                            {companyTypes.map((ct) => (
+                                                <OptionCard
+                                                    key={ct.id}
+                                                    selected={companyType === ct.id}
+                                                    onClick={() => setCompanyType(ct.id)}
+                                                    color={ct.color}
                                                 >
-                                                    <span className="text-sm font-semibold text-white">{fz.name}</span>
-                                                    <span className="text-sm font-semibold text-brand-copper">AED {fz.license.toLocaleString()}</span>
-                                                </button>
+                                                    <div className="flex flex-col items-center gap-3 text-center">
+                                                        <ct.icon size={20} style={{ color: companyType === ct.id ? '#fff' : ct.color }} />
+                                                        <div className="text-sm font-semibold text-white">{ct.label}</div>
+                                                    </div>
+                                                </OptionCard>
                                             ))}
                                         </div>
-                                    </motion.div>
-                                )}
-
-                                <div>
-                                    <SectionLabel>Visas ({visaCount})</SectionLabel>
-                                    <input
-                                        type="range" min="0" max="10" value={visaCount}
-                                        onChange={(e) => setVisaCount(parseInt(e.target.value))}
-                                        className="w-full h-1 bg-white/10 rounded-full appearance-none accent-brand-copper cursor-pointer mb-3"
-                                    />
-                                    <div className="flex justify-between text-sm font-medium text-white/30">
-                                        <span>0 Visas</span>
-                                        <span>Priority Processing</span>
-                                        <span>10+ Visas</span>
                                     </div>
-                                </div>
 
-                                <div className="pt-6 border-t border-white/5 w-full">
-                                    <SectionLabel>The Roadmap ({timelines[companyType as keyof typeof timelines].length} Steps)</SectionLabel>
-                                    <div className="flex gap-4 overflow-x-auto pb-4 hide-scrollbar snap-x">
-                                        {timelines[companyType as keyof typeof timelines].map((t, i, arr) => (
-                                            <div key={i} className="flex flex-col relative min-w-[140px] flex-1 snap-start group">
-                                                {/* Connector line */}
-                                                {i < arr.length - 1 && (
-                                                    <div className="absolute top-3 left-6 w-[calc(100%+1rem)] h-px bg-white/10" />
-                                                )}
-                                                {/* Step Circle */}
-                                                <div className="w-6 h-6 rounded-full border border-brand-copper/30 bg-[#0d1627] flex items-center justify-center text-[8px] font-black text-brand-copper group-hover:bg-brand-copper group-hover:text-brand-navy transition-all shrink-0 shadow-lg relative z-10 mb-3">
-                                                    {i + 1}
-                                                </div>
-                                                {/* Step Content */}
-                                                <div className="flex flex-col gap-1.5 mb-1.5">
-                                                    <h4 className="text-sm font-semibold text-white leading-tight pr-4">{t.step}</h4>
-                                                    <div className="inline-flex items-center justify-center px-2 py-0.5 bg-brand-copper/10 text-brand-copper text-xs font-semibold rounded-full w-fit mb-0.5">{t.duration}</div>
-                                                </div>
-                                                <p className="text-sm font-medium text-white/40 leading-relaxed pr-2">{t.desc}</p>
+                                    {companyType === "freezone" && (
+                                        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+                                            <SectionLabel>Choose Authority</SectionLabel>
+                                            <div className="grid sm:grid-cols-2 gap-2">
+                                                {freeZones.map((fz) => (
+                                                    <button
+                                                        key={fz.id}
+                                                        onClick={() => setSelectedFZ(fz.id)}
+                                                        className={`p-3 rounded-lg border text-left flex justify-between items-center transition-all ${selectedFZ === fz.id ? 'bg-white/10 border-brand-copper' : 'bg-white/5 border-white/5 opacity-50'}`}
+                                                    >
+                                                        <span className="text-sm font-semibold text-white">{fz.name}</span>
+                                                        <span className="text-sm font-semibold text-brand-copper">AED {fz.license.toLocaleString()}</span>
+                                                    </button>
+                                                ))}
                                             </div>
-                                        ))}
+                                        </motion.div>
+                                    )}
+
+                                    <div>
+                                        <SectionLabel>Visas ({visaCount})</SectionLabel>
+                                        <input
+                                            type="range" min="0" max="10" value={visaCount}
+                                            onChange={(e) => setVisaCount(parseInt(e.target.value))}
+                                            className="w-full h-1 bg-white/10 rounded-full appearance-none accent-brand-copper cursor-pointer mb-3"
+                                        />
+                                        <div className="flex justify-between text-sm font-medium text-white/30">
+                                            <span>0 Visas</span>
+                                            <span>Priority Processing</span>
+                                            <span>10+ Visas</span>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div className="w-full lg:flex-[2] lg:sticky lg:top-24">
+                                    <div className="bg-[#1a2b45] border border-white/10 rounded-2xl p-6 shadow-2xl">
+                                        <div className="flex border-b border-white/5 mb-6">
+                                            <button onClick={() => setCalcView("setup")} className={`flex-1 pb-3 text-sm font-semibold transition-all ${calcView === "setup" ? 'text-brand-copper border-b-2 border-brand-copper' : 'text-white/30'}`}>Setup Cost</button>
+                                            <button onClick={() => setCalcView("annual")} className={`flex-1 pb-3 text-sm font-semibold transition-all ${calcView === "annual" ? 'text-brand-copper border-b-2 border-brand-copper' : 'text-white/30'}`}>Annual Recurring</button>
+                                        </div>
+                                        <div className="space-y-4 mb-8">
+                                            <div className="flex justify-between items-center">
+                                                <span className="text-sm font-medium text-white/50">Trade License</span>
+                                                <span className="text-sm font-bold text-white">AED {calc[calcView].license.toLocaleString()}</span>
+                                            </div>
+                                            <div className="flex justify-between items-center">
+                                                <span className="text-sm font-medium text-white/50">Visas ({visaCount})</span>
+                                                <span className="text-sm font-bold text-white">AED {calc[calcView].visa.toLocaleString()}</span>
+                                            </div>
+                                            <div className="flex justify-between items-center">
+                                                <span className="text-sm font-medium text-white/50">Gov & Admin</span>
+                                                <span className="text-sm font-bold text-white">AED {calc[calcView].gov.toLocaleString()}</span>
+                                            </div>
+                                        </div>
+                                        <div className="pt-6 border-t border-brand-copper/30 mb-6">
+                                            <div className="text-sm font-semibold text-brand-copper mb-1.5">Total {calcView === 'setup' ? 'Investment' : 'Maintenance'}</div>
+                                            <div className="text-3xl font-header font-black text-white tracking-tighter">AED {displayedTotal.toLocaleString()}</div>
+                                            <div className="text-xs font-medium text-white/30 mt-1.5">100% Transparent · No hidden fees</div>
+                                        </div>
+
+                                        <button
+                                            onClick={() => {
+                                                setFormData({ firstName: '', lastName: '', email: '', whatsapp: '' });
+                                                setSubmitted(false);
+                                                setSubmitError(null);
+                                                setIsModalOpen(true);
+                                            }}
+                                            className="btn-primary w-full"
+                                        >
+                                            Get Precise Quote <ArrowRight className="ml-2 w-3 h-3" />
+                                        </button>
+
+                                        <div className="mt-6 flex items-center justify-center gap-2 px-3 py-2 bg-white/5 rounded-xl border border-white/5">
+                                            <Info size={12} className="text-brand-copper" />
+                                            <p className="text-[8px] font-bold text-white/30 uppercase leading-none tracking-tighter">Estimates only. Subject to government updates.</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div className="lg:col-span-2 sticky top-24">
-                                <div className="bg-[#1a2b45] border border-white/10 rounded-2xl p-6 shadow-2xl">
-                                    <div className="flex border-b border-white/5 mb-6">
-                                        <button onClick={() => setCalcView("setup")} className={`flex-1 pb-3 text-sm font-semibold transition-all ${calcView === "setup" ? 'text-brand-copper border-b-2 border-brand-copper' : 'text-white/30'}`}>Setup Cost</button>
-                                        <button onClick={() => setCalcView("annual")} className={`flex-1 pb-3 text-sm font-semibold transition-all ${calcView === "annual" ? 'text-brand-copper border-b-2 border-brand-copper' : 'text-white/30'}`}>Annual Recurring</button>
-                                    </div>
-                                    <div className="space-y-4 mb-8">
-                                        <div className="flex justify-between items-center">
-                                            <span className="text-sm font-medium text-white/50">Trade License</span>
-                                            <span className="text-sm font-bold text-white">AED {calc[calcView].license.toLocaleString()}</span>
+                            {/* Roadmap — full width, always last */}
+                            <div className="mt-8 pt-8 border-t border-white/5">
+                                <SectionLabel>The Roadmap ({timelines[companyType as keyof typeof timelines].length} Steps)</SectionLabel>
+                                <div className="flex gap-4 overflow-x-auto pb-4 hide-scrollbar snap-x">
+                                    {timelines[companyType as keyof typeof timelines].map((t, i, arr) => (
+                                        <div key={i} className="flex flex-col relative min-w-[140px] flex-1 snap-start group">
+                                            {i < arr.length - 1 && (
+                                                <div className="absolute top-3 left-6 w-[calc(100%+1rem)] h-px bg-white/10" />
+                                            )}
+                                            <div className="w-6 h-6 rounded-full border border-brand-copper/30 bg-[#0d1627] flex items-center justify-center text-[8px] font-black text-brand-copper group-hover:bg-brand-copper group-hover:text-brand-navy transition-all shrink-0 shadow-lg relative z-10 mb-3">
+                                                {i + 1}
+                                            </div>
+                                            <div className="flex flex-col gap-1.5 mb-1.5">
+                                                <h4 className="text-sm font-semibold text-white leading-tight pr-4">{t.step}</h4>
+                                                <div className="inline-flex items-center justify-center px-2 py-0.5 bg-brand-copper/10 text-brand-copper text-xs font-semibold rounded-full w-fit mb-0.5">{t.duration}</div>
+                                            </div>
+                                            <p className="text-sm font-medium text-white/40 leading-relaxed pr-2">{t.desc}</p>
                                         </div>
-                                        <div className="flex justify-between items-center">
-                                            <span className="text-sm font-medium text-white/50">Visas ({visaCount})</span>
-                                            <span className="text-sm font-bold text-white">AED {calc[calcView].visa.toLocaleString()}</span>
-                                        </div>
-                                        <div className="flex justify-between items-center">
-                                            <span className="text-sm font-medium text-white/50">Gov & Admin</span>
-                                            <span className="text-sm font-bold text-white">AED {calc[calcView].gov.toLocaleString()}</span>
-                                        </div>
-                                    </div>
-                                    <div className="pt-6 border-t border-brand-copper/30 mb-6">
-                                        <div className="text-sm font-semibold text-brand-copper mb-1.5">Total {calcView === 'setup' ? 'Investment' : 'Maintenance'}</div>
-                                        <div className="text-3xl font-header font-black text-white tracking-tighter">AED {displayedTotal.toLocaleString()}</div>
-                                        <div className="text-xs font-medium text-white/30 mt-1.5">100% Transparent · No hidden fees</div>
-                                    </div>
-
-                                    <button
-                                        onClick={() => {
-                                            setFormData({ firstName: '', lastName: '', email: '', whatsapp: '' });
-                                            setSubmitted(false);
-                                            setSubmitError(null);
-                                            setIsModalOpen(true);
-                                        }}
-                                        className="btn-primary w-full"
-                                    >
-                                        Get Precise Quote <ArrowRight className="ml-2 w-3 h-3" />
-                                    </button>
-
-                                    <div className="mt-6 flex items-center justify-center gap-2 px-3 py-2 bg-white/5 rounded-xl border border-white/5">
-                                        <Info size={12} className="text-brand-copper" />
-                                        <p className="text-[8px] font-bold text-white/30 uppercase leading-none tracking-tighter">Estimates only. Subject to government updates.</p>
-                                    </div>
+                                    ))}
                                 </div>
                             </div>
-                        </div>
+                        </>
                     )}
                 </div>
             </div>
 
             {/* Quote Modal */}
-            {mounted && createPortal(
-                <AnimatePresence>
-                    {isModalOpen && (
-                        <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            className="fixed inset-0 z-[99999] flex items-center justify-center p-4 bg-[#070E1A]/80 backdrop-blur-sm"
-                            onClick={() => setIsModalOpen(false)}
-                        >
+            {
+                mounted && createPortal(
+                    <AnimatePresence>
+                        {isModalOpen && (
                             <motion.div
-                                initial={{ scale: 0.95, opacity: 0, y: 20 }}
-                                animate={{ scale: 1, opacity: 1, y: 0 }}
-                                exit={{ scale: 0.95, opacity: 0, y: 20 }}
-                                onClick={(e) => e.stopPropagation()}
-                                className="bg-white rounded-3xl p-6 md:p-8 max-w-lg w-full shadow-2xl relative max-h-[90vh] overflow-y-auto"
-                                style={{ borderTop: '4px solid #C28667' }}
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                className="fixed inset-0 z-[99999] flex items-center justify-center p-4 bg-[#070E1A]/80 backdrop-blur-sm"
+                                onClick={() => setIsModalOpen(false)}
                             >
-                                <button
-                                    onClick={() => setIsModalOpen(false)}
-                                    className="absolute top-4 right-4 p-2 text-brand-navy/40 hover:text-brand-navy hover:bg-slate-100 rounded-full transition-colors z-10"
+                                <motion.div
+                                    initial={{ scale: 0.95, opacity: 0, y: 20 }}
+                                    animate={{ scale: 1, opacity: 1, y: 0 }}
+                                    exit={{ scale: 0.95, opacity: 0, y: 20 }}
+                                    onClick={(e) => e.stopPropagation()}
+                                    className="bg-white rounded-3xl p-6 md:p-8 max-w-lg w-full shadow-2xl relative max-h-[90vh] overflow-y-auto"
+                                    style={{ borderTop: '4px solid #C28667' }}
                                 >
-                                    <X size={20} />
-                                </button>
+                                    <button
+                                        onClick={() => setIsModalOpen(false)}
+                                        className="absolute top-4 right-4 p-2 text-brand-navy/40 hover:text-brand-navy hover:bg-slate-100 rounded-full transition-colors z-10"
+                                    >
+                                        <X size={20} />
+                                    </button>
 
-                                <AnimatePresence mode="wait">
-                                    {submitted ? (
-                                        <motion.div key="success" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="text-center py-10">
-                                            <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 shadow-2xl" style={{ background: '#C28667', boxShadow: '0 20px 40px rgba(194,134,103,0.4)' }}>
-                                                <CheckCircle2 className="w-10 h-10 text-white" />
-                                            </div>
-                                            <h4 className="text-2xl font-black text-brand-navy mb-2 uppercase tracking-tight">Success!</h4>
-                                            <p className="text-brand-navy/60 text-xs font-bold uppercase tracking-widest leading-relaxed">
-                                                Your quote request is received.<br />An expert will contact you shortly.
-                                            </p>
-                                            <button onClick={() => setIsModalOpen(false)} className="mt-8 text-sm font-bold tracking-widest uppercase hover:underline" style={{ color: '#C28667' }}>Close Window</button>
-                                        </motion.div>
-                                    ) : (
-                                        <motion.div key="form" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 20 }}>
-                                            <div className="mb-8">
-                                                <h3 className="text-xl font-black text-brand-navy uppercase tracking-tight">Get Your Precise Quote</h3>
-                                                <p className="text-brand-navy/50 text-xs font-medium mt-1">
-                                                    For {companyType === 'freezone' ? (freeZones.find((f) => f.id === selectedFZ)?.name || '') : (companyTypes.find((f) => f.id === companyType)?.label || companyType)} with {visaCount} Visa(s)
+                                    <AnimatePresence mode="wait">
+                                        {submitted ? (
+                                            <motion.div key="success" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="text-center py-10">
+                                                <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 shadow-2xl" style={{ background: '#C28667', boxShadow: '0 20px 40px rgba(194,134,103,0.4)' }}>
+                                                    <CheckCircle2 className="w-10 h-10 text-white" />
+                                                </div>
+                                                <h4 className="text-2xl font-black text-brand-navy mb-2 uppercase tracking-tight">Success!</h4>
+                                                <p className="text-brand-navy/60 text-xs font-bold uppercase tracking-widest leading-relaxed">
+                                                    Your quote request is received.<br />An expert will contact you shortly.
                                                 </p>
-                                            </div>
-                                            <form onSubmit={handleModalSubmit} className="space-y-4">
-                                                {submitError && (
-                                                    <div className="bg-red-50 text-red-600 px-4 py-3 rounded-xl text-xs font-medium border border-red-100 text-center">
-                                                        {submitError}
+                                                <button onClick={() => setIsModalOpen(false)} className="mt-8 text-sm font-bold tracking-widest uppercase hover:underline" style={{ color: '#C28667' }}>Close Window</button>
+                                            </motion.div>
+                                        ) : (
+                                            <motion.div key="form" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 20 }}>
+                                                <div className="mb-8">
+                                                    <h3 className="text-xl font-black text-brand-navy uppercase tracking-tight">Get Your Precise Quote</h3>
+                                                    <p className="text-brand-navy/50 text-xs font-medium mt-1">
+                                                        For {companyType === 'freezone' ? (freeZones.find((f) => f.id === selectedFZ)?.name || '') : (companyTypes.find((f) => f.id === companyType)?.label || companyType)} with {visaCount} Visa(s)
+                                                    </p>
+                                                </div>
+                                                <form onSubmit={handleModalSubmit} className="space-y-4">
+                                                    {submitError && (
+                                                        <div className="bg-red-50 text-red-600 px-4 py-3 rounded-xl text-xs font-medium border border-red-100 text-center">
+                                                            {submitError}
+                                                        </div>
+                                                    )}
+                                                    <div className="flex gap-3">
+                                                        <input type="text" placeholder="First Name" value={formData.firstName} onChange={(e) => setFormData({ ...formData, firstName: e.target.value })} required className="w-full h-14 px-5 bg-slate-50 border border-slate-200 text-brand-navy placeholder:text-brand-navy/40 rounded-xl outline-none focus:border-brand-copper focus:ring-1 focus:ring-brand-copper transition-all text-sm font-medium" />
+                                                        <input type="text" placeholder="Last Name" value={formData.lastName} onChange={(e) => setFormData({ ...formData, lastName: e.target.value })} required className="w-full h-14 px-5 bg-slate-50 border border-slate-200 text-brand-navy placeholder:text-brand-navy/40 rounded-xl outline-none focus:border-brand-copper focus:ring-1 focus:ring-brand-copper transition-all text-sm font-medium" />
                                                     </div>
-                                                )}
-                                                <div className="flex gap-3">
-                                                    <input type="text" placeholder="First Name" value={formData.firstName} onChange={(e) => setFormData({ ...formData, firstName: e.target.value })} required className="w-full h-14 px-5 bg-slate-50 border border-slate-200 text-brand-navy placeholder:text-brand-navy/40 rounded-xl outline-none focus:border-brand-copper focus:ring-1 focus:ring-brand-copper transition-all text-sm font-medium" />
-                                                    <input type="text" placeholder="Last Name" value={formData.lastName} onChange={(e) => setFormData({ ...formData, lastName: e.target.value })} required className="w-full h-14 px-5 bg-slate-50 border border-slate-200 text-brand-navy placeholder:text-brand-navy/40 rounded-xl outline-none focus:border-brand-copper focus:ring-1 focus:ring-brand-copper transition-all text-sm font-medium" />
-                                                </div>
-                                                <input type="email" placeholder="Email Address" value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} required className="w-full h-14 px-5 bg-slate-50 border border-slate-200 text-brand-navy placeholder:text-brand-navy/40 rounded-xl outline-none focus:border-brand-copper focus:ring-1 focus:ring-brand-copper transition-all text-sm font-medium" />
-                                                <div className="space-y-1.5 pb-2">
-                                                    <label className="text-[10px] font-black uppercase tracking-widest text-brand-navy/40 ml-1">WhatsApp Number</label>
-                                                    <PhoneInput
-                                                        international defaultCountry="AE"
-                                                        value={formData.whatsapp}
-                                                        onChange={(value) => setFormData({ ...formData, whatsapp: value?.toString() || '' })}
-                                                        className="phone-input-custom text-brand-navy w-full h-14 px-5 bg-slate-50 border border-slate-200 rounded-xl focus-within:border-brand-copper focus-within:ring-1 focus-within:ring-brand-copper transition-all text-sm font-medium"
-                                                        placeholder="WhatsApp Number"
-                                                    />
-                                                </div>
-                                                <button type="submit" disabled={isSubmitting} className="w-full h-14 rounded-xl font-black uppercase tracking-widest text-sm transition-all duration-300 hover:scale-[1.02] flex items-center justify-center gap-2" style={{ background: '#C28667', color: '#fff', boxShadow: '0 10px 30px rgba(194,134,103,0.3)', opacity: isSubmitting ? 0.7 : 1 }}>
-                                                    {isSubmitting ? 'Processing...' : <>Send Quote Request <ArrowRight size={16} /></>}
-                                                </button>
-                                                <p className="text-center text-[10px] text-brand-navy/40 font-bold uppercase tracking-widest mt-4">100% Secure • Fast Response</p>
-                                            </form>
-                                        </motion.div>
-                                    )}
-                                </AnimatePresence>
+                                                    <input type="email" placeholder="Email Address" value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} required className="w-full h-14 px-5 bg-slate-50 border border-slate-200 text-brand-navy placeholder:text-brand-navy/40 rounded-xl outline-none focus:border-brand-copper focus:ring-1 focus:ring-brand-copper transition-all text-sm font-medium" />
+                                                    <div className="space-y-1.5 pb-2">
+                                                        <label className="text-[10px] font-black uppercase tracking-widest text-brand-navy/40 ml-1">WhatsApp Number</label>
+                                                        <PhoneInput
+                                                            international defaultCountry="AE"
+                                                            value={formData.whatsapp}
+                                                            onChange={(value) => setFormData({ ...formData, whatsapp: value?.toString() || '' })}
+                                                            className="phone-input-custom text-brand-navy w-full h-14 px-5 bg-slate-50 border border-slate-200 rounded-xl focus-within:border-brand-copper focus-within:ring-1 focus-within:ring-brand-copper transition-all text-sm font-medium"
+                                                            placeholder="WhatsApp Number"
+                                                        />
+                                                    </div>
+                                                    <button type="submit" disabled={isSubmitting} className="w-full h-14 rounded-xl font-black uppercase tracking-widest text-sm transition-all duration-300 hover:scale-[1.02] flex items-center justify-center gap-2" style={{ background: '#C28667', color: '#fff', boxShadow: '0 10px 30px rgba(194,134,103,0.3)', opacity: isSubmitting ? 0.7 : 1 }}>
+                                                        {isSubmitting ? 'Processing...' : <>Send Quote Request <ArrowRight size={16} /></>}
+                                                    </button>
+                                                    <p className="text-center text-[10px] text-brand-navy/40 font-bold uppercase tracking-widest mt-4">100% Secure • Fast Response</p>
+                                                </form>
+                                            </motion.div>
+                                        )}
+                                    </AnimatePresence>
+                                </motion.div>
                             </motion.div>
-                        </motion.div>
-                    )}
-                </AnimatePresence>,
-                document.body
-            )}
-        </section>
+                        )}
+                    </AnimatePresence>,
+                    document.body
+                )
+            }
+        </section >
     );
 }

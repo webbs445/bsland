@@ -29,7 +29,7 @@ export default function TeamSection() {
 
     const stats = [
         { label: "Years Expertise", value: "22+", icon: Award },
-        { label: "Businesses Set", value: "2.5K+", icon: Building2 },
+        { label: "Businesses Set", value: "5.0K+", icon: Building2 },
         { label: "Team Experts", value: "50+", icon: Users },
         { label: "Service Partners", value: "10+", icon: Briefcase }
     ];
@@ -137,7 +137,7 @@ export default function TeamSection() {
                                     whileHover={{ y: -5 }}
                                     className="p-6 bg-white/[0.03] border border-white/10 rounded-3xl backdrop-blur-sm"
                                 >
-                                    <stat.icon className="w-5 h-5 text-[#CC8667]/40 mb-3" />
+                                    <stat.icon className="w-5 h-5 text-white/40 mb-3" />
                                     <div className="text-2xl font-black text-[#CC8667] leading-none mb-1">{stat.value}</div>
                                     <div className="text-[9px] font-bold uppercase tracking-widest text-white/40">{stat.label}</div>
                                 </motion.div>
@@ -229,7 +229,14 @@ export default function TeamSection() {
                                     <MapPin className="w-4 h-4 text-[#CC8667] mt-1" />
                                     <div>
                                         <div className="text-[10px] font-black uppercase tracking-widest text-white mb-0.5">Dubai HQ</div>
-                                        <div className="text-[10px] text-white/40 uppercase tracking-tight leading-tight">906 Capital Golden Tower, Business Bay</div>
+                                        <a
+                                            href="https://maps.app.goo.gl/FAEU9zgK2FCiwmtLA"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="text-[10px] text-white/40 uppercase tracking-tight leading-tight hover:text-white transition-colors cursor-pointer"
+                                        >
+                                            906 Capital Golden Tower, Business Bay
+                                        </a>
                                     </div>
                                 </div>
                                 <div className="flex items-start gap-3">
