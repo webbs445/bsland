@@ -1,16 +1,20 @@
 'use client';
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import {
     Building2, Globe, FileCheck,
     Info, ArrowRight,
     CheckCircle2,
     Package, Laptop, Briefcase, BarChart3, ShoppingCart,
-    Flag, Globe2, Plane, Wallet, CreditCard, Gem
+    Flag, Globe2, Plane, Wallet, CreditCard, Gem, X
 } from "lucide-react";
 import FreeZoneQuiz from "./FreeZoneQuiz";
 import SetupQuiz from "./SetupQuiz";
+import 'react-phone-number-input/style.css';
+import PhoneInput, { parsePhoneNumber } from 'react-phone-number-input';
+import { submitLeadAction } from '@/app/actions/lead';
 
 // ─── Data & Constants ────────────────────────────────────────────────────────
 
@@ -106,6 +110,16 @@ function OptionCard({ selected, onClick, color, children, disabled }: any) {
 export default function IntelligenceSection() {
     const [activeTab, setActiveTab] = useState<"quiz" | "calculator" | "freezone">("quiz");
 
+    // Modal State
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [mounted, setMounted] = useState(false);
+    const [formData, setFormData] = useState({ firstName: '', lastName: '', email: '', whatsapp: '' });
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [submitted, setSubmitted] = useState(false);
+    const [submitError, setSubmitError] = useState<string | null>(null);
+
+    useEffect(() => { setMounted(true); }, []);
+
     // Calculator State
     const [companyType, setCompanyType] = useState("freezone");
     const [selectedFZ, setSelectedFZ] = useState("ifza");
@@ -147,6 +161,41 @@ export default function IntelligenceSection() {
     const displayedTotal = calcView === "setup" ? setupTotal : annualTotal;
     const activeColor = companyTypes.find((c) => c.id === companyType)?.color || "#CC8667";
 
+    const handleModalSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setIsSubmitting(true);
+        setSubmitError(null);
+        try {
+            let countryName = 'United Arab Emirates';
+            if (formData.whatsapp) {
+                try {
+                    const parsed = parsePhoneNumber(formData.whatsapp);
+                    if (parsed && parsed.country) {
+                        const regionNames = new Intl.DisplayNames(['en'], { type: 'region' });
+                        countryName = regionNames.of(parsed.country) || parsed.country;
+                    }
+                } catch (e) { console.error(e); }
+            }
+
+            const authName = companyType === 'freezone' ? (freeZones.find((f) => f.id === selectedFZ)?.name || '') : companyType;
+
+            await submitLeadAction({
+                first_name: formData.firstName,
+                last_name: formData.lastName,
+                custom_service_enquired: "Business Setup",
+                custom_client_profile_and_requirement: `[Cost Calculator] Type: ${companyType} | Auth: ${authName} | Visas: ${visaCount} | View: ${calcView} | Total: AED ${displayedTotal.toLocaleString()}`,
+                email_id: formData.email,
+                mobile_no: formData.whatsapp,
+                country: countryName
+            });
+            setSubmitted(true);
+        } catch (error) {
+            console.error(error);
+            setSubmitError("Failed to submit inquiry. Please try again.");
+        }
+        finally { setIsSubmitting(false); }
+    };
+
     return (
         <section className="py-16 px-8 bg-brand-navy text-white overflow-hidden relative">
             {/* Decorative Glows */}
@@ -180,22 +229,22 @@ export default function IntelligenceSection() {
                     >
                         Use our free tools to calculate costs, check eligibility, see the process, and compare structures.
                     </motion.p>
-                    <div className="inline-flex bg-white/5 p-1 rounded-xl border border-white/10 mb-4 mt-2">
+                    <div className="flex flex-col sm:flex-row sm:inline-flex w-full sm:w-auto bg-white/5 p-1 rounded-xl border border-white/10 mb-4 mt-2 gap-1 sm:gap-0">
                         <button
                             onClick={() => setActiveTab("quiz")}
-                            className={`px-5 py-2.5 rounded-lg text-[9px] font-black uppercase tracking-widest transition-all ${activeTab === "quiz" ? 'bg-brand-copper text-brand-navy' : 'text-white/40 hover:text-white'}`}
+                            className={`px-5 py-3 sm:py-2.5 rounded-lg text-[9px] font-black uppercase tracking-widest transition-all w-full sm:w-auto ${activeTab === "quiz" ? 'bg-brand-copper text-brand-navy' : 'text-white/40 hover:text-white hover:bg-white/5'}`}
                         >
                             Setup Quiz
                         </button>
                         <button
                             onClick={() => setActiveTab("calculator")}
-                            className={`px-5 py-2.5 rounded-lg text-[9px] font-black uppercase tracking-widest transition-all ${activeTab === "calculator" ? 'bg-brand-copper text-brand-navy' : 'text-white/40 hover:text-white'}`}
+                            className={`px-5 py-3 sm:py-2.5 rounded-lg text-[9px] font-black uppercase tracking-widest transition-all w-full sm:w-auto ${activeTab === "calculator" ? 'bg-brand-copper text-brand-navy' : 'text-white/40 hover:text-white hover:bg-white/5'}`}
                         >
                             Cost Calculator
                         </button>
                         <button
                             onClick={() => setActiveTab("freezone")}
-                            className={`px-5 py-2.5 rounded-lg text-[9px] font-black uppercase tracking-widest transition-all ${activeTab === "freezone" ? 'bg-brand-copper text-brand-navy' : 'text-white/40 hover:text-white'}`}
+                            className={`px-5 py-3 sm:py-2.5 rounded-lg text-[9px] font-black uppercase tracking-widest transition-all w-full sm:w-auto ${activeTab === "freezone" ? 'bg-brand-copper text-brand-navy' : 'text-white/40 hover:text-white hover:bg-white/5'}`}
                         >
                             Free Zone Match
                         </button>
@@ -261,24 +310,25 @@ export default function IntelligenceSection() {
                                     </div>
                                 </div>
 
-                                <div className="pt-6 border-t border-white/5">
+                                <div className="pt-6 border-t border-white/5 w-full">
                                     <SectionLabel>The Roadmap ({timelines[companyType as keyof typeof timelines].length} Steps)</SectionLabel>
-                                    <div className="space-y-3">
-                                        {timelines[companyType as keyof typeof timelines].map((t, i) => (
-                                            <div key={i} className="flex gap-4 group">
-                                                <div className="flex flex-col items-center">
-                                                    <div className="w-6 h-6 rounded-full border border-brand-copper/30 flex items-center justify-center text-[8px] font-black text-brand-copper group-hover:bg-brand-copper group-hover:text-brand-navy transition-all">
-                                                        {i + 1}
-                                                    </div>
-                                                    {i < timelines[companyType as keyof typeof timelines].length - 1 && <div className="w-px h-full bg-white/5 mt-1.5" />}
+                                    <div className="flex gap-4 overflow-x-auto pb-4 hide-scrollbar snap-x">
+                                        {timelines[companyType as keyof typeof timelines].map((t, i, arr) => (
+                                            <div key={i} className="flex flex-col relative min-w-[140px] flex-1 snap-start group">
+                                                {/* Connector line */}
+                                                {i < arr.length - 1 && (
+                                                    <div className="absolute top-3 left-6 w-[calc(100%+1rem)] h-px bg-white/10" />
+                                                )}
+                                                {/* Step Circle */}
+                                                <div className="w-6 h-6 rounded-full border border-brand-copper/30 bg-[#0d1627] flex items-center justify-center text-[8px] font-black text-brand-copper group-hover:bg-brand-copper group-hover:text-brand-navy transition-all shrink-0 shadow-lg relative z-10 mb-3">
+                                                    {i + 1}
                                                 </div>
-                                                <div className="pb-4">
-                                                    <div className="flex items-center gap-3 mb-1">
-                                                        <h4 className="text-[9px] font-black uppercase tracking-widest text-white">{t.step}</h4>
-                                                        <div className="px-1.5 py-0.5 bg-brand-copper/10 text-brand-copper text-[7px] font-black rounded-full tracking-widest">{t.duration}</div>
-                                                    </div>
-                                                    <p className="text-[9px] font-medium text-white/30 uppercase tracking-tighter leading-relaxed">{t.desc}</p>
+                                                {/* Step Content */}
+                                                <div className="flex flex-col gap-1.5 mb-1.5">
+                                                    <h4 className="text-[9px] font-black uppercase tracking-widest text-white leading-tight pr-4">{t.step}</h4>
+                                                    <div className="inline-flex items-center justify-center px-1.5 py-0.5 bg-brand-copper/10 text-brand-copper text-[7px] font-black rounded-full tracking-widest w-fit mb-0.5">{t.duration}</div>
                                                 </div>
+                                                <p className="text-[8px] font-medium text-white/30 uppercase tracking-tighter leading-relaxed pr-2">{t.desc}</p>
                                             </div>
                                         ))}
                                     </div>
@@ -313,7 +363,15 @@ export default function IntelligenceSection() {
                                         <div className="text-[8px] font-bold uppercase tracking-widest text-white/20 mt-1.5">100% Transparent · No hidden fees</div>
                                     </div>
 
-                                    <button onClick={() => document.getElementById('hero-form')?.scrollIntoView({ behavior: 'smooth' })} className="btn-primary w-full">
+                                    <button
+                                        onClick={() => {
+                                            setFormData({ firstName: '', lastName: '', email: '', whatsapp: '' });
+                                            setSubmitted(false);
+                                            setSubmitError(null);
+                                            setIsModalOpen(true);
+                                        }}
+                                        className="btn-primary w-full"
+                                    >
                                         Get Precise Quote <ArrowRight className="ml-2 w-3 h-3" />
                                     </button>
 
@@ -327,6 +385,88 @@ export default function IntelligenceSection() {
                     )}
                 </div>
             </div>
+
+            {/* Quote Modal */}
+            {mounted && createPortal(
+                <AnimatePresence>
+                    {isModalOpen && (
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            className="fixed inset-0 z-[99999] flex items-center justify-center p-4 bg-[#070E1A]/80 backdrop-blur-sm"
+                            onClick={() => setIsModalOpen(false)}
+                        >
+                            <motion.div
+                                initial={{ scale: 0.95, opacity: 0, y: 20 }}
+                                animate={{ scale: 1, opacity: 1, y: 0 }}
+                                exit={{ scale: 0.95, opacity: 0, y: 20 }}
+                                onClick={(e) => e.stopPropagation()}
+                                className="bg-white rounded-3xl p-6 md:p-8 max-w-lg w-full shadow-2xl relative max-h-[90vh] overflow-y-auto"
+                                style={{ borderTop: '4px solid #C28667' }}
+                            >
+                                <button
+                                    onClick={() => setIsModalOpen(false)}
+                                    className="absolute top-4 right-4 p-2 text-brand-navy/40 hover:text-brand-navy hover:bg-slate-100 rounded-full transition-colors z-10"
+                                >
+                                    <X size={20} />
+                                </button>
+
+                                <AnimatePresence mode="wait">
+                                    {submitted ? (
+                                        <motion.div key="success" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="text-center py-10">
+                                            <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 shadow-2xl" style={{ background: '#C28667', boxShadow: '0 20px 40px rgba(194,134,103,0.4)' }}>
+                                                <CheckCircle2 className="w-10 h-10 text-white" />
+                                            </div>
+                                            <h4 className="text-2xl font-black text-brand-navy mb-2 uppercase tracking-tight">Success!</h4>
+                                            <p className="text-brand-navy/60 text-xs font-bold uppercase tracking-widest leading-relaxed">
+                                                Your quote request is received.<br />An expert will contact you shortly.
+                                            </p>
+                                            <button onClick={() => setIsModalOpen(false)} className="mt-8 text-sm font-bold tracking-widest uppercase hover:underline" style={{ color: '#C28667' }}>Close Window</button>
+                                        </motion.div>
+                                    ) : (
+                                        <motion.div key="form" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 20 }}>
+                                            <div className="mb-8">
+                                                <h3 className="text-xl font-black text-brand-navy uppercase tracking-tight">Get Your Precise Quote</h3>
+                                                <p className="text-brand-navy/50 text-xs font-medium mt-1">
+                                                    For {companyType === 'freezone' ? (freeZones.find((f) => f.id === selectedFZ)?.name || '') : (companyTypes.find((f) => f.id === companyType)?.label || companyType)} with {visaCount} Visa(s)
+                                                </p>
+                                            </div>
+                                            <form onSubmit={handleModalSubmit} className="space-y-4">
+                                                {submitError && (
+                                                    <div className="bg-red-50 text-red-600 px-4 py-3 rounded-xl text-xs font-medium border border-red-100 text-center">
+                                                        {submitError}
+                                                    </div>
+                                                )}
+                                                <div className="flex gap-3">
+                                                    <input type="text" placeholder="First Name" value={formData.firstName} onChange={(e) => setFormData({ ...formData, firstName: e.target.value })} required className="w-full h-14 px-5 bg-slate-50 border border-slate-200 text-brand-navy placeholder:text-brand-navy/40 rounded-xl outline-none focus:border-brand-copper focus:ring-1 focus:ring-brand-copper transition-all text-sm font-medium" />
+                                                    <input type="text" placeholder="Last Name" value={formData.lastName} onChange={(e) => setFormData({ ...formData, lastName: e.target.value })} required className="w-full h-14 px-5 bg-slate-50 border border-slate-200 text-brand-navy placeholder:text-brand-navy/40 rounded-xl outline-none focus:border-brand-copper focus:ring-1 focus:ring-brand-copper transition-all text-sm font-medium" />
+                                                </div>
+                                                <input type="email" placeholder="Email Address" value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} required className="w-full h-14 px-5 bg-slate-50 border border-slate-200 text-brand-navy placeholder:text-brand-navy/40 rounded-xl outline-none focus:border-brand-copper focus:ring-1 focus:ring-brand-copper transition-all text-sm font-medium" />
+                                                <div className="space-y-1.5 pb-2">
+                                                    <label className="text-[10px] font-black uppercase tracking-widest text-brand-navy/40 ml-1">WhatsApp Number</label>
+                                                    <PhoneInput
+                                                        international defaultCountry="AE"
+                                                        value={formData.whatsapp}
+                                                        onChange={(value) => setFormData({ ...formData, whatsapp: value?.toString() || '' })}
+                                                        className="phone-input-custom text-brand-navy w-full h-14 px-5 bg-slate-50 border border-slate-200 rounded-xl focus-within:border-brand-copper focus-within:ring-1 focus-within:ring-brand-copper transition-all text-sm font-medium"
+                                                        placeholder="WhatsApp Number"
+                                                    />
+                                                </div>
+                                                <button type="submit" disabled={isSubmitting} className="w-full h-14 rounded-xl font-black uppercase tracking-widest text-sm transition-all duration-300 hover:scale-[1.02] flex items-center justify-center gap-2" style={{ background: '#C28667', color: '#fff', boxShadow: '0 10px 30px rgba(194,134,103,0.3)', opacity: isSubmitting ? 0.7 : 1 }}>
+                                                    {isSubmitting ? 'Processing...' : <>Send Quote Request <ArrowRight size={16} /></>}
+                                                </button>
+                                                <p className="text-center text-[10px] text-brand-navy/40 font-bold uppercase tracking-widest mt-4">100% Secure • Fast Response</p>
+                                            </form>
+                                        </motion.div>
+                                    )}
+                                </AnimatePresence>
+                            </motion.div>
+                        </motion.div>
+                    )}
+                </AnimatePresence>,
+                document.body
+            )}
         </section>
     );
 }

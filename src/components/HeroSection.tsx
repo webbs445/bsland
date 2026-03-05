@@ -87,7 +87,7 @@ export default function HeroSection() {
                 first_name: formData.firstName,
                 last_name: formData.lastName,
                 custom_service_enquired: serviceMap[formData.lookingTo] || "Business Setup",
-                custom_client_profile: `Services Looking For: ${formData.lookingTo}`,
+                custom_client_profile_and_requirement: `Services Looking For: ${formData.lookingTo}`,
                 email_id: formData.email,
                 mobile_no: formData.whatsapp,
                 country: countryName
@@ -318,9 +318,20 @@ export default function HeroSection() {
                                     </form>
                                 )}
 
-                                <div className="mt-10 flex items-center justify-center gap-4 text-white/30 text-[9px] font-black uppercase tracking-widest border-t border-white/5 pt-8">
-                                    <Phone className="w-3 h-3 text-brand-copper" />
-                                    <span>Call: +971 4 553 1546</span>
+                                <div className="mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-white/40 text-[9px] font-black uppercase tracking-widest border-t border-white/5 pt-8">
+                                    <a href="tel:+97145531546" className="flex items-center gap-2 hover:text-white transition-colors group">
+                                        <div className="w-5 h-5 rounded flex items-center justify-center bg-white/5 group-hover:bg-brand-copper/20 transition-colors">
+                                            <Phone className="w-2.5 h-2.5 text-brand-copper" />
+                                        </div>
+                                        <span>Call: +971 4 553 1546</span>
+                                    </a>
+                                    <div className="w-px h-3 bg-white/10 hidden sm:block"></div>
+                                    <a href="https://wa.me/971501234567" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-white transition-colors group">
+                                        <div className="w-5 h-5 rounded flex items-center justify-center bg-white/5 group-hover:bg-[#25D366]/20 transition-colors">
+                                            <MessageCircle className="w-2.5 h-2.5 text-[#25D366]" />
+                                        </div>
+                                        <span>WhatsApp Us</span>
+                                    </a>
                                 </div>
                             </div>
                         </div>

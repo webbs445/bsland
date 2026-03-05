@@ -48,7 +48,7 @@ export default function PricingFAQ() {
                 first_name: formData.firstName,
                 last_name: formData.lastName,
                 custom_service_enquired: "Business Setup",
-                custom_client_profile: `[FAQ Section] General Inquiry`,
+                custom_client_profile_and_requirement: `[FAQ Section] General Inquiry`,
                 email_id: formData.email,
                 mobile_no: formData.whatsapp,
                 country: countryName
@@ -264,7 +264,7 @@ export default function PricingFAQ() {
                                 animate={{ scale: 1, opacity: 1, y: 0 }}
                                 exit={{ scale: 0.95, opacity: 0, y: 20 }}
                                 onClick={(e) => e.stopPropagation()}
-                                className="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl relative overflow-hidden"
+                                className="bg-white rounded-3xl p-6 md:p-8 max-w-md w-full shadow-2xl relative overflow-hidden max-h-[90vh] overflow-y-auto"
                                 style={{ borderTop: `4px solid #C28667` }}
                             >
                                 <button

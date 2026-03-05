@@ -1,5 +1,6 @@
 'use client';
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import {
     ChevronRight, ArrowRight, Trophy, RotateCcw,
@@ -7,8 +8,12 @@ import {
     Wallet, CreditCard, Landmark, Gem,
     Building2, LayoutGrid,
     User, Users, UsersRound,
-    Activity, BadgeDollarSign, Home, ClipboardList
+    Activity, BadgeDollarSign, Home, ClipboardList,
+    CheckCircle2, X
 } from "lucide-react";
+import 'react-phone-number-input/style.css';
+import PhoneInput, { parsePhoneNumber } from 'react-phone-number-input';
+import { submitLeadAction } from '@/app/actions/lead';
 
 const quizSteps = [
     {
@@ -101,6 +106,17 @@ export default function FreeZoneQuiz() {
     const [answers, setAnswers] = useState<Record<number, string>>({});
     const [results, setResults] = useState<QuizResult[] | null>(null);
 
+    // Modal State
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [mounted, setMounted] = useState(false);
+    const [formData, setFormData] = useState({ firstName: '', lastName: '', email: '', whatsapp: '' });
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [submitted, setSubmitted] = useState(false);
+    const [submitError, setSubmitError] = useState<string | null>(null);
+    const [selectedRecommendation, setSelectedRecommendation] = useState<string | null>(null);
+
+    useEffect(() => { setMounted(true); }, []);
+
     const currentQ = quizSteps[step - 1];
 
     const handleAnswer = (value: string) => {
@@ -113,8 +129,57 @@ export default function FreeZoneQuiz() {
         }
     };
 
-    const reset = () => { setStep(0); setAnswers({}); setResults(null); };
+    const reset = () => { setStep(0); setAnswers({}); setResults(null); setSelectedRecommendation(null); setIsModalOpen(false); setSubmitted(false); };
     const scrollToForm = () => document.getElementById('hero-form')?.scrollIntoView({ behavior: 'smooth' });
+
+    const openModal = (recommendationName: string | null = null) => {
+        setSelectedRecommendation(recommendationName);
+        setFormData({ firstName: '', lastName: '', email: '', whatsapp: '' });
+        setSubmitted(false);
+        setSubmitError(null);
+        setIsModalOpen(true);
+    };
+
+    const handleModalSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setIsSubmitting(true);
+        setSubmitError(null);
+        try {
+            let countryName = 'United Arab Emirates';
+            if (formData.whatsapp) {
+                try {
+                    const parsed = parsePhoneNumber(formData.whatsapp);
+                    if (parsed && parsed.country) {
+                        const regionNames = new Intl.DisplayNames(['en'], { type: 'region' });
+                        countryName = regionNames.of(parsed.country) || parsed.country;
+                    }
+                } catch (e) { console.error(e); }
+            }
+
+            // Map answers back to readable labels
+            const activityLabel = quizSteps[0].options.find(o => o.value === answers[1])?.label || answers[1];
+            const budgetLabel = quizSteps[1].options.find(o => o.value === answers[2])?.label || answers[2];
+            const officeLabel = quizSteps[2].options.find(o => o.value === answers[3])?.label || answers[3];
+            const visasLabel = quizSteps[3].options.find(o => o.value === answers[4])?.label || answers[4];
+
+            const profileStr = `[Free Zone Match Quiz] Recommend: ${selectedRecommendation || 'General'} | Activity: ${activityLabel} | Budget: ${budgetLabel} | Office: ${officeLabel} | Visas: ${visasLabel}`;
+
+            await submitLeadAction({
+                first_name: formData.firstName,
+                last_name: formData.lastName,
+                custom_service_enquired: "Business Setup",
+                custom_client_profile_and_requirement: profileStr,
+                email_id: formData.email,
+                mobile_no: formData.whatsapp,
+                country: countryName
+            });
+            setSubmitted(true);
+        } catch (error) {
+            console.error(error);
+            setSubmitError("Failed to submit inquiry. Please try again.");
+        }
+        finally { setIsSubmitting(false); }
+    };
 
     return (
         <div className="max-w-2xl mx-auto">
@@ -255,7 +320,7 @@ export default function FreeZoneQuiz() {
                                     <motion.button
                                         whileHover={{ scale: 1.03 }}
                                         whileTap={{ scale: 0.97 }}
-                                        onClick={scrollToForm}
+                                        onClick={() => openModal(r.name)}
                                         className="px-5 py-3 rounded-xl font-black text-[9px] uppercase tracking-widest flex items-center gap-2 shrink-0 transition-all"
                                         style={i === 0
                                             ? { background: 'linear-gradient(135deg, #CC8667, #b8734f)', color: '#0a1628', boxShadow: '0 6px 18px rgba(204,134,103,0.35)' }
@@ -274,7 +339,7 @@ export default function FreeZoneQuiz() {
                                 <RotateCcw size={13} /> Retake Quiz
                             </motion.button>
                             <motion.button whileHover={{ scale: 1.02, boxShadow: '0 12px 30px rgba(204,134,103,0.4)' }} whileTap={{ scale: 0.98 }}
-                                onClick={scrollToForm}
+                                onClick={() => openModal("All Matches (Consultation)")}
                                 className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-black text-[9px] uppercase tracking-widest mx-auto transition-all"
                                 style={{ background: 'linear-gradient(135deg, #CC8667, #b8734f)', color: '#0a1628', boxShadow: '0 8px 24px rgba(204,134,103,0.3)' }}>
                                 Book Free Consultation <ArrowRight size={13} />
@@ -292,10 +357,94 @@ export default function FreeZoneQuiz() {
                         <span className="text-white/20 text-[9px] font-black uppercase tracking-widest">OR</span>
                         <div className="flex-1 h-px bg-white/10" />
                     </div>
-                    <button onClick={scrollToForm} className="text-white/30 hover:text-white text-xs font-bold underline underline-offset-4 transition-colors">
+                    <button onClick={() => openModal("Direct Call Inquiry (Skipped Quiz)")} className="text-white/30 hover:text-white text-xs font-bold underline underline-offset-4 transition-colors">
                         Book a free 15‑minute clarity call instead →
                     </button>
                 </div>
+            )}
+
+            {/* Quote Modal */}
+            {mounted && createPortal(
+                <AnimatePresence>
+                    {isModalOpen && (
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            className="fixed inset-0 z-[99999] flex items-center justify-center p-4 bg-[#070E1A]/80 backdrop-blur-sm"
+                            onClick={() => setIsModalOpen(false)}
+                        >
+                            <motion.div
+                                initial={{ scale: 0.95, opacity: 0, y: 20 }}
+                                animate={{ scale: 1, opacity: 1, y: 0 }}
+                                exit={{ scale: 0.95, opacity: 0, y: 20 }}
+                                onClick={(e) => e.stopPropagation()}
+                                className="bg-white rounded-3xl p-8 max-w-lg w-full shadow-2xl relative"
+                                style={{ borderTop: '4px solid #C28667' }}
+                            >
+                                <button
+                                    onClick={() => setIsModalOpen(false)}
+                                    className="absolute top-4 right-4 p-2 text-brand-navy/40 hover:text-brand-navy hover:bg-slate-100 rounded-full transition-colors"
+                                >
+                                    <X size={20} />
+                                </button>
+
+                                <AnimatePresence mode="wait">
+                                    {submitted ? (
+                                        <motion.div key="success" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="text-center py-10">
+                                            <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 shadow-2xl" style={{ background: '#C28667', boxShadow: '0 20px 40px rgba(194,134,103,0.4)' }}>
+                                                <CheckCircle2 className="w-10 h-10 text-white" />
+                                            </div>
+                                            <h4 className="text-2xl font-black text-brand-navy mb-2 uppercase tracking-tight">Match Secured!</h4>
+                                            <p className="text-brand-navy/60 text-xs font-bold uppercase tracking-widest leading-relaxed">
+                                                Your quiz results and quote request are received.<br />A specialist will contact you shortly.
+                                            </p>
+                                            <button onClick={() => setIsModalOpen(false)} className="mt-8 text-sm font-bold tracking-widest uppercase hover:underline" style={{ color: '#C28667' }}>Close Window</button>
+                                        </motion.div>
+                                    ) : (
+                                        <motion.div key="form" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 20 }}>
+                                            <div className="mb-8">
+                                                <h3 className="text-xl font-black text-brand-navy uppercase tracking-tight">Get Your Tailored Quote</h3>
+                                                <p className="text-brand-navy/50 text-xs font-medium mt-1">
+                                                    {selectedRecommendation?.includes("Direct")
+                                                        ? "Speak with a specialist about your specific setup needs."
+                                                        : `Requesting precise breakdown for ${selectedRecommendation}`}
+                                                </p>
+                                            </div>
+                                            <form onSubmit={handleModalSubmit} className="space-y-4">
+                                                {submitError && (
+                                                    <div className="bg-red-50 text-red-600 px-4 py-3 rounded-xl text-xs font-medium border border-red-100 text-center">
+                                                        {submitError}
+                                                    </div>
+                                                )}
+                                                <div className="flex gap-3">
+                                                    <input type="text" placeholder="First Name" value={formData.firstName} onChange={(e) => setFormData({ ...formData, firstName: e.target.value })} required className="w-full h-14 px-5 bg-slate-50 border border-slate-200 text-brand-navy placeholder:text-brand-navy/40 rounded-xl outline-none focus:border-brand-copper focus:ring-1 focus:ring-brand-copper transition-all text-sm font-medium" />
+                                                    <input type="text" placeholder="Last Name" value={formData.lastName} onChange={(e) => setFormData({ ...formData, lastName: e.target.value })} required className="w-full h-14 px-5 bg-slate-50 border border-slate-200 text-brand-navy placeholder:text-brand-navy/40 rounded-xl outline-none focus:border-brand-copper focus:ring-1 focus:ring-brand-copper transition-all text-sm font-medium" />
+                                                </div>
+                                                <input type="email" placeholder="Email Address" value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} required className="w-full h-14 px-5 bg-slate-50 border border-slate-200 text-brand-navy placeholder:text-brand-navy/40 rounded-xl outline-none focus:border-brand-copper focus:ring-1 focus:ring-brand-copper transition-all text-sm font-medium" />
+                                                <div className="space-y-1.5 pb-2">
+                                                    <label className="text-[10px] font-black uppercase tracking-widest text-brand-navy/40 ml-1">WhatsApp Number</label>
+                                                    <PhoneInput
+                                                        international defaultCountry="AE"
+                                                        value={formData.whatsapp}
+                                                        onChange={(value) => setFormData({ ...formData, whatsapp: value?.toString() || '' })}
+                                                        className="phone-input-custom text-brand-navy w-full h-14 px-5 bg-slate-50 border border-slate-200 rounded-xl focus-within:border-brand-copper focus-within:ring-1 focus-within:ring-brand-copper transition-all text-sm font-medium"
+                                                        placeholder="WhatsApp Number"
+                                                    />
+                                                </div>
+                                                <button type="submit" disabled={isSubmitting} className="w-full h-14 rounded-xl font-black uppercase tracking-widest text-sm transition-all duration-300 hover:scale-[1.02] flex items-center justify-center gap-2" style={{ background: '#C28667', color: '#fff', boxShadow: '0 10px 30px rgba(194,134,103,0.3)', opacity: isSubmitting ? 0.7 : 1 }}>
+                                                    {isSubmitting ? 'Processing...' : <>Send Quote Request <ArrowRight size={16} /></>}
+                                                </button>
+                                                <p className="text-center text-[10px] text-brand-navy/40 font-bold uppercase tracking-widest mt-4">100% Secure • Fast Response</p>
+                                            </form>
+                                        </motion.div>
+                                    )}
+                                </AnimatePresence>
+                            </motion.div>
+                        </motion.div>
+                    )}
+                </AnimatePresence>,
+                document.body
             )}
         </div>
     );

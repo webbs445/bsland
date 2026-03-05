@@ -7,15 +7,13 @@ import PricingFAQ from "@/components/PricingFAQ";
 import IntelligenceSection from "@/components/IntelligenceSection";
 import FreeZoneActivities from "@/components/FreeZoneActivities";
 import TestimonialsSection from "@/components/TestimonialsSection";
-import FloatingCTA from "@/components/FloatingCTA";
-import StickyNav from "@/components/StickyNav";
 import Footer from "@/components/Footer";
+import StickyNav from "@/components/StickyNav";
 
 export default function HomePage() {
   return (
     <main className="min-h-screen bg-white">
-      {/* Floating WhatsApp + CTA */}
-      <FloatingCTA />
+
 
       {/* Sticky Navigation */}
       <StickyNav />

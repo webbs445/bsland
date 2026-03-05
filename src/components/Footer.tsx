@@ -70,7 +70,7 @@ export default function Footer() {
                 first_name: formData.firstName,
                 last_name: formData.lastName,
                 custom_service_enquired: "Business Setup",
-                custom_client_profile: `[Footer CTA] Service: ${selectedService || 'General'}`,
+                custom_client_profile_and_requirement: `[Footer CTA] Service: ${selectedService || 'General'}`,
                 email_id: formData.email,
                 mobile_no: formData.whatsapp,
                 country: countryName
@@ -231,7 +231,7 @@ export default function Footer() {
                                 animate={{ scale: 1, opacity: 1, y: 0 }}
                                 exit={{ scale: 0.95, opacity: 0, y: 20 }}
                                 onClick={(e) => e.stopPropagation()}
-                                className="bg-white rounded-3xl p-8 max-w-lg w-full shadow-2xl relative"
+                                className="bg-white rounded-3xl p-6 md:p-8 max-w-lg w-full shadow-2xl relative max-h-[90vh] overflow-y-auto"
                                 style={{ borderTop: '4px solid #C28667' }}
                             >
                                 <button

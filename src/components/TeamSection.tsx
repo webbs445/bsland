@@ -71,7 +71,7 @@ export default function TeamSection() {
                 first_name: formData.firstName,
                 last_name: formData.lastName,
                 custom_service_enquired: "Business Setup",
-                custom_client_profile: `[Team Section] Selected Path: Speak to an Expert`,
+                custom_client_profile_and_requirement: `[Team Section] Selected Path: Speak to an Expert`,
                 email_id: formData.email,
                 mobile_no: formData.whatsapp,
                 country: countryName
@@ -250,7 +250,7 @@ export default function TeamSection() {
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="mt-20 bg-gradient-to-r from-brand-copper/10 to-transparent border border-brand-copper/20 rounded-[2rem] p-10 flex flex-col items-center text-center relative overflow-hidden group"
+                    className="mt-20 bg-gradient-to-r from-brand-copper/10 to-transparent border border-brand-copper/20 rounded-[2rem] p-8 md:p-10 flex flex-col items-center text-center relative overflow-hidden group"
                 >
                     <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 mix-blend-overlay pointer-events-none" />
 
@@ -305,7 +305,7 @@ export default function TeamSection() {
                                 animate={{ scale: 1, opacity: 1, y: 0 }}
                                 exit={{ scale: 0.95, opacity: 0, y: 20 }}
                                 onClick={(e) => e.stopPropagation()}
-                                className="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl relative overflow-hidden"
+                                className="bg-white rounded-3xl p-6 md:p-8 max-w-md w-full shadow-2xl relative overflow-hidden max-h-[90vh] overflow-y-auto"
                                 style={{ borderTop: `4px solid #CC8667` }}
                             >
                                 <button

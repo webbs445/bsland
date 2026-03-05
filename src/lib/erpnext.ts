@@ -3,7 +3,7 @@ export async function submitToERPNext(data: {
     last_name: string;
     status: string;
     custom_service_enquired: string;
-    custom_client_profile?: string;
+    custom_client_profile_and_requirement?: string;
     email_id: string;
     mobile_no: string;
     country?: string;
