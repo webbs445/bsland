@@ -307,7 +307,7 @@ export default function HeroSection() {
                                             whileTap={{ scale: 0.97, y: 0 }}
                                             transition={{ type: 'spring', stiffness: 400, damping: 20 }}
                                             className="relative overflow-hidden w-full h-16 mt-6 rounded-xl font-black text-[16px] uppercase tracking-[0.2em] flex items-center justify-center gap-2 shadow-2xl group"
-                                            style={{ background: 'linear-gradient(135deg, #FFBEA3 0%, #ffd4c2e0 50%, #FFBEA3 100%)', color: '#14253E' }}
+                                            style={{ background: 'linear-gradient(135deg, #d4956f 0%, #C28667 50%, #a86c4f 100%)', color: '#ffffff' }}
                                         >
                                             {/* Shimmer sweep */}
                                             <span className="absolute inset-0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 bg-gradient-to-r from-transparent via-white/40 to-transparent pointer-events-none" />

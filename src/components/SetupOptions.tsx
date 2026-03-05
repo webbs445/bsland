@@ -53,7 +53,7 @@ const options = [
         subtitle: '100% foreign ownership',
         description:
             '0% personal & corporate tax, full profit repatriation. Perfect for e-commerce, consulting, startups, and export-focused businesses.',
-        price: '7,900',
+        price: '4,888',
         priceNote: 'Starting at SHAMS / IFZA',
         badge: 'Best Value',
         icon: Globe,

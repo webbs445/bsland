@@ -77,7 +77,7 @@ const VISA_GOVT_FEE = 1200;
 // ─── Sub-components ──────────────────────────────────────────────────────────
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
-    return <p className="text-white/40 text-[9px] font-black uppercase tracking-[0.3em] mb-3">{children}</p>;
+    return <p className="text-white/50 text-sm font-semibold mb-3">{children}</p>;
 }
 
 function OptionCard({ selected, onClick, color, children, disabled }: any) {
@@ -274,7 +274,7 @@ export default function IntelligenceSection() {
                                             >
                                                 <div className="flex flex-col items-center gap-3 text-center">
                                                     <ct.icon size={20} style={{ color: companyType === ct.id ? '#fff' : ct.color }} />
-                                                    <div className="text-[8px] font-black uppercase tracking-widest text-white">{ct.label}</div>
+                                                    <div className="text-sm font-semibold text-white">{ct.label}</div>
                                                 </div>
                                             </OptionCard>
                                         ))}
@@ -291,8 +291,8 @@ export default function IntelligenceSection() {
                                                     onClick={() => setSelectedFZ(fz.id)}
                                                     className={`p-3 rounded-lg border text-left flex justify-between items-center transition-all ${selectedFZ === fz.id ? 'bg-white/10 border-brand-copper' : 'bg-white/5 border-white/5 opacity-50'}`}
                                                 >
-                                                    <span className="text-[9px] font-black uppercase tracking-tight">{fz.name}</span>
-                                                    <span className="text-[7px] font-bold text-brand-copper tracking-widest">AED {fz.license.toLocaleString()}</span>
+                                                    <span className="text-sm font-semibold text-white">{fz.name}</span>
+                                                    <span className="text-sm font-semibold text-brand-copper">AED {fz.license.toLocaleString()}</span>
                                                 </button>
                                             ))}
                                         </div>
@@ -306,7 +306,7 @@ export default function IntelligenceSection() {
                                         onChange={(e) => setVisaCount(parseInt(e.target.value))}
                                         className="w-full h-1 bg-white/10 rounded-full appearance-none accent-brand-copper cursor-pointer mb-3"
                                     />
-                                    <div className="flex justify-between text-[7px] font-black uppercase tracking-widest text-white/20">
+                                    <div className="flex justify-between text-sm font-medium text-white/30">
                                         <span>0 Visas</span>
                                         <span>Priority Processing</span>
                                         <span>10+ Visas</span>
@@ -328,10 +328,10 @@ export default function IntelligenceSection() {
                                                 </div>
                                                 {/* Step Content */}
                                                 <div className="flex flex-col gap-1.5 mb-1.5">
-                                                    <h4 className="text-[9px] font-black uppercase tracking-widest text-white leading-tight pr-4">{t.step}</h4>
-                                                    <div className="inline-flex items-center justify-center px-1.5 py-0.5 bg-brand-copper/10 text-brand-copper text-[7px] font-black rounded-full tracking-widest w-fit mb-0.5">{t.duration}</div>
+                                                    <h4 className="text-sm font-semibold text-white leading-tight pr-4">{t.step}</h4>
+                                                    <div className="inline-flex items-center justify-center px-2 py-0.5 bg-brand-copper/10 text-brand-copper text-xs font-semibold rounded-full w-fit mb-0.5">{t.duration}</div>
                                                 </div>
-                                                <p className="text-[8px] font-medium text-white/30 uppercase tracking-tighter leading-relaxed pr-2">{t.desc}</p>
+                                                <p className="text-sm font-medium text-white/40 leading-relaxed pr-2">{t.desc}</p>
                                             </div>
                                         ))}
                                     </div>
@@ -341,29 +341,27 @@ export default function IntelligenceSection() {
                             <div className="lg:col-span-2 sticky top-24">
                                 <div className="bg-[#1a2b45] border border-white/10 rounded-2xl p-6 shadow-2xl">
                                     <div className="flex border-b border-white/5 mb-6">
-                                        <button onClick={() => setCalcView("setup")} className={`flex-1 pb-3 text-[8px] font-black uppercase tracking-widest transition-all ${calcView === "setup" ? 'text-brand-copper border-b-2 border-brand-copper' : 'text-white/20'}`}>Setup Cost</button>
-                                        <button onClick={() => setCalcView("annual")} className={`flex-1 pb-3 text-[8px] font-black uppercase tracking-widest transition-all ${calcView === "annual" ? 'text-brand-copper border-b-2 border-brand-copper' : 'text-white/20'}`}>Annual Recurring</button>
+                                        <button onClick={() => setCalcView("setup")} className={`flex-1 pb-3 text-sm font-semibold transition-all ${calcView === "setup" ? 'text-brand-copper border-b-2 border-brand-copper' : 'text-white/30'}`}>Setup Cost</button>
+                                        <button onClick={() => setCalcView("annual")} className={`flex-1 pb-3 text-sm font-semibold transition-all ${calcView === "annual" ? 'text-brand-copper border-b-2 border-brand-copper' : 'text-white/30'}`}>Annual Recurring</button>
                                     </div>
-
                                     <div className="space-y-4 mb-8">
                                         <div className="flex justify-between items-center">
-                                            <span className="text-[9px] font-black uppercase tracking-widest text-white/40">Trade License</span>
-                                            <span className="text-xs font-header font-black tracking-tight text-white">AED {calc[calcView].license.toLocaleString()}</span>
+                                            <span className="text-sm font-medium text-white/50">Trade License</span>
+                                            <span className="text-sm font-bold text-white">AED {calc[calcView].license.toLocaleString()}</span>
                                         </div>
                                         <div className="flex justify-between items-center">
-                                            <span className="text-[9px] font-black uppercase tracking-widest text-white/40">Visas ({visaCount})</span>
-                                            <span className="text-xs font-header font-black tracking-tight text-white">AED {calc[calcView].visa.toLocaleString()}</span>
+                                            <span className="text-sm font-medium text-white/50">Visas ({visaCount})</span>
+                                            <span className="text-sm font-bold text-white">AED {calc[calcView].visa.toLocaleString()}</span>
                                         </div>
                                         <div className="flex justify-between items-center">
-                                            <span className="text-[9px] font-black uppercase tracking-widest text-white/40">Gov & Admin</span>
-                                            <span className="text-xs font-header font-black tracking-tight text-white">AED {calc[calcView].gov.toLocaleString()}</span>
+                                            <span className="text-sm font-medium text-white/50">Gov & Admin</span>
+                                            <span className="text-sm font-bold text-white">AED {calc[calcView].gov.toLocaleString()}</span>
                                         </div>
                                     </div>
-
                                     <div className="pt-6 border-t border-brand-copper/30 mb-6">
-                                        <div className="text-[9px] font-black uppercase tracking-[0.2em] text-brand-copper mb-1.5">Total {calcView === 'setup' ? 'Investment' : 'Maintenance'}</div>
+                                        <div className="text-sm font-semibold text-brand-copper mb-1.5">Total {calcView === 'setup' ? 'Investment' : 'Maintenance'}</div>
                                         <div className="text-3xl font-header font-black text-white tracking-tighter">AED {displayedTotal.toLocaleString()}</div>
-                                        <div className="text-[8px] font-bold uppercase tracking-widest text-white/20 mt-1.5">100% Transparent · No hidden fees</div>
+                                        <div className="text-xs font-medium text-white/30 mt-1.5">100% Transparent · No hidden fees</div>
                                     </div>
 
                                     <button

@@ -55,9 +55,9 @@
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  background: linear-gradient(135deg, #FFBEA3 0%, #ffd4c2e0 50%, #FFBEA3 100%);
+  background: linear-gradient(135deg, #d4956f 0%, #C28667 50%, #a86c4f 100%);
   background-size: 200% 100%;
-  color: #14253E;
+  color: #ffffff;
   font-weight: 900;
   font-size: 0.625rem;
   letter-spacing: 0.25em;
@@ -67,7 +67,7 @@
   border: none;
   cursor: pointer;
   transition: background-position 0.4s ease, transform 0.15s ease, box-shadow 0.3s ease;
-  box-shadow: 0 4px 20px rgba(255, 190, 163, 0.35);
+  box-shadow: 0 4px 20px rgba(194, 134, 103, 0.4);
 }
 
 .btn-primary::after {
@@ -181,4 +181,57 @@
 
 .phone-input-custom .PhoneInputCountry {
   margin-right: 0.5rem;
+}
+
+.phone-input-custom .PhoneInputCountrySelect {
+  border: none !important;
+  outline: none !important;
+  background: transparent;
+  appearance: none;
+}
+
+.phone-input-custom .PhoneInputCountrySelectArrow {
+  border-color: currentColor !important;
+  opacity: 0.4;
+}
+
+/* Remove the white border/shadow on the flag icon */
+.phone-input-custom .PhoneInputCountryIcon,
+.phone-input-custom-hero .PhoneInputCountryIcon {
+  border: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+}
+
+/* Hero dark-background variant */
+.phone-input-custom-hero {
+  display: flex;
+  align-items: center;
+}
+
+.phone-input-custom-hero .PhoneInputInput {
+  flex: 1;
+  background: transparent;
+  color: white;
+  border: none;
+  outline: none;
+  height: 100%;
+  padding-left: 0.5rem;
+}
+
+.phone-input-custom-hero .PhoneInputCountry {
+  margin-right: 0.5rem;
+}
+
+.phone-input-custom-hero .PhoneInputCountrySelect {
+  border: none !important;
+  outline: none !important;
+  background: transparent;
+  appearance: none;
+  color: white;
+}
+
+.phone-input-custom-hero .PhoneInputCountrySelectArrow {
+  border-color: white !important;
+  opacity: 0.4;
 }

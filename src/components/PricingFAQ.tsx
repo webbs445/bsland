@@ -138,115 +138,56 @@ export default function PricingFAQ() {
                     </div>
                 </div>
 
-                <div className="mt-32 relative overflow-hidden rounded-[3rem] p-10 md:p-20 text-center shadow-2xl group border border-brand-copper/20">
-                    {/* Animated Background Layers */}
-                    <div className="absolute inset-0 bg-brand-navy z-0" />
-                    <div className="absolute inset-0 opacity-[0.15] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] z-0 mix-blend-overlay" />
-                    <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-copper/20 rounded-full blur-[120px] -mr-40 -mt-40 pointer-events-none group-hover:bg-brand-copper/30 transition-all duration-1000 z-0" />
-                    <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#2E548A]/30 rounded-full blur-[100px] -ml-20 -mb-20 pointer-events-none z-0" />
-
+                <div className="mt-32 relative rounded-[3rem] p-10 md:p-20 text-center bg-brand-navy">
                     <div className="relative z-10 flex flex-col items-center">
                         <motion.h3
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
-                            className="text-4xl md:text-5xl lg:text-6xl font-header font-black tracking-tight uppercase mb-6 leading-tight max-w-4xl text-white shadow-brand-navy drop-shadow-lg"
+                            className="text-4xl md:text-5xl lg:text-6xl font-header font-black tracking-tight uppercase mb-6 leading-tight max-w-4xl text-white"
                         >
-                            Your business in Dubai starts with <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#C28667] to-[#C28667]  pr-2">one conversation.</span>
+                            Your business in Dubai starts with{' '}
+                            <span className="text-brand-copper">one conversation.</span>
                         </motion.h3>
+
                         <motion.p
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: 0.1 }}
-                            className="text-white/70 font-medium text-lg mb-10 max-w-2xl mx-auto leading-relaxed"
+                            className="text-white/60 text-lg mb-10 max-w-2xl mx-auto leading-relaxed"
                         >
                             Talk to a setup expert today — free, no commitment. We'll recommend the right structure, give you exact costs, and handle everything from there.
                         </motion.p>
 
                         <motion.div
-                            initial={{ opacity: 0, scale: 0.95 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
+                            initial={{ opacity: 0, y: 10 }}
+                            whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: 0.2 }}
-                            className="flex flex-col sm:flex-row items-center justify-center gap-6 md:gap-8 w-full max-w-md mx-auto"
+                            className="flex flex-col sm:flex-row items-center justify-center gap-6"
                         >
-                            {/* ── Enhanced CTA Button ── */}
                             <button
-                                onClick={() => {
-                                    setSubmitted(false);
-                                    setIsModalOpen(true);
-                                }}
-                                className="group/cta relative w-full sm:w-auto overflow-hidden rounded-full text-sm font-black uppercase tracking-[0.15em] text-white whitespace-nowrap"
-                                style={{
-                                    padding: '1px',
-                                    background: 'linear-gradient(135deg, #e8aa86 0%, #C28667 40%, #9a5f42 100%)',
-                                    boxShadow: '0 0 30px rgba(194,134,103,0.5), 0 0 80px rgba(194,134,103,0.2), inset 0 1px 0 rgba(255,255,255,0.15)',
-                                }}
+                                onClick={() => { setSubmitted(false); setIsModalOpen(true); }}
+                                className="px-8 py-4 rounded-full bg-brand-copper text-white text-sm font-black uppercase tracking-[0.15em] hover:opacity-90 transition-opacity flex items-center gap-2"
                             >
-                                {/* Shimmer sweep on hover */}
-                                <span
-                                    className="pointer-events-none absolute inset-0 -translate-x-full group-hover/cta:translate-x-full transition-transform duration-700 ease-in-out z-10"
-                                    style={{
-                                        background: 'linear-gradient(105deg, transparent 35%, rgba(255,255,255,0.3) 50%, transparent 65%)'
-                                    }}
-                                />
-                                {/* Breathing outer glow ring */}
-                                <span
-                                    className="pointer-events-none absolute -inset-[3px] rounded-full"
-                                    style={{
-                                        background: 'transparent',
-                                        boxShadow: '0 0 0 0 rgba(194,134,103,0.6)',
-                                        animation: 'ctaPulse 2s ease-in-out infinite',
-                                    }}
-                                />
-                                {/* Inner button surface */}
-                                <span
-                                    className="relative z-20 flex items-center justify-center gap-2.5 px-8 py-[15px] rounded-full group-hover/cta:brightness-110 transition-all duration-300"
-                                    style={{
-                                        background: 'linear-gradient(160deg, #d4845e 0%, #C28667 55%, #b07352 100%)',
-                                    }}
-                                >
-                                    {/* Live dot */}
-                                    <span className="relative flex h-[7px] w-[7px]">
-                                        <span
-                                            className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75"
-                                            style={{ background: 'rgba(255,255,255,0.8)' }}
-                                        />
-                                        <span className="relative inline-flex rounded-full h-[7px] w-[7px] bg-white" />
-                                    </span>
-                                    Start Now
-                                    <ArrowRight
-                                        strokeWidth={3}
-                                        className="w-4 h-4 transition-transform duration-300 group-hover/cta:translate-x-1.5"
-                                    />
-                                </span>
+                                Start Now <ArrowRight className="w-4 h-4" strokeWidth={3} />
                             </button>
-
-                            {/* Pulse keyframe injected inline */}
-                            <style>{`
-                                @keyframes ctaPulse {
-                                    0%, 100% { box-shadow: 0 0 0 0 rgba(194,134,103,0.5); }
-                                    50%       { box-shadow: 0 0 0 8px rgba(194,134,103,0); }
-                                }
-                            `}</style>
 
                             <div className="hidden sm:block w-px h-10 bg-white/10" />
 
-                            <a href="tel:+971522330011" className="flex items-center gap-3 group/phone cursor-pointer">
-                                <div className="relative flex items-center justify-center w-12 h-12 rounded-full bg-white/5 border border-white/10 group-hover/phone:border-brand-copper/50 transition-colors">
-                                    <div className="absolute inset-0 rounded-full border border-brand-copper/30 animate-ping opacity-20 group-hover/phone:opacity-50" />
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 text-brand-copper group-hover/phone:scale-110 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                            <a href="tel:+971522330011" className="flex items-center gap-3 group">
+                                <div className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 text-brand-copper" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
                                 </div>
-                                <div className="flex items-center gap-2">
-                                    <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest group-hover/phone:text-white/70 transition-colors">Call Experts</span>
-                                    <span className="text-lg font-black tracking-tight text-white group-hover/phone:text-brand-copper transition-colors whitespace-nowrap">+971 522 330 011</span>
+                                <div>
+                                    <p className="text-[10px] font-bold text-white/40 uppercase tracking-widest">Call Experts</p>
+                                    <p className="text-base font-black text-white group-hover:text-brand-copper transition-colors">+971 522 330 011</p>
                                 </div>
                             </a>
                         </motion.div>
                     </div>
-                </div>
-            </div>
+                </div>            </div>
 
             {/* Popup Modal */}
             {mounted && createPortal(

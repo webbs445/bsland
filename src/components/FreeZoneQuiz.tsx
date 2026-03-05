@@ -205,7 +205,7 @@ export default function FreeZoneQuiz() {
                             whileHover={{ scale: 1.02, boxShadow: '0 12px 30px rgba(204,134,103,0.45)' }}
                             whileTap={{ scale: 0.98 }}
                             onClick={() => setStep(1)}
-                            className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl font-black text-[10px] uppercase tracking-widest mx-auto"
+                            className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl font-white text-[10px] uppercase tracking-widest mx-auto"
                             style={{ background: 'linear-gradient(135deg, #CC8667, #b8734f)', color: '#0a1628', boxShadow: '0 8px 24px rgba(204,134,103,0.35)' }}
                         >
                             Find My Perfect Free Zone <ArrowRight size={16} />
@@ -237,10 +237,10 @@ export default function FreeZoneQuiz() {
                             ))}
                         </div>
 
-                        <p className="text-[9px] font-black uppercase tracking-[0.3em] mb-3" style={{ color: '#CC8667' }}>
+                        <p className="text-white/50 text-sm font-medium mb-3" style={{ color: '#CC8667' }}>
                             Question {step} of {quizSteps.length}
                         </p>
-                        <h3 className="text-2xl font-black text-white mb-8 tracking-tight uppercase leading-tight">
+                        <h3 className="font-header font-black text-white text-2xl md:text-3xl mb-8 tracking-tight uppercase leading-tight">
                             {currentQ.question}
                         </h3>
 
@@ -271,7 +271,7 @@ export default function FreeZoneQuiz() {
                                             style={{ background: 'rgba(204,134,103,0.10)', border: '1px solid rgba(204,134,103,0.18)' }}>
                                             <Icon size={20} style={{ color: '#CC8667' }} />
                                         </div>
-                                        <span className="text-white font-bold text-[11px] uppercase tracking-tight leading-tight">{opt.label}</span>
+                                        <span className="text-white font-semibold text-sm leading-tight">{opt.label}</span>
                                     </motion.button>
                                 );
                             })}
@@ -311,8 +311,8 @@ export default function FreeZoneQuiz() {
                                                 {r.match}% Match
                                             </span>
                                         </div>
-                                        <p className="text-white/40 text-xs mb-2">{r.why}</p>
-                                        <div className="flex gap-4 text-[10px] font-black uppercase tracking-widest">
+                                        <p className="text-white/40 text-sm font-medium mb-2">{r.why}</p>
+                                        <div className="flex gap-4 text-sm font-semibold">
                                             <span className="text-white/40">Cost: <span style={{ color: '#CC8667' }}>{r.cost}</span></span>
                                             <span className="text-white/40">Visas: <span style={{ color: '#CC8667' }}>{r.visas}</span></span>
                                         </div>
@@ -335,12 +335,12 @@ export default function FreeZoneQuiz() {
                         <div className="flex flex-col sm:flex-row gap-3 justify-center">
                             <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
                                 onClick={reset}
-                                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-black text-[9px] uppercase tracking-widest border border-white/12 text-white/40 hover:text-white/70 transition-all mx-auto">
+                                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm border border-white/12 text-white/40 hover:text-white/70 transition-all mx-auto">
                                 <RotateCcw size={13} /> Retake Quiz
                             </motion.button>
                             <motion.button whileHover={{ scale: 1.02, boxShadow: '0 12px 30px rgba(204,134,103,0.4)' }} whileTap={{ scale: 0.98 }}
                                 onClick={() => openModal("All Matches (Consultation)")}
-                                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-black text-[9px] uppercase tracking-widest mx-auto transition-all"
+                                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm mx-auto transition-all"
                                 style={{ background: 'linear-gradient(135deg, #CC8667, #b8734f)', color: '#0a1628', boxShadow: '0 8px 24px rgba(204,134,103,0.3)' }}>
                                 Book Free Consultation <ArrowRight size={13} />
                             </motion.button>
