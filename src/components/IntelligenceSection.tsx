@@ -255,7 +255,10 @@ export default function IntelligenceSection() {
                     {activeTab === "freezone" ? (
                         <FreeZoneQuiz />
                     ) : activeTab === "quiz" ? (
-                        <SetupQuiz />
+                        <SetupQuiz onComplete={(type) => {
+                            setCompanyType(type);
+                            setActiveTab("calculator");
+                        }} />
                     ) : (
                         <div className="grid lg:grid-cols-5 gap-10 items-start">
                             <div className="lg:col-span-3 space-y-8">

@@ -176,7 +176,7 @@ function getRecommendation(answers: Record<string, string>): Result {
 }
 
 // ─── Component ────────────────────────────────────────────────────────────────
-export default function SetupQuiz() {
+export default function SetupQuiz({ onComplete }: { onComplete?: (type: string) => void }) {
     const [currentQ, setCurrentQ] = useState(0);
     const [answers, setAnswers] = useState<Record<string, string>>({});
     const [result, setResult] = useState<Result | null>(null);
@@ -377,7 +377,13 @@ export default function SetupQuiz() {
                         {/* CTAs */}
                         <div className="flex flex-col sm:flex-row gap-3">
                             <button
-                                onClick={() => document.getElementById('hero-form')?.scrollIntoView({ behavior: 'smooth' })}
+                                onClick={() => {
+                                    if (onComplete) {
+                                        onComplete(result.type);
+                                    } else {
+                                        document.getElementById('hero-form')?.scrollIntoView({ behavior: 'smooth' });
+                                    }
+                                }}
                                 className="flex-1 py-3.5 rounded-xl font-black text-sm uppercase tracking-widest flex items-center justify-center gap-2 transition-all hover:opacity-90"
                                 style={{ background: result.color, color: result.type === "mainland" ? "#0A1628" : "#fff" }}
                             >
