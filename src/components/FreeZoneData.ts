@@ -8,7 +8,7 @@ export const ACTIVITIES_CATEGORIES = [
         name: 'Technology & IT',
         icon: Laptop,
         color: 'from-blue-500 to-indigo-600',
-        bestZones: ['Dubai Silicon Oasis', 'IFZA', 'DMCC', 'SHAMS'],
+        bestZones: ['Masdar City', 'IFZA', 'RAKEZ', 'SHAMS', 'SRTIP'],
         activities: [
             'Software Development',
             'Mobile App Development',
@@ -26,7 +26,7 @@ export const ACTIVITIES_CATEGORIES = [
         name: 'Trading & Import/Export',
         icon: Package,
         color: 'from-amber-500 to-orange-600',
-        bestZones: ['JAFZA', 'DMCC', 'IFZA', 'Dubai South'],
+        bestZones: ['ANCFZ', 'RAKEZ', 'MEYDAN', 'DMCC', 'JAFZA'],
         activities: [
             'General Trading',
             'Electronics Trading',
@@ -44,7 +44,7 @@ export const ACTIVITIES_CATEGORIES = [
         name: 'Media & Marketing',
         icon: Megaphone,
         color: 'from-pink-500 to-rose-600',
-        bestZones: ['SHAMS', 'DMCC', 'IFZA', 'Dubai Media City'],
+        bestZones: ['SHAMS', 'RAKEZ', 'IFZA', 'SRTIP', 'MEYDAN'],
         activities: [
             'Advertising Agency',
             'Digital Marketing',
@@ -62,7 +62,7 @@ export const ACTIVITIES_CATEGORIES = [
         name: 'Consulting & Professional Services',
         icon: Briefcase,
         color: 'from-slate-600 to-slate-800',
-        bestZones: ['IFZA', 'DMCC', 'DIFC', 'RAK ICC'],
+        bestZones: ['MEYDAN', 'RAKEZ', 'IFZA', 'SHAMS', 'RAK ICC'],
         activities: [
             'Business Management Consultancy',
             'HR & Recruitment Consultancy',
@@ -80,7 +80,7 @@ export const ACTIVITIES_CATEGORIES = [
         name: 'E-commerce & Retail',
         icon: ShoppingCart,
         color: 'from-emerald-500 to-teal-600',
-        bestZones: ['SPC Free Zone', 'IFZA', 'SHAMS', 'Dubai CommerCity'],
+        bestZones: ['ANCFZ', 'SPC', 'IFZA', 'RAKEZ', 'Dubai Commercial City'],
         activities: [
             'Online Retail Store',
             'Dropshipping Business',
@@ -98,7 +98,7 @@ export const ACTIVITIES_CATEGORIES = [
         name: 'Logistics & Freight',
         icon: Truck,
         color: 'from-yellow-500 to-amber-600',
-        bestZones: ['Dubai South', 'JAFZA', 'IFZA', 'RAK FTZ'],
+        bestZones: ['JAFZA', 'Dubai South', 'RAKEZ', 'Ajman Free Zone', 'SRTIP',],
         activities: [
             'Freight Forwarding',
             'Cargo Shipping',
@@ -116,7 +116,7 @@ export const ACTIVITIES_CATEGORIES = [
         name: 'Finance & Investment',
         icon: TrendingUp,
         color: 'from-violet-500 to-purple-700',
-        bestZones: ['DIFC', 'DMCC', 'ADGM', 'RAK ICC'],
+        bestZones: ['MEYDAN', 'IFZA', 'DMCC', 'ADGM', 'RAKEZ'],
         activities: [
             'Investment Holding Company',
             'Family Office',
@@ -134,7 +134,7 @@ export const ACTIVITIES_CATEGORIES = [
         name: 'Healthcare & Wellness',
         icon: Heart,
         color: 'from-red-500 to-rose-600',
-        bestZones: ['Dubai Healthcare City', 'IFZA', 'SHAMS', 'DMCC'],
+        bestZones: ['DHCC', 'MEYDAN', 'IFZA', 'SHAMS', 'Sharjah Healthcare City'],
         activities: [
             'Medical Consultancy',
             'Pharmaceutical Trading',
@@ -152,7 +152,7 @@ export const ACTIVITIES_CATEGORIES = [
         name: 'Food & Beverage',
         icon: Utensils,
         color: 'from-orange-500 to-red-500',
-        bestZones: ['IFZA', 'JAFZA', 'DMCC', 'Dubai South'],
+        bestZones: ['MEYDAN', 'Dubai South', 'IFZA', 'RAKEZ', 'ANCFZ'],
         activities: [
             'Food Trading & Distribution',
             'Food Manufacturing',
@@ -170,7 +170,7 @@ export const ACTIVITIES_CATEGORIES = [
         name: 'Construction & Real Estate',
         icon: Hammer,
         color: 'from-stone-500 to-stone-700',
-        bestZones: ['IFZA', 'DMCC', 'Ajman Free Zone', 'RAK FTZ'],
+        bestZones: ['MEYDAN', 'Dubai South', 'IFZA', 'RAKEZ', 'ANCFZ'],
         activities: [
             'Real Estate Development',
             'Property Management',
@@ -188,7 +188,7 @@ export const ACTIVITIES_CATEGORIES = [
         name: 'Education & Training',
         icon: GraduationCap,
         color: 'from-cyan-500 to-blue-600',
-        bestZones: ['SHAMS', 'IFZA', 'Dubai Knowledge Park', 'DMCC'],
+        bestZones: ['MEYDAN', 'RAKEZ', 'Dubai South', 'IFZA', 'SPC', 'SRTIP'],
         activities: [
             'Online Education Platform',
             'Corporate Training',
@@ -206,7 +206,7 @@ export const ACTIVITIES_CATEGORIES = [
         name: 'Creative & Design',
         icon: Camera,
         color: 'from-fuchsia-500 to-pink-600',
-        bestZones: ['SHAMS', 'Dubai Design District', 'IFZA', 'DMCC'],
+        bestZones: ['SRTIP', 'SHAMS', 'RAKEZ', 'IFZA', 'ANCFZ'],
         activities: [
             'Photography Studio',
             'Videography Services',
