@@ -84,9 +84,9 @@ export default function RootLayout({
             `,
           }}
         />
-        {/* Stape GTM — head loader */}
+        {/* Stape GTM — server-side container (commented out — encountering issues)
         <Script
-          id="gtm-init"
+          id="gtm-stape"
           strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -96,6 +96,7 @@ export default function RootLayout({
   })(window,document,'script','dataLayer','GTM-5VWSND9M');`,
           }}
         />
+        */}
         {/* GTM — client-side (web) container */}
         <Script
           id="gtm-web"
@@ -110,7 +111,7 @@ export default function RootLayout({
         />
       </head>
       <body className={`${dmSans.variable} antialiased`}>
-        {/* Stape GTM — noscript fallback */}
+        {/* Stape GTM — noscript fallback (commented out — encountering issues)
         <noscript>
           <iframe
             src="https://marktmen.best-solution.ae/ns.html?id=GTM-5VWSND9M"
@@ -118,6 +119,7 @@ export default function RootLayout({
             style={{ display: 'none', visibility: 'hidden' }}
           />
         </noscript>
+        */}
         {/* GTM Web — noscript fallback */}
         <noscript>
           <iframe
