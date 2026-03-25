@@ -96,12 +96,32 @@ export default function RootLayout({
   })(window,document,'script','dataLayer','GTM-5VWSND9M');`,
           }}
         />
+        {/* GTM — client-side (web) container */}
+        <Script
+          id="gtm-web"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-MLFW9XR');`,
+          }}
+        />
       </head>
       <body className={`${dmSans.variable} antialiased`}>
         {/* Stape GTM — noscript fallback */}
         <noscript>
           <iframe
             src="https://marktmen.best-solution.ae/ns.html?id=GTM-5VWSND9M"
+            height="0" width="0"
+            style={{ display: 'none', visibility: 'hidden' }}
+          />
+        </noscript>
+        {/* GTM Web — noscript fallback */}
+        <noscript>
+          <iframe
+            src="https://www.googletagmanager.com/ns.html?id=GTM-MLFW9XR"
             height="0" width="0"
             style={{ display: 'none', visibility: 'hidden' }}
           />

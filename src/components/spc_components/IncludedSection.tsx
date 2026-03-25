@@ -24,9 +24,11 @@ export default function IncludedSection() {
         </ScrollReveal>
 
         <ScrollReveal delay="0.15s" className="feat-list">
-          {FEATURES.map(({ icon, name, sub }) => (
+          {FEATURES.map(({ icon: Icon, name, sub }) => (
             <div key={name} className="feat">
-              <div className="feat-ic">{icon}</div>
+              <div className="feat-ic">
+                <Icon size={24} strokeWidth={1.5} />
+              </div>
               <div className="feat-info">
                 <div className="feat-name">{name}</div>
                 <div className="feat-sub">{sub}</div>

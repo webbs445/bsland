@@ -22,14 +22,16 @@ export default function BenefitsSection() {
       </ScrollReveal>
 
       <div className="b-grid">
-        {BENEFITS.map(({ idx, icon, value, prefix, title, desc }, i) => {
+        {BENEFITS.map(({ idx, icon: Icon, value, prefix, title, desc }, i) => {
           const delay = `${[0, 0.07, 0.14, 0.07, 0.14, 0.21][i] ?? 0}s`
           // Split "AED 16,528" → prefix "AED " + number "16,528"
           const numPart = prefix ? value.replace(prefix, '') : value
           return (
             <ScrollReveal key={idx} className="b-card" delay={delay}>
               <div className="b-num">{idx}</div>
-              <span className="b-icon">{icon}</span>
+              <span className="b-icon">
+                <Icon size={32} strokeWidth={1.5} />
+              </span>
               <div className="b-val">
                 {prefix && <sup>{prefix.trim()}</sup>}
                 {numPart}

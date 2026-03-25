@@ -1,8 +1,24 @@
+import { 
+  BarChart3, 
+  MessageSquare, 
+  Megaphone, 
+  Laptop, 
+  Globe, 
+  Building2,
+  Zap,
+  Landmark,
+  FileText,
+  CreditCard,
+  Package,
+  ShoppingBag,
+  Phone
+} from 'lucide-react'
+
 // ─── Benefits ────────────────────────────────────────────────────────────────
 export const BENEFITS = [
   {
     idx: '01 / 06',
-    icon: '📊',
+    icon: BarChart3,
     value: 'AED 16,528',
     prefix: 'AED ',
     title: 'Free Zoho Credits',
@@ -10,7 +26,7 @@ export const BENEFITS = [
   },
   {
     idx: '02 / 06',
-    icon: '💬',
+    icon: MessageSquare,
     value: 'AED 3,922',
     prefix: 'AED ',
     title: 'WhatsApp Marketing',
@@ -18,7 +34,7 @@ export const BENEFITS = [
   },
   {
     idx: '03 / 06',
-    icon: '📣',
+    icon: Megaphone,
     value: 'AED 5,100',
     prefix: 'AED ',
     title: 'Social Media AI Platform',
@@ -26,7 +42,7 @@ export const BENEFITS = [
   },
   {
     idx: '04 / 06',
-    icon: '💻',
+    icon: Laptop,
     value: 'AED 3,800',
     prefix: 'AED ',
     title: 'Office Device Savings',
@@ -34,7 +50,7 @@ export const BENEFITS = [
   },
   {
     idx: '05 / 06',
-    icon: '🌐',
+    icon: Globe,
     value: 'AED 1,250',
     prefix: 'AED ',
     title: 'Free Website & Hosting',
@@ -42,7 +58,7 @@ export const BENEFITS = [
   },
   {
     idx: '06 / 06',
-    icon: '🏢',
+    icon: Building2,
     value: '60% OFF',
     prefix: '',
     title: 'Coworking Access',
@@ -52,14 +68,14 @@ export const BENEFITS = [
 
 // ─── Features ────────────────────────────────────────────────────────────────
 export const FEATURES = [
-  { icon: '⚡', name: 'Instant Business License',       sub: 'Fastest issuance in UAE — from AED 5,750' },
-  { icon: '🏦', name: 'Guaranteed Bank Account',        sub: 'Corporate account in as little as 3 working days' },
-  { icon: '📋', name: 'Corporate Tax Registration',     sub: 'Stay compliant and penalty-free from day one' },
-  { icon: '🌍', name: 'Import / Export Codes',          sub: 'Customs code valid across every UAE port' },
-  { icon: '💳', name: 'Multi-Currency Payments',        sub: 'USD, EUR, AED, GBP, YEN via PayCaps & TotalPay' },
-  { icon: '📦', name: 'Last Mile Logistics',            sub: 'Aramex, FedEx, CSS and eLogix partnerships' },
-  { icon: '🛍️', name: 'Online Marketplace Access',     sub: 'List on Noon, Amazon & more — hassle-free' },
-  { icon: '📞', name: 'Free Phone Answering Service',   sub: 'UAE landline + virtual receptionist' },
+  { icon: Zap,          name: 'Instant Business License',       sub: 'Fastest issuance in UAE — from AED 5,750' },
+  { icon: Landmark,     name: 'Guaranteed Bank Account',        sub: 'Corporate account in as little as 3 working days' },
+  { icon: FileText,     name: 'Corporate Tax Registration',     sub: 'Stay compliant and penalty-free from day one' },
+  { icon: Globe,        name: 'Import / Export Codes',          sub: 'Customs code valid across every UAE port' },
+  { icon: CreditCard,   name: 'Multi-Currency Payments',        sub: 'USD, EUR, AED, GBP, YEN via PayCaps & TotalPay' },
+  { icon: Package,      name: 'Last Mile Logistics',            sub: 'Aramex, FedEx, CSS and eLogix partnerships' },
+  { icon: ShoppingBag,  name: 'Online Marketplace Access',     sub: 'List on Noon, Amazon & more — hassle-free' },
+  { icon: Phone,        name: 'Free Phone Answering Service',   sub: 'UAE landline + virtual receptionist' },
 ]
 
 // ─── Steps ───────────────────────────────────────────────────────────────────
