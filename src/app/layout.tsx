@@ -84,7 +84,7 @@ export default function RootLayout({
             `,
           }}
         />
-        {/* Stape GTM — server-side container (commented out — encountering issues)
+        {/* Stape GTM — server-side container (disabled)
         <Script
           id="gtm-stape"
           strategy="afterInteractive"
@@ -111,7 +111,7 @@ export default function RootLayout({
         />
       </head>
       <body className={`${dmSans.variable} antialiased`}>
-        {/* Stape GTM — noscript fallback (commented out — encountering issues)
+        {/* Stape GTM — noscript fallback (disabled)
         <noscript>
           <iframe
             src="https://marktmen.best-solution.ae/ns.html?id=GTM-5VWSND9M"
@@ -120,6 +120,7 @@ export default function RootLayout({
           />
         </noscript>
         */}
+
         {/* GTM Web — noscript fallback */}
         <noscript>
           <iframe
