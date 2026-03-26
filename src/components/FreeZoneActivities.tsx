@@ -417,7 +417,7 @@ function InquiryForm({ selectedInquiry, setSelectedInquiry, submitted, setSubmit
                         </p>
                     </div>
 
-                    <div className="space-y-4">
+                    <form className="space-y-4" onSubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
                         {submitError && (
                             <div className="bg-red-500/10 border border-red-500/20 text-red-600 px-4 py-3 rounded-xl text-xs text-center font-medium">
                                 {submitError}
@@ -453,7 +453,7 @@ function InquiryForm({ selectedInquiry, setSelectedInquiry, submitted, setSubmit
                             placeholder="WhatsApp Number"
                         />
                         <button
-                            onClick={handleSubmit}
+                            type="submit"
                             disabled={isSubmitting}
                             className="btn-primary w-full mt-2"
                         >
@@ -470,7 +470,7 @@ function InquiryForm({ selectedInquiry, setSelectedInquiry, submitted, setSubmit
                                 Cancel
                             </button>
                         )}
-                    </div>
+                    </form>
                 </>
             ) : (
                 <div className="flex flex-col items-center justify-center text-center py-10">
