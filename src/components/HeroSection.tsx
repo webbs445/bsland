@@ -323,7 +323,7 @@ export default function HeroSection() {
                                         <div className="w-5 h-5 rounded flex items-center justify-center bg-white/5 group-hover:bg-brand-copper/20 transition-colors">
                                             <Phone className="w-2.5 h-2.5 text-brand-copper" />
                                         </div>
-                                        <span>Call: +971 4 553 1546</span>
+                                        <span>Call: +971 52 233 0011</span>
                                     </a>
                                     <div className="w-px h-3 bg-white/10 hidden sm:block"></div>
                                     <a href="https://wa.me/971522330011" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-white transition-colors group">
