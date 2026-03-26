@@ -417,7 +417,7 @@ function InquiryForm({ selectedInquiry, setSelectedInquiry, submitted, setSubmit
                         </p>
                     </div>
 
-                    <div className="space-y-3">
+                    <div className="space-y-4">
                         {submitError && (
                             <div className="bg-red-500/10 border border-red-500/20 text-red-600 px-4 py-3 rounded-xl text-xs text-center font-medium">
                                 {submitError}
