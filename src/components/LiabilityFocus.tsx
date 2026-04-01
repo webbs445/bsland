@@ -7,6 +7,7 @@ import { ShieldAlert, UserPlus, Globe, Layers, Check, X, CheckCircle2, ArrowRigh
 import 'react-phone-number-input/style.css';
 import PhoneInput, { parsePhoneNumber } from 'react-phone-number-input';
 import { submitLeadAction } from '@/app/actions/lead';
+import { useUTMParams } from '@/hooks/useUTMParams';
 
 const benefits = [
     {
@@ -60,6 +61,7 @@ export default function LiabilityFocus() {
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitted, setSubmitted] = useState(false);
+    const utms = useUTMParams();
 
     useEffect(() => {
         setMounted(true);
@@ -89,7 +91,8 @@ export default function LiabilityFocus() {
                 custom_client_profile_and_requirement: `[Liability Focus] Selected Path: Setup LLC`,
                 email_id: formData.email,
                 mobile_no: formData.whatsapp,
-                country: countryName
+                country: countryName,
+                ...utms
             });
             setSubmitted(true);
         } catch (error) {

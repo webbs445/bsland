@@ -21,6 +21,7 @@ import {
 import 'react-phone-number-input/style.css';
 import PhoneInput, { parsePhoneNumber } from 'react-phone-number-input';
 import { submitLeadAction } from '@/app/actions/lead';
+import { useUTMParams } from '@/hooks/useUTMParams';
 
 const options = [
     {
@@ -106,6 +107,7 @@ export default function SetupOptions() {
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitted, setSubmitted] = useState(false);
+    const utms = useUTMParams();
 
     useEffect(() => {
         setMounted(true);
@@ -135,7 +137,8 @@ export default function SetupOptions() {
                 custom_client_profile_and_requirement: `[Setup Options] Selected Path: ${hovered.title}`,
                 email_id: formData.email,
                 mobile_no: formData.whatsapp,
-                country: countryName
+                country: countryName,
+                ...utms
             });
             setSubmitted(true);
         } catch (error) {

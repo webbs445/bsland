@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import HeroSection from "@/components/HeroSection";
 import SetupOptions from "@/components/SetupOptions";
 import WhyChooseUs from "@/components/WhyChooseUs";
@@ -13,51 +14,50 @@ import StickyNav from "@/components/StickyNav";
 export default function HomePage() {
   return (
     <main className="min-h-screen bg-white">
-
-
-      {/* Sticky Navigation */}
       <StickyNav />
 
-      {/* Hero Section with Lead Form */}
-      <section id="contact">
-        <HeroSection />
-      </section>
+      <Suspense fallback={<div className="min-h-screen bg-brand-navy" />}>
+        {/* Hero Section with Lead Form */}
+        <section id="contact">
+          <HeroSection />
+        </section>
 
-      {/* Activity Finder */}
-      <FreeZoneActivities />
-      {/* Interactive Setup Intelligence (Quiz & Calculator) */}
-      <section id="intelligence">
-        <IntelligenceSection />
-      </section>
+        {/* Activity Finder */}
+        <FreeZoneActivities />
 
+        {/* Interactive Setup Intelligence (Quiz & Calculator) */}
+        <section id="intelligence">
+          <IntelligenceSection />
+        </section>
 
-      {/* License Options Comparison */}
-      <section id="options">
-        <SetupOptions />
-      </section>
+        {/* License Options Comparison */}
+        <section id="options">
+          <SetupOptions />
+        </section>
 
-      {/* Value Propositions */}
-      <section id="why-us">
-        <WhyChooseUs />
-      </section>
+        {/* Value Propositions */}
+        <section id="why-us">
+          <WhyChooseUs />
+        </section>
 
-      {/* Deep Dive: Liability & LLC */}
-      <LiabilityFocus />
+        {/* Deep Dive: Liability & LLC */}
+        <LiabilityFocus />
 
-      {/* Company Heritage & Team */}
-      <section id="team">
-        <TeamSection />
-      </section>
+        {/* Company Heritage & Team */}
+        <section id="team">
+          <TeamSection />
+        </section>
 
-      {/* Commercial Packages & FAQ */}
-      <section id="pricing">
-        <PricingFAQ />
-      </section>
+        {/* Commercial Packages & FAQ */}
+        <section id="pricing">
+          <PricingFAQ />
+        </section>
 
-      {/* Testimonials */}
-      <TestimonialsSection />
+        {/* Testimonials */}
+        <TestimonialsSection />
 
-      <Footer />
+        <Footer />
+      </Suspense>
     </main>
   );
 }

@@ -14,6 +14,7 @@ import {
 import 'react-phone-number-input/style.css';
 import PhoneInput, { parsePhoneNumber } from 'react-phone-number-input';
 import { submitLeadAction } from '@/app/actions/lead';
+import { useUTMParams } from '@/hooks/useUTMParams';
 
 const quizSteps = [
     {
@@ -114,6 +115,7 @@ export default function FreeZoneQuiz() {
     const [submitted, setSubmitted] = useState(false);
     const [submitError, setSubmitError] = useState<string | null>(null);
     const [selectedRecommendation, setSelectedRecommendation] = useState<string | null>(null);
+    const utms = useUTMParams();
 
     useEffect(() => { setMounted(true); }, []);
 
@@ -171,7 +173,8 @@ export default function FreeZoneQuiz() {
                 custom_client_profile_and_requirement: profileStr,
                 email_id: formData.email,
                 mobile_no: formData.whatsapp,
-                country: countryName
+                country: countryName,
+                ...utms
             });
             setSubmitted(true);
         } catch (error) {

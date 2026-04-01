@@ -6,6 +6,7 @@ import { Globe, Building2, Banknote, ArrowRight, Phone, CheckCircle2, MessageCir
 import { submitLeadAction } from '@/app/actions/lead';
 import 'react-phone-number-input/style.css';
 import PhoneInput, { parsePhoneNumber } from 'react-phone-number-input';
+import { useUTMParams } from '@/hooks/useUTMParams';
 
 const highlights = [
     { icon: Globe, text: "Trade Freely", color: "text-blue-500" },
@@ -26,6 +27,7 @@ export default function HeroSection() {
     const [tickerIndex, setTickerIndex] = useState(0);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitted, setSubmitted] = useState(false);
+    const utms = useUTMParams();
 
     const tickerMessages = [
         "78% of new investors use our guide before choosing a free zone.",
@@ -90,7 +92,8 @@ export default function HeroSection() {
                 custom_client_profile_and_requirement: `Services Looking For: ${formData.lookingTo}`,
                 email_id: formData.email,
                 mobile_no: formData.whatsapp,
-                country: countryName
+                country: countryName,
+                ...utms
             });
             setSubmitted(true);
         } catch (error) {
