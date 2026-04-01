@@ -1,3 +1,68 @@
+// ─── Lead Source Resolution ──────────────────────────────────────────────────
+
+let cachedLeadSources: string[] | null = null;
+
+// Aliases for common ad platform utm_source values
+const SOURCE_ALIASES: Record<string, string> = {
+    fb: 'Meta Ads',
+    ig: 'Meta Ads',
+    instagram: 'Meta Ads',
+    meta: 'Meta Ads',
+    facebook: 'Meta Ads',
+    mailchimp: 'Email Campaign',
+    newsletter: 'Email Campaign',
+    whatsapp: 'WhatsApp Best Solution',
+    referral: 'Reference',
+    reference: 'Reference',
+};
+
+async function getLeadSources(): Promise<string[]> {
+    if (cachedLeadSources !== null) return cachedLeadSources;
+
+    const apiUrl = process.env.ERPNEXT_API_URL;
+    const apiKey = process.env.ERPNEXT_API_KEY;
+    const apiSecret = process.env.ERPNEXT_API_SECRET;
+    if (!apiUrl || !apiKey || !apiSecret) return [];
+
+    try {
+        const baseUrl = apiUrl.replace('/api/resource/Lead', '');
+        const res = await fetch(`${baseUrl}/api/resource/Lead Source?fields=["name"]&limit_page_length=100`, {
+            headers: { Accept: 'application/json', Authorization: `token ${apiKey}:${apiSecret}` },
+        });
+        if (res.ok) {
+            const json = await res.json();
+            const sources: string[] = json.data.map((d: { name: string }) => d.name);
+            cachedLeadSources = sources;
+            return sources;
+        }
+    } catch (e) {
+        console.error('Failed to fetch Lead Sources:', e);
+    }
+    return [];
+}
+
+export async function resolveLeadSource(utmSource?: string): Promise<string> {
+    if (!utmSource) return 'Website';
+
+    const src = utmSource.toLowerCase();
+
+    // Check alias map first
+    if (SOURCE_ALIASES[src]) return SOURCE_ALIASES[src];
+
+    // Fetch actual Lead Sources from ERPNext and try exact match (case-insensitive)
+    const sources = await getLeadSources();
+    const exactMatch = sources.find(s => s.toLowerCase() === src);
+    if (exactMatch) return exactMatch;
+
+    // Try contains match (e.g. utm_source="google_ads" matches "Google")
+    const containsMatch = sources.find(s => src.includes(s.toLowerCase()) || s.toLowerCase().includes(src));
+    if (containsMatch) return containsMatch;
+
+    return 'Website';
+}
+
+// ─── Lead Submission ─────────────────────────────────────────────────────────
+
 export async function submitToERPNext(data: {
     first_name: string;
     last_name: string;

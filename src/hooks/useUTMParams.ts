@@ -2,31 +2,15 @@
 
 const UTM_STORAGE_KEY = 'bsl_utm_params';
 
-function getLeadSource(utmSource: string | null): string {
-    if (!utmSource) return 'Website';
-
-    const src = utmSource.toLowerCase();
-
-    if (src === 'google') return 'Google';
-    if (['facebook', 'fb', 'meta', 'ig', 'instagram'].includes(src)) return 'Meta Ads';
-    if (['email', 'mailchimp', 'newsletter'].includes(src)) return 'Email Campaign';
-    if (src === 'whatsapp') return 'WhatsApp Best Solution';
-    if (['referral', 'reference'].includes(src)) return 'Reference';
-
-    return 'Website';
-}
-
 function readAndStoreUTM(): Record<string, string> {
-    if (typeof window === 'undefined') return { source: 'Website' };
+    if (typeof window === 'undefined') return {};
 
     // Check if current URL has UTM params — if so, store them
     const searchParams = new URLSearchParams(window.location.search);
     const utmSource = searchParams.get('utm_source');
 
     if (utmSource || searchParams.get('gclid')) {
-        const params: Record<string, string> = {
-            source: getLeadSource(utmSource),
-        };
+        const params: Record<string, string> = {};
 
         const utm_campaign = searchParams.get('utm_campaign');
         const utm_term = searchParams.get('utm_term');
@@ -55,14 +39,13 @@ function readAndStoreUTM(): Record<string, string> {
         if (stored) return JSON.parse(stored);
     } catch (e) { /* ignore storage errors */ }
 
-    return { source: 'Website' };
+    return {};
 }
 
 export function getUTMParams(): Record<string, string> {
     return readAndStoreUTM();
 }
 
-// Hook wrapper for backward compatibility
 export function useUTMParams(): Record<string, string> {
     return getUTMParams();
 }
