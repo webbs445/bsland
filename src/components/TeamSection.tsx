@@ -7,7 +7,7 @@ import { MapPin, Quote, Star, Users, Building2, Briefcase, Award, ArrowRight, X,
 import 'react-phone-number-input/style.css';
 import PhoneInput, { parsePhoneNumber } from 'react-phone-number-input';
 import { submitLeadAction } from '@/app/actions/lead';
-import { useUTMParams } from '@/hooks/useUTMParams';
+import { getUTMParams } from '@/hooks/useUTMParams';
 
 export default function TeamSection() {
     const team = [
@@ -45,7 +45,6 @@ export default function TeamSection() {
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitted, setSubmitted] = useState(false);
-    const utms = useUTMParams();
 
     useEffect(() => {
         setMounted(true);
@@ -68,7 +67,8 @@ export default function TeamSection() {
                 }
             }
 
-            await submitLeadAction({
+            const utmParams = getUTMParams();
+            const result = await submitLeadAction({
                 first_name: formData.firstName,
                 last_name: formData.lastName,
                 custom_service_enquired: "Business Setup",
@@ -76,11 +76,16 @@ export default function TeamSection() {
                 email_id: formData.email,
                 mobile_no: formData.whatsapp,
                 country: countryName,
-                ...utms
+                ...utmParams,
             });
-            setSubmitted(true);
+            if (result.success) {
+                setSubmitted(true);
+            } else {
+                alert(result.error || 'Submission failed. Please check your details and try again.');
+            }
         } catch (error) {
             console.error(error);
+            alert('An error occurred. Please try again.');
         } finally {
             setIsSubmitting(false);
         }

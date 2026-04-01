@@ -7,7 +7,7 @@ import { ShieldAlert, UserPlus, Globe, Layers, Check, X, CheckCircle2, ArrowRigh
 import 'react-phone-number-input/style.css';
 import PhoneInput, { parsePhoneNumber } from 'react-phone-number-input';
 import { submitLeadAction } from '@/app/actions/lead';
-import { useUTMParams } from '@/hooks/useUTMParams';
+import { getUTMParams } from '@/hooks/useUTMParams';
 
 const benefits = [
     {
@@ -61,7 +61,6 @@ export default function LiabilityFocus() {
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitted, setSubmitted] = useState(false);
-    const utms = useUTMParams();
 
     useEffect(() => {
         setMounted(true);
@@ -69,6 +68,7 @@ export default function LiabilityFocus() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        const utmParams = getUTMParams();
         setIsSubmitting(true);
         try {
             let countryName = 'United Arab Emirates';
@@ -84,7 +84,7 @@ export default function LiabilityFocus() {
                 }
             }
 
-            await submitLeadAction({
+            const result = await submitLeadAction({
                 first_name: formData.firstName,
                 last_name: formData.lastName,
                 custom_service_enquired: "Business Setup",
@@ -92,11 +92,16 @@ export default function LiabilityFocus() {
                 email_id: formData.email,
                 mobile_no: formData.whatsapp,
                 country: countryName,
-                ...utms
+                ...utmParams,
             });
-            setSubmitted(true);
+            if (result.success) {
+                setSubmitted(true);
+            } else {
+                alert(result.error || 'Submission failed. Please check your details and try again.');
+            }
         } catch (error) {
             console.error(error);
+            alert('An error occurred. Please try again.');
         } finally {
             setIsSubmitting(false);
         }

@@ -7,7 +7,8 @@ export async function submitToERPNext(data: {
     email_id: string;
     mobile_no: string;
     country?: string;
-    // ✅ Exact Frappe field names
+    source?: string;
+    campaign_name?: string;
     custom_ad_set_name?: string;
     custom_ad_name?: string;
     custom_form_name?: string;
@@ -24,6 +25,23 @@ export async function submitToERPNext(data: {
     }
 
     try {
+        // Validate campaign_name exists in ERPNext before sending (it's a Link field)
+        if (data.campaign_name) {
+            const campaignCheck = await fetch(
+                `${apiUrl.replace('/api/resource/Lead', '')}/api/resource/Campaign/${encodeURIComponent(data.campaign_name)}`,
+                {
+                    headers: {
+                        'Accept': 'application/json',
+                        'Authorization': `token ${apiKey}:${apiSecret}`
+                    }
+                }
+            );
+            if (!campaignCheck.ok) {
+                // Campaign doesn't exist — remove it so the rest of the data still saves
+                delete data.campaign_name;
+            }
+        }
+
         const response = await fetch(apiUrl, {
             method: 'POST',
             headers: {

@@ -10,7 +10,8 @@ export async function submitLeadAction(data: {
     email_id: string;
     mobile_no: string;
     country?: string;
-    // Exact Frappe field names
+    source?: string;
+    campaign_name?: string;
     custom_ad_set_name?: string;
     custom_ad_name?: string;
     custom_form_name?: string;
@@ -21,7 +22,6 @@ export async function submitLeadAction(data: {
     const payload = {
         ...data,
         status: "Lead"
-
     };
 
     const result = await submitToERPNext(payload);

@@ -15,7 +15,7 @@ import SetupQuiz from "./SetupQuiz";
 import 'react-phone-number-input/style.css';
 import PhoneInput, { parsePhoneNumber } from 'react-phone-number-input';
 import { submitLeadAction } from '@/app/actions/lead';
-import { useUTMParams } from '@/hooks/useUTMParams';
+import { getUTMParams } from '@/hooks/useUTMParams';
 
 // ─── Data & Constants ────────────────────────────────────────────────────────
 
@@ -123,7 +123,6 @@ export default function IntelligenceSection() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitted, setSubmitted] = useState(false);
     const [submitError, setSubmitError] = useState<string | null>(null);
-    const utms = useUTMParams();
 
     useEffect(() => { setMounted(true); }, []);
 
@@ -171,6 +170,7 @@ export default function IntelligenceSection() {
 
     const handleModalSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        const utmParams = getUTMParams();
         setIsSubmitting(true);
         setSubmitError(null);
         try {
@@ -187,7 +187,7 @@ export default function IntelligenceSection() {
 
             const authName = companyType === 'freezone' ? (freeZones.find((f) => f.id === selectedFZ)?.name || '') : companyType;
 
-            await submitLeadAction({
+            const result = await submitLeadAction({
                 first_name: formData.firstName,
                 last_name: formData.lastName,
                 custom_service_enquired: "Business Setup",
@@ -195,9 +195,13 @@ export default function IntelligenceSection() {
                 email_id: formData.email,
                 mobile_no: formData.whatsapp,
                 country: countryName,
-                ...utms
+                ...utmParams,
             });
-            setSubmitted(true);
+            if (result.success) {
+                setSubmitted(true);
+            } else {
+                setSubmitError(result.error || "Submission failed. Please check your details and try again.");
+            }
         } catch (error) {
             console.error(error);
             setSubmitError("Failed to submit inquiry. Please try again.");

@@ -8,7 +8,7 @@ import Image from 'next/image';
 import 'react-phone-number-input/style.css';
 import PhoneInput, { parsePhoneNumber } from 'react-phone-number-input';
 import { submitLeadAction } from '@/app/actions/lead';
-import { useUTMParams } from '@/hooks/useUTMParams';
+import { getUTMParams } from '@/hooks/useUTMParams';
 
 export default function WhyChooseUs() {
     const features = [
@@ -56,7 +56,6 @@ export default function WhyChooseUs() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitted, setSubmitted] = useState(false);
     const [submitError, setSubmitError] = useState<string | null>(null);
-    const utms = useUTMParams();
 
     useEffect(() => { setMounted(true); }, []);
 
@@ -71,6 +70,7 @@ export default function WhyChooseUs() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        const utmParams = getUTMParams();
         setIsSubmitting(true);
         setSubmitError(null);
         try {
@@ -84,7 +84,7 @@ export default function WhyChooseUs() {
                     }
                 } catch (e) { console.error(e); }
             }
-            await submitLeadAction({
+            const result = await submitLeadAction({
                 first_name: formData.firstName,
                 last_name: formData.lastName,
                 custom_service_enquired: "Business Setup",
@@ -92,9 +92,13 @@ export default function WhyChooseUs() {
                 email_id: formData.email,
                 mobile_no: formData.whatsapp,
                 country: countryName,
-                ...utms
+                ...utmParams,
             });
-            setSubmitted(true);
+            if (result.success) {
+                setSubmitted(true);
+            } else {
+                setSubmitError(result.error || "Submission failed. Please check your details and try again.");
+            }
         } catch (error) {
             console.error(error);
             setSubmitError("Failed to submit. Please try again.");

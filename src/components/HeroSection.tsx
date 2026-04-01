@@ -6,7 +6,7 @@ import { Globe, Building2, Banknote, ArrowRight, Phone, CheckCircle2, MessageCir
 import { submitLeadAction } from '@/app/actions/lead';
 import 'react-phone-number-input/style.css';
 import PhoneInput, { parsePhoneNumber } from 'react-phone-number-input';
-import { useUTMParams } from '@/hooks/useUTMParams';
+import { getUTMParams } from '@/hooks/useUTMParams';
 
 const highlights = [
     { icon: Globe, text: "Trade Freely", color: "text-blue-500" },
@@ -27,7 +27,6 @@ export default function HeroSection() {
     const [tickerIndex, setTickerIndex] = useState(0);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitted, setSubmitted] = useState(false);
-    const utms = useUTMParams();
 
     const tickerMessages = [
         "78% of new investors use our guide before choosing a free zone.",
@@ -56,6 +55,7 @@ export default function HeroSection() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        const utmParams = getUTMParams();
         setIsSubmitting(true);
         try {
             const countryMap: Record<string, string> = {
@@ -85,7 +85,7 @@ export default function HeroSection() {
                 }
             }
 
-            await submitLeadAction({
+            const result = await submitLeadAction({
                 first_name: formData.firstName,
                 last_name: formData.lastName,
                 custom_service_enquired: serviceMap[formData.lookingTo] || "Business Setup",
@@ -93,11 +93,16 @@ export default function HeroSection() {
                 email_id: formData.email,
                 mobile_no: formData.whatsapp,
                 country: countryName,
-                ...utms
+                ...utmParams,
             });
-            setSubmitted(true);
+            if (result.success) {
+                setSubmitted(true);
+            } else {
+                alert(result.error || 'Submission failed. Please check your details and try again.');
+            }
         } catch (error) {
             console.error(error);
+            alert('An error occurred. Please try again.');
         } finally {
             setIsSubmitting(false);
         }
@@ -326,7 +331,7 @@ export default function HeroSection() {
                                         <div className="w-5 h-5 rounded flex items-center justify-center bg-white/5 group-hover:bg-brand-copper/20 transition-colors">
                                             <Phone className="w-2.5 h-2.5 text-brand-copper" />
                                         </div>
-                                        <span>Call: +971 52 233 0011</span>
+                                        <span>Call: +971 4 553 1546</span>
                                     </a>
                                     <div className="w-px h-3 bg-white/10 hidden sm:block"></div>
                                     <a href="https://wa.me/971522330011" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-white transition-colors group">
