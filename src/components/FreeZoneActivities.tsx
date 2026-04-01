@@ -6,7 +6,6 @@ import { ACTIVITIES_CATEGORIES } from './FreeZoneData';
 import 'react-phone-number-input/style.css';
 import PhoneInput, { parsePhoneNumber } from 'react-phone-number-input';
 import { submitLeadAction } from '@/app/actions/lead';
-import { useUTMParams } from '@/hooks/useUTMParams';
 
 export default function FreeZoneActivities() {
     const [searchQuery, setSearchQuery] = useState('');
@@ -20,7 +19,6 @@ export default function FreeZoneActivities() {
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
     const tabsRef = useRef<HTMLDivElement>(null);
-    const utms = useUTMParams();
 
     const filteredCategories = ACTIVITIES_CATEGORIES.map(cat => {
         if (!searchQuery) return { ...cat, isMatch: true };
@@ -78,8 +76,7 @@ export default function FreeZoneActivities() {
                 custom_client_profile_and_requirement: `[Free Zone Finder Form] Activity: ${selectedInquiry.activity} | Location: ${selectedInquiry.zone}`,
                 email_id: email,
                 mobile_no: phone,
-                country: countryCode,
-                ...utms
+                country: countryCode
             });
 
             if (result && !result.success) {
@@ -420,7 +417,7 @@ function InquiryForm({ selectedInquiry, setSelectedInquiry, submitted, setSubmit
                         </p>
                     </div>
 
-                    <form className="space-y-4" onSubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
+                    <div className="space-y-3">
                         {submitError && (
                             <div className="bg-red-500/10 border border-red-500/20 text-red-600 px-4 py-3 rounded-xl text-xs text-center font-medium">
                                 {submitError}
@@ -456,7 +453,7 @@ function InquiryForm({ selectedInquiry, setSelectedInquiry, submitted, setSubmit
                             placeholder="WhatsApp Number"
                         />
                         <button
-                            type="submit"
+                            onClick={handleSubmit}
                             disabled={isSubmitting}
                             className="btn-primary w-full mt-2"
                         >
@@ -473,7 +470,7 @@ function InquiryForm({ selectedInquiry, setSelectedInquiry, submitted, setSubmit
                                 Cancel
                             </button>
                         )}
-                    </form>
+                    </div>
                 </>
             ) : (
                 <div className="flex flex-col items-center justify-center text-center py-10">
