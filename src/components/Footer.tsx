@@ -21,6 +21,7 @@ import {
 import 'react-phone-number-input/style.css';
 import PhoneInput, { parsePhoneNumber } from 'react-phone-number-input';
 import { submitLeadAction } from '@/app/actions/lead';
+import { useUTMParams } from '@/hooks/useUTMParams';
 
 export default function Footer() {
     const currentYear = new Date().getFullYear();
@@ -42,6 +43,7 @@ export default function Footer() {
     const [formData, setFormData] = useState({ firstName: '', lastName: '', email: '', whatsapp: '' });
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitted, setSubmitted] = useState(false);
+    const utms = useUTMParams();
 
     useEffect(() => { setMounted(true); }, []);
 
@@ -73,7 +75,8 @@ export default function Footer() {
                 custom_client_profile_and_requirement: `[Footer CTA] Service: ${selectedService || 'General'}`,
                 email_id: formData.email,
                 mobile_no: formData.whatsapp,
-                country: countryName
+                country: countryName,
+                ...utms
             });
             setSubmitted(true);
         } catch (error) { console.error(error); }

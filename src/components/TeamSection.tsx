@@ -7,6 +7,7 @@ import { MapPin, Quote, Star, Users, Building2, Briefcase, Award, ArrowRight, X,
 import 'react-phone-number-input/style.css';
 import PhoneInput, { parsePhoneNumber } from 'react-phone-number-input';
 import { submitLeadAction } from '@/app/actions/lead';
+import { useUTMParams } from '@/hooks/useUTMParams';
 
 export default function TeamSection() {
     const team = [
@@ -44,6 +45,7 @@ export default function TeamSection() {
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitted, setSubmitted] = useState(false);
+    const utms = useUTMParams();
 
     useEffect(() => {
         setMounted(true);
@@ -73,7 +75,8 @@ export default function TeamSection() {
                 custom_client_profile_and_requirement: `[Team Section] Selected Path: Speak to an Expert`,
                 email_id: formData.email,
                 mobile_no: formData.whatsapp,
-                country: countryName
+                country: countryName,
+                ...utms
             });
             setSubmitted(true);
         } catch (error) {

@@ -7,6 +7,7 @@ import { ChevronDown, Check, ArrowRight, X, CheckCircle2 } from 'lucide-react';
 import 'react-phone-number-input/style.css';
 import PhoneInput, { parsePhoneNumber } from 'react-phone-number-input';
 import { submitLeadAction } from '@/app/actions/lead';
+import { useUTMParams } from '@/hooks/useUTMParams';
 
 export default function PricingFAQ() {
     const [activeFaq, setActiveFaq] = useState<number | null>(null);
@@ -22,6 +23,7 @@ export default function PricingFAQ() {
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitted, setSubmitted] = useState(false);
+    const utms = useUTMParams();
 
     useEffect(() => {
         setMounted(true);
@@ -51,7 +53,8 @@ export default function PricingFAQ() {
                 custom_client_profile_and_requirement: `[FAQ Section] General Inquiry`,
                 email_id: formData.email,
                 mobile_no: formData.whatsapp,
-                country: countryName
+                country: countryName,
+                ...utms
             });
             setSubmitted(true);
         } catch (error) {

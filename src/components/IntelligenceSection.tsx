@@ -15,6 +15,7 @@ import SetupQuiz from "./SetupQuiz";
 import 'react-phone-number-input/style.css';
 import PhoneInput, { parsePhoneNumber } from 'react-phone-number-input';
 import { submitLeadAction } from '@/app/actions/lead';
+import { useUTMParams } from '@/hooks/useUTMParams';
 
 // ─── Data & Constants ────────────────────────────────────────────────────────
 
@@ -122,6 +123,7 @@ export default function IntelligenceSection() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitted, setSubmitted] = useState(false);
     const [submitError, setSubmitError] = useState<string | null>(null);
+    const utms = useUTMParams();
 
     useEffect(() => { setMounted(true); }, []);
 
@@ -192,7 +194,8 @@ export default function IntelligenceSection() {
                 custom_client_profile_and_requirement: `[Cost Calculator] Type: ${companyType} | Auth: ${authName} | Visas: ${visaCount} | View: ${calcView} | Total: AED ${displayedTotal.toLocaleString()}`,
                 email_id: formData.email,
                 mobile_no: formData.whatsapp,
-                country: countryName
+                country: countryName,
+                ...utms
             });
             setSubmitted(true);
         } catch (error) {

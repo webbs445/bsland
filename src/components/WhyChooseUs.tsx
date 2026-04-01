@@ -8,6 +8,7 @@ import Image from 'next/image';
 import 'react-phone-number-input/style.css';
 import PhoneInput, { parsePhoneNumber } from 'react-phone-number-input';
 import { submitLeadAction } from '@/app/actions/lead';
+import { useUTMParams } from '@/hooks/useUTMParams';
 
 export default function WhyChooseUs() {
     const features = [
@@ -55,6 +56,7 @@ export default function WhyChooseUs() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitted, setSubmitted] = useState(false);
     const [submitError, setSubmitError] = useState<string | null>(null);
+    const utms = useUTMParams();
 
     useEffect(() => { setMounted(true); }, []);
 
@@ -89,7 +91,8 @@ export default function WhyChooseUs() {
                 custom_client_profile_and_requirement: `[Why Choose Us] Service: ${selectedService || 'General'} | CTA: Start Your Business Today`,
                 email_id: formData.email,
                 mobile_no: formData.whatsapp,
-                country: countryName
+                country: countryName,
+                ...utms
             });
             setSubmitted(true);
         } catch (error) {
