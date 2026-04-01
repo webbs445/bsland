@@ -1,6 +1,6 @@
 'use server';
 
-import { submitToERPNext } from '@/lib/erpnext';
+import { submitToERPNext, resolveLeadSource } from '@/lib/erpnext';
 
 export async function submitLeadAction(data: {
     first_name: string;
@@ -10,18 +10,21 @@ export async function submitLeadAction(data: {
     email_id: string;
     mobile_no: string;
     country?: string;
-    // Exact Frappe field names
+    source?: string;
+    campaign_name?: string;
     custom_ad_set_name?: string;
     custom_ad_name?: string;
     custom_form_name?: string;
     custom_platform?: string;
     custom_lead_id?: string;
 }) {
-    // Add the status field specifically defined by the user
+    // Resolve Lead Source from utm_source (custom_platform holds the raw value)
+    const source = await resolveLeadSource(data.custom_platform || undefined);
+
     const payload = {
         ...data,
-        status: "Lead"
-
+        status: "Lead",
+        source,
     };
 
     const result = await submitToERPNext(payload);
