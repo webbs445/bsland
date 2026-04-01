@@ -11,10 +11,8 @@ export async function submitLeadAction(data: {
     mobile_no: string;
     country?: string;
     // Exact Frappe field names
-    campaign_name?: string;
     custom_ad_set_name?: string;
     custom_ad_name?: string;
-    custom_button_name?: string;
     custom_form_name?: string;
     custom_platform?: string;
     custom_lead_id?: string;

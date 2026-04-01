@@ -7,7 +7,6 @@ export function useUTMParams() {
 
     return {
         // UTM values mapped to existing Frappe fields
-        campaign_name: searchParams.get('utm_campaign') || '',  // utm_campaign → campaign_name
         custom_ad_set_name: searchParams.get('utm_term') || '',  // utm_term → custom_ad_set_name
         custom_platform: searchParams.get('utm_source') || '',  // utm_source → custom_platform
         custom_form_name: searchParams.get('utm_medium') || '',  // utm_medium → custom_form_name
