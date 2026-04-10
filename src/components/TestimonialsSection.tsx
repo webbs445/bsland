@@ -27,8 +27,8 @@ export default function TeamSection() {
     }, [teamWithImages.length]);
 
     const stats = [
-        { label: "Years Expertise", value: "22+", icon: Award },
-        { label: "Businesses Set", value: "5.0K+", icon: Building2 },
+        { label: "Years Expertise", value: "23+", icon: Award },
+        { label: "Businesses Set", value: "5K+", icon: Building2 },
         { label: "Team Experts", value: "50+", icon: Users },
         { label: "Service Partners", value: "10+", icon: Briefcase }
     ];
@@ -217,8 +217,8 @@ export default function TeamSection() {
                                     <div className="flex items-center gap-1 text-[#fbbc04] mb-1">
                                         {[...Array(5)].map((_, i) => <Star key={i} className="w-3.5 h-3.5 fill-current" />)}
                                     </div>
-                                    <div className="text-[11px] font-black uppercase tracking-[0.1em] text-white">4.9/5 Average Rating</div>
-                                    <div className="text-[10px] font-bold text-white/30 uppercase mt-0.5">300+ Verified Reviews</div>
+                                    <div className="text-[11px] font-black uppercase tracking-[0.1em] text-white">4.8/5 Average Rating</div>
+                                    <div className="text-[10px] font-bold text-white/30 uppercase mt-0.5">200+ Verified Reviews</div>
                                 </div>
                             </div>
 

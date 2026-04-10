@@ -43,7 +43,7 @@ const tableData = [
     { label: 'Starting from', value: 'AED 20,000', featured: true, check: false },
 ];
 
-const trustItems = ['No Hidden Fees', 'Same-Day Consultation', '22+ Years Experience'];
+const trustItems = ['No Hidden Fees', 'Same-Day Consultation', '23+ Years Experience'];
 
 export default function LiabilityFocus() {
     const cardRef = useRef<HTMLDivElement>(null);

@@ -10,6 +10,7 @@ import FreeZoneActivities from "@/components/FreeZoneActivities";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import Footer from "@/components/Footer";
 import StickyNav from "@/components/StickyNav";
+import GeometricSeparator from "@/components/GeometricSeparator";
 
 export default function HomePage() {
   return (
@@ -20,14 +21,6 @@ export default function HomePage() {
         {/* Hero Section with Lead Form */}
         <section id="contact">
           <HeroSection />
-        </section>
-
-        {/* Activity Finder */}
-        <FreeZoneActivities />
-
-        {/* Interactive Setup Intelligence (Quiz & Calculator) */}
-        <section id="intelligence">
-          <IntelligenceSection />
         </section>
 
         {/* License Options Comparison */}
@@ -43,10 +36,22 @@ export default function HomePage() {
         {/* Deep Dive: Liability & LLC */}
         <LiabilityFocus />
 
-        {/* Company Heritage & Team */}
-        <section id="team">
-          <TeamSection />
+        {/* Interactive Setup Intelligence (Quiz & Calculator) */}
+        <section id="intelligence">
+          <IntelligenceSection />
         </section>
+
+        {/* Activity Finder */}
+        <FreeZoneActivities />
+
+        {/* Geometric Pattern Separator */}
+        <GeometricSeparator />
+
+
+        {/* Company Heritage & Team */}
+        {/* <section id="team">
+          <TeamSection />
+        </section> */}
 
         {/* Commercial Packages & FAQ */}
         <section id="pricing">

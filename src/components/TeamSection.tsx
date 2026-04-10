@@ -28,8 +28,8 @@ export default function TeamSection() {
     }, [teamWithImages.length]);
 
     const stats = [
-        { label: "Years Expertise", value: "22+", icon: Award },
-        { label: "Businesses Set", value: "5.0K+", icon: Building2 },
+        { label: "Years Expertise", value: "23+", icon: Award },
+        { label: "Businesses Set", value: "5K+", icon: Building2 },
         { label: "Team Experts", value: "50+", icon: Users },
         { label: "Service Partners", value: "10+", icon: Briefcase }
     ];
