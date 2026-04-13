@@ -246,7 +246,7 @@ export default function TeamSection() {
                                         </a>
                                     </div>
                                 </div>
-                                </div>
+
                             </div>
                         </div>
                     </div>
