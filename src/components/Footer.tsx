@@ -188,13 +188,6 @@ export default function Footer() {
                             </div>
 
                             <div className="h-px w-full bg-white/10" />
-
-                            {/* Egypt Office */}
-                            <div className="group">
-                                <p className="text-[10px] font-bold uppercase tracking-widest text-brand-copper mb-2">Egypt Office</p>
-                                <p className="text-sm text-white/60 leading-relaxed mb-3">Hyde Park New Cairo<br />Cairo, Egypt</p>
-                                <a href="mailto:info@best-solution.ae" className="text-xs font-medium italic text-white/40 group-hover:text-white transition-colors flex items-center gap-2"><Mail className="w-3.5 h-3.5" /> info@best-solution.ae</a>
-                            </div>
                         </div>
                     </div>
                 </div>
