@@ -242,24 +242,24 @@ export default function IntelligenceSection() {
                     >
                         Use our free tools to calculate costs, check eligibility, see the process, and compare structures.
                     </motion.p>
-                    <div className="flex flex-col sm:flex-row sm:inline-flex w-full sm:w-auto bg-white/5 p-1 rounded-xl border border-white/10 mb-4 mt-2 gap-1 sm:gap-0">
+                    <div className="flex flex-col sm:flex-row sm:inline-flex w-full sm:w-auto bg-white/5 p-1.5 rounded-2xl border border-white/10 mb-4 mt-2 gap-1 sm:gap-0">
                         <button
                             onClick={() => setActiveTab("quiz")}
-                            className={`px-5 py-3 sm:py-2.5 rounded-lg text-[9px] font-black uppercase tracking-widest transition-all w-full sm:w-auto ${activeTab === "quiz" ? 'bg-brand-copper text-brand-navy' : 'text-white/40 hover:text-white hover:bg-white/5'}`}
+                            className={`rounded-xl font-black uppercase tracking-widest transition-all w-full sm:w-auto ${activeTab === "quiz" ? 'px-7 py-3.5 sm:py-3 text-[11px] bg-brand-copper text-brand-navy' : 'px-5 py-3 sm:py-2.5 text-[10px] text-white/40 hover:text-white hover:bg-white/5'}`}
                         >
-                            Setup Quiz
+                            Find Jurisdiction
                         </button>
                         <button
                             onClick={() => setActiveTab("calculator")}
-                            className={`px-5 py-3 sm:py-2.5 rounded-lg text-[9px] font-black uppercase tracking-widest transition-all w-full sm:w-auto ${activeTab === "calculator" ? 'bg-brand-copper text-brand-navy' : 'text-white/40 hover:text-white hover:bg-white/5'}`}
+                            className={`rounded-xl font-black uppercase tracking-widest transition-all w-full sm:w-auto ${activeTab === "calculator" ? 'px-7 py-3.5 sm:py-3 text-[11px] bg-brand-copper text-brand-navy' : 'px-5 py-3 sm:py-2.5 text-[10px] text-white/40 hover:text-white hover:bg-white/5'}`}
                         >
                             Cost Calculator
                         </button>
                         <button
                             onClick={() => setActiveTab("freezone")}
-                            className={`px-5 py-3 sm:py-2.5 rounded-lg text-[9px] font-black uppercase tracking-widest transition-all w-full sm:w-auto ${activeTab === "freezone" ? 'bg-brand-copper text-brand-navy' : 'text-white/40 hover:text-white hover:bg-white/5'}`}
+                            className={`rounded-xl font-black uppercase tracking-widest transition-all w-full sm:w-auto ${activeTab === "freezone" ? 'px-7 py-3.5 sm:py-3 text-[11px] bg-brand-copper text-brand-navy' : 'px-5 py-3 sm:py-2.5 text-[10px] text-white/40 hover:text-white hover:bg-white/5'}`}
                         >
-                            Free Zone Match
+                            Exact your Freezone
                         </button>
                     </div>
                 </div>
