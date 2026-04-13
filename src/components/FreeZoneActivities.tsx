@@ -18,6 +18,7 @@ export default function FreeZoneActivities() {
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
+    const [showBrowser, setShowBrowser] = useState(false);
     const tabsRef = useRef<HTMLDivElement>(null);
 
     const filteredCategories = ACTIVITIES_CATEGORIES.map(cat => {
@@ -139,65 +140,122 @@ export default function FreeZoneActivities() {
                 </div>
 
                 {/* ─── DESKTOP: Side-by-side grid ─── */}
-                <div className="hidden lg:grid lg:grid-cols-12 gap-8 items-start">
-                    {/* Left — Activity Browser */}
-                    <div className="lg:col-span-8">
-                        <ActivityBrowser
-                            searchQuery={searchQuery}
-                            setSearchQuery={setSearchQuery}
-                            activeTab={activeTab}
-                            setActiveTab={setActiveTab}
-                            activeCategory={activeCategory}
-                            filteredCategories={filteredCategories}
-                            selectedInquiry={selectedInquiry}
-                            handleInquiry={handleInquiry}
-                            tabsRef={tabsRef}
-                            isMobile={false}
-                        />
-                    </div>
+                <div className="hidden lg:block">
+                    <AnimatePresence mode="wait">
+                        {!showBrowser ? (
+                            <motion.div
+                                key="explore-btn"
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: -10 }}
+                                className="flex justify-center"
+                            >
+                                <button
+                                    onClick={() => setShowBrowser(true)}
+                                    className="group inline-flex items-center gap-3 px-8 py-4 bg-brand-navy text-white rounded-2xl font-bold text-sm shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all"
+                                >
+                                    <Search size={18} className="text-brand-copper group-hover:scale-110 transition-transform" />
+                                    Explore Activities
+                                </button>
+                            </motion.div>
+                        ) : (
+                            <motion.div
+                                key="browser"
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: -20 }}
+                                className="grid grid-cols-12 gap-8 items-start"
+                            >
+                                {/* Left — Activity Browser */}
+                                <div className="lg:col-span-8">
+                                    <ActivityBrowser
+                                        searchQuery={searchQuery}
+                                        setSearchQuery={setSearchQuery}
+                                        activeTab={activeTab}
+                                        setActiveTab={setActiveTab}
+                                        activeCategory={activeCategory}
+                                        filteredCategories={filteredCategories}
+                                        selectedInquiry={selectedInquiry}
+                                        handleInquiry={handleInquiry}
+                                        tabsRef={tabsRef}
+                                        isMobile={false}
+                                        onClose={() => setShowBrowser(false)}
+                                    />
+                                </div>
 
-                    {/* Right — Inquiry / CTA */}
-                    <div className="lg:col-span-4 flex flex-col gap-5 lg:sticky lg:top-24">
-                        <AnimatePresence mode="wait">
-                            {selectedInquiry ? (
-                                <InquiryForm
-                                    key="inquiry"
-                                    selectedInquiry={selectedInquiry}
-                                    setSelectedInquiry={setSelectedInquiry}
-                                    submitted={submitted}
-                                    setSubmitted={setSubmitted}
-                                    isSubmitting={isSubmitting}
-                                    submitError={submitError}
-                                    firstName={firstName} setFirstName={setFirstName}
-                                    lastName={lastName} setLastName={setLastName}
-                                    email={email} setEmail={setEmail}
-                                    phone={phone} setPhone={setPhone}
-                                    handleSubmit={handleSubmit}
-                                />
-                            ) : (
-                                <CTACard key="cta" scrollToForm={scrollToForm} />
-                            )}
-                        </AnimatePresence>
+                                {/* Right — Inquiry / CTA */}
+                                <div className="lg:col-span-4 flex flex-col gap-5 lg:sticky lg:top-24">
+                                    <AnimatePresence mode="wait">
+                                        {selectedInquiry ? (
+                                            <InquiryForm
+                                                key="inquiry"
+                                                selectedInquiry={selectedInquiry}
+                                                setSelectedInquiry={setSelectedInquiry}
+                                                submitted={submitted}
+                                                setSubmitted={setSubmitted}
+                                                isSubmitting={isSubmitting}
+                                                submitError={submitError}
+                                                firstName={firstName} setFirstName={setFirstName}
+                                                lastName={lastName} setLastName={setLastName}
+                                                email={email} setEmail={setEmail}
+                                                phone={phone} setPhone={setPhone}
+                                                handleSubmit={handleSubmit}
+                                            />
+                                        ) : (
+                                            <CTACard key="cta" scrollToForm={scrollToForm} />
+                                        )}
+                                    </AnimatePresence>
 
-                        {/* Pro tip */}
-                        <ProTip />
-                    </div>
+                                    {/* Pro tip */}
+                                    <ProTip />
+                                </div>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
                 </div>
 
                 {/* ─── MOBILE: Stacked layout with bottom sheet ─── */}
                 <div className="lg:hidden">
-                    <ActivityBrowser
-                        searchQuery={searchQuery}
-                        setSearchQuery={setSearchQuery}
-                        activeTab={activeTab}
-                        setActiveTab={setActiveTab}
-                        activeCategory={activeCategory}
-                        filteredCategories={filteredCategories}
-                        selectedInquiry={selectedInquiry}
-                        handleInquiry={handleInquiry}
-                        tabsRef={tabsRef}
-                        isMobile={true}
-                    />
+                    <AnimatePresence mode="wait">
+                        {!showBrowser ? (
+                            <motion.div
+                                key="explore-btn-mobile"
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: -10 }}
+                                className="flex justify-center"
+                            >
+                                <button
+                                    onClick={() => setShowBrowser(true)}
+                                    className="group inline-flex items-center gap-3 px-7 py-3.5 bg-brand-navy text-white rounded-2xl font-bold text-sm shadow-lg hover:shadow-xl active:scale-[0.98] transition-all"
+                                >
+                                    <Search size={16} className="text-brand-copper" />
+                                    Explore Activities
+                                </button>
+                            </motion.div>
+                        ) : (
+                            <motion.div
+                                key="browser-mobile"
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: -20 }}
+                            >
+                                <ActivityBrowser
+                                    searchQuery={searchQuery}
+                                    setSearchQuery={setSearchQuery}
+                                    activeTab={activeTab}
+                                    setActiveTab={setActiveTab}
+                                    activeCategory={activeCategory}
+                                    filteredCategories={filteredCategories}
+                                    selectedInquiry={selectedInquiry}
+                                    handleInquiry={handleInquiry}
+                                    tabsRef={tabsRef}
+                                    isMobile={true}
+                                    onClose={() => setShowBrowser(false)}
+                                />
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
 
 
 
@@ -259,9 +317,18 @@ export default function FreeZoneActivities() {
 
 // ─── Sub-components ────────────────────────────────────────────────
 
-function ActivityBrowser({ searchQuery, setSearchQuery, activeTab, setActiveTab, activeCategory, filteredCategories, selectedInquiry, handleInquiry, tabsRef, isMobile }: any) {
+function ActivityBrowser({ searchQuery, setSearchQuery, activeTab, setActiveTab, activeCategory, filteredCategories, selectedInquiry, handleInquiry, tabsRef, isMobile, onClose }: any) {
     return (
         <div className="bg-slate-50 border border-slate-200 rounded-3xl p-4 md:p-8 shadow-sm relative overflow-hidden">
+            {/* Close button */}
+            {onClose && (
+                <button
+                    onClick={onClose}
+                    className="absolute top-3 right-3 md:top-5 md:right-5 z-10 p-2 rounded-xl bg-white border border-slate-200 text-brand-navy/40 hover:text-brand-navy hover:border-slate-300 transition-all shadow-sm"
+                >
+                    <X size={16} />
+                </button>
+            )}
             {/* Search */}
             <div className="relative mb-5 md:mb-8">
                 <input
