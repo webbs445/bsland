@@ -7,7 +7,7 @@ import { Menu, X } from 'lucide-react';
 const navLinks = [
     { label: 'Our Approach', href: '#why-us' },
     { label: 'Business Models', href: '#options' },
-    { label: 'Intelligence', href: '#intelligence' },
+    { label: 'Cost Calculator', href: '#intelligence' },
     { label: 'Contact', href: '#contact' },
 ];
 
@@ -63,10 +63,10 @@ export default function StickyNav() {
 
                 <div className="hidden md:block">
                     <a
-                        href="#hero-form"
+                        href="tel:+971522330011"
                         className="btn-primary"
                     >
-                        Get Started
+                        Call Now
                     </a>
                 </div>
 

@@ -222,7 +222,7 @@ export default function IntelligenceSection() {
                         viewport={{ once: true }}
                         className="text-sm font-bold uppercase tracking-[0.2em] text-[#c28867]"
                     >
-                        Interactive Tools
+                        Cost Calculator
                     </motion.span>
                     <motion.h2
                         initial={{ opacity: 0, y: 20 }}
@@ -231,7 +231,7 @@ export default function IntelligenceSection() {
                         transition={{ delay: 0.1 }}
                         className="mt-4 text-4xl md:text-5xl font-bold text-white"
                     >
-                        Don't Take Anyone's Word For It — See For Yourself.
+                        Calculate Your Business Cost Here.
                     </motion.h2>
                     <motion.p
                         initial={{ opacity: 0, y: 20 }}

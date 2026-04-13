@@ -147,7 +147,7 @@ export default function HeroSection() {
                             className="mb-6 font-header text-white"
                             style={{ fontSize: 'clamp(2.2rem, 5vw, 4rem)', fontWeight: 900, lineHeight: 1.05 }}
                         >
-                            Your Business in Dubai{' '}
+                            Your Business License in Dubai{' '}
                             <span
                                 className="inline-block"
                                 style={{
@@ -157,7 +157,7 @@ export default function HeroSection() {
                                     backgroundClip: 'text'
                                 }}
                             >
-                                Set Up, Sorted, Protected.
+                                Set Up & Protected.
 
                             </span>
                         </h1>
@@ -169,12 +169,79 @@ export default function HeroSection() {
                         </p>
 
                         {/* Highlights Bar */}
-                        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
+                        <style>{`
+                            @keyframes pillShimmer {
+                                0% { transform: translateX(-100%); }
+                                100% { transform: translateX(100%); }
+                            }
+                            @keyframes pillGlow {
+                                0%, 100% { box-shadow: 0 0 15px rgba(194,134,103,0.15), 0 0 30px rgba(194,134,103,0.05); }
+                                50% { box-shadow: 0 0 20px rgba(194,134,103,0.35), 0 0 50px rgba(194,134,103,0.12); }
+                            }
+                            @keyframes borderFlow {
+                                0% { background-position: 0% 50%; }
+                                50% { background-position: 100% 50%; }
+                                100% { background-position: 0% 50%; }
+                            }
+                            @keyframes iconPulse {
+                                0%, 100% { box-shadow: 0 0 0 0 rgba(194,134,103,0.3); }
+                                50% { box-shadow: 0 0 0 8px rgba(194,134,103,0); }
+                            }
+                        `}</style>
+                        <div className="grid grid-cols-3 gap-5 mb-10">
                             {highlights.map((item, index) => (
-                                <div key={index} className="flex items-center gap-2 bg-white/5 border border-white/10 rounded-xl px-4 py-3 shadow-lg">
-                                    <item.icon className="w-4 h-4 text-brand-copper" />
-                                    <span className="text-[10px] font-black uppercase tracking-widest text-white/80">{item.text}</span>
-                                </div>
+                                <motion.div
+                                    key={index}
+                                    initial={{ opacity: 0, y: 30, scale: 0.9 }}
+                                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                                    transition={{ duration: 0.6, delay: 0.3 + index * 0.2 }}
+                                    whileHover={{ scale: 1.06, y: -4 }}
+                                    className="relative group flex flex-col items-center gap-3 rounded-2xl px-5 py-6 cursor-default overflow-hidden"
+                                    style={{
+                                        animation: `pillGlow 3s ease-in-out infinite`,
+                                        animationDelay: `${index * 0.7}s`,
+                                    }}
+                                >
+                                    {/* Animated gradient border wrapper */}
+                                    <div
+                                        className="absolute inset-0 rounded-2xl p-[1.5px]"
+                                        style={{
+                                            background: 'linear-gradient(90deg, rgba(194,134,103,0.1), rgba(194,134,103,0.6), rgba(232,201,122,0.5), rgba(194,134,103,0.6), rgba(194,134,103,0.1))',
+                                            backgroundSize: '200% 100%',
+                                            animation: `borderFlow 4s ease-in-out infinite`,
+                                            animationDelay: `${index * 0.8}s`,
+                                        }}
+                                    >
+                                        <div className="w-full h-full rounded-2xl bg-[#0d1d35]" />
+                                    </div>
+
+                                    {/* Icon with pulse ring */}
+                                    <div className="relative z-10">
+                                        <div
+                                            className="w-11 h-11 rounded-xl bg-brand-copper/10 border border-brand-copper/25 flex items-center justify-center"
+                                            style={{
+                                                animation: `iconPulse 2.5s ease-in-out infinite`,
+                                                animationDelay: `${index * 0.5}s`,
+                                            }}
+                                        >
+                                            <item.icon className="w-5 h-5 text-brand-copper" />
+                                        </div>
+                                    </div>
+
+                                    {/* Text */}
+                                    <span className="relative z-10 text-[11px] font-black uppercase tracking-[0.15em] text-white/90">
+                                        {item.text}
+                                    </span>
+
+                                    {/* Continuous shimmer sweep */}
+                                    <span
+                                        className="absolute inset-0 pointer-events-none bg-gradient-to-r from-transparent via-white/[0.08] to-transparent"
+                                        style={{
+                                            animation: `pillShimmer 3.5s ease-in-out infinite`,
+                                            animationDelay: `${index * 0.6}s`,
+                                        }}
+                                    />
+                                </motion.div>
                             ))}
                         </div>
 
@@ -197,21 +264,66 @@ export default function HeroSection() {
                             </AnimatePresence>
                         </div>
 
-                        {/* Trust Indicators */}
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 pt-8 border-t border-white/5">
-                            {[
-                                { value: "5,000+", label: "Companies Formed" },
-                                { value: "23+", label: "Years Experience" },
-                                { value: "4.8★", label: "Google Rating" },
-                                { value: "3-5", label: "Days Setup" },
-                            ].map((stat, index) => (
-                                <div key={index} className="text-left">
-                                    <div className="text-2xl font-header font-black text-brand-copper tracking-tighter">
-                                        {stat.value}
-                                    </div>
-                                    <div className="text-[9px] font-bold uppercase tracking-widest text-white/30 mt-1">{stat.label}</div>
+                        {/* Free Zone Partners — dual row marquee */}
+                        <div className="pt-8 border-t border-white/5">
+                            <p className="text-white/20 text-[9px] font-black uppercase tracking-[0.3em] mb-5">Free Zones We Service</p>
+                            <style>{`
+                                @keyframes scrollLeft {
+                                    0% { transform: translateX(0); }
+                                    100% { transform: translateX(-50%); }
+                                }
+                                @keyframes scrollRight {
+                                    0% { transform: translateX(-50%); }
+                                    100% { transform: translateX(0); }
+                                }
+                                .fz-pill {
+                                    position: relative;
+                                    overflow: hidden;
+                                }
+                                .fz-pill::before {
+                                    content: '';
+                                    position: absolute;
+                                    inset: 0;
+                                    border-radius: 9999px;
+                                    padding: 1px;
+                                    background: linear-gradient(135deg, rgba(194,134,103,0.4), rgba(255,255,255,0.05), rgba(194,134,103,0.2));
+                                    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+                                    -webkit-mask-composite: xor;
+                                    mask-composite: exclude;
+                                }
+                                .fz-pill::after {
+                                    content: '';
+                                    position: absolute;
+                                    top: 0; left: -100%;
+                                    width: 100%; height: 100%;
+                                    background: linear-gradient(90deg, transparent, rgba(194,134,103,0.15), transparent);
+                                    animation: fzShimmer 4s ease-in-out infinite;
+                                }
+                                @keyframes fzShimmer {
+                                    0%, 100% { left: -100%; }
+                                    50% { left: 100%; }
+                                }
+                            `}</style>
+                            <div className="relative overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_5%,white_95%,transparent)]">
+                                <div
+                                    className="flex items-center gap-3 w-max"
+                                    style={{ animation: 'scrollLeft 35s linear infinite' }}
+                                >
+                                    {[...Array(2)].map((_, i) => (
+                                        ['DMCC', 'IFZA', 'RAKEZ', 'Meydan', 'Dubai South', 'ADGM', 'SHAMS', 'SPC', 'Ajman Nuventure', 'SRTIP', 'Masdar', 'Innovation City'].map((name) => (
+                                            <span
+                                                key={`fz-${i}-${name}`}
+                                                className="fz-pill flex-shrink-0 px-5 py-2.5 rounded-full bg-white/[0.03] text-[10px] font-black uppercase tracking-[0.15em] text-white/60 whitespace-nowrap backdrop-blur-sm hover:text-brand-copper hover:bg-brand-copper/[0.08] transition-all duration-400 cursor-default"
+                                            >
+                                                <span className="relative z-10 flex items-center gap-2">
+                                                    <span className="w-1.5 h-1.5 rounded-full bg-brand-copper/50" />
+                                                    {name}
+                                                </span>
+                                            </span>
+                                        ))
+                                    ))}
                                 </div>
-                            ))}
+                            </div>
                         </div>
                     </motion.div>
 
@@ -344,16 +456,21 @@ export default function HeroSection() {
                             </div>
                         </div>
 
-                        {/* Partner Logos */}
-                        <div className="mt-12 text-center">
-                            <p className="text-white/20 text-[9px] font-black uppercase tracking-[0.3em] mb-6">Preferred Free Zone Partners</p>
-                            <div className="flex flex-wrap justify-center gap-8 grayscale opacity-20 hover:opacity-100 transition-all duration-700">
-                                {['DMCC', 'IFZA', 'JAFZA', 'SHAMS', 'RAK'].map((partner) => (
-                                    <div key={partner} className="text-xs font-black tracking-tighter text-white border-b-2 border-brand-copper/20 pb-1">
-                                        {partner}
+                        {/* Trust Indicators — below form */}
+                        <div className="mt-10 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+                            {[
+                                { value: "5,000+", label: "Companies Formed" },
+                                { value: "23+", label: "Years Experience" },
+                                { value: "4.8★", label: "Google Rating" },
+                                { value: "3-5", label: "Days Setup" },
+                            ].map((stat, index) => (
+                                <div key={index}>
+                                    <div className="text-xl font-header font-black text-brand-copper tracking-tighter">
+                                        {stat.value}
                                     </div>
-                                ))}
-                            </div>
+                                    <div className="text-[8px] font-bold uppercase tracking-widest text-white/30 mt-1">{stat.label}</div>
+                                </div>
+                            ))}
                         </div>
                     </motion.div>
                 </div>
