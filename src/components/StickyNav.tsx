@@ -5,8 +5,7 @@ import { motion } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 
 const navLinks = [
-    { label: 'Our Approach', href: '#why-us' },
-    { label: 'Business Models', href: '#options' },
+    { label: 'MainLand & Freezone', href: '#options' },
     { label: 'Cost Calculator', href: '#intelligence' },
     { label: 'Contact', href: '#contact' },
 ];
