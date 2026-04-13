@@ -246,14 +246,7 @@ export default function TeamSection() {
                                         </a>
                                     </div>
                                 </div>
-                                <div className="flex items-start gap-3">
-                                    <MapPin className="w-4 h-4 text-[#CC8667] mt-1" />
-                                    <div>
-                                        <div className="text-[10px] font-black uppercase tracking-widest text-white mb-0.5">Egypt</div>
-                                        <div className="text-[10px] text-white/40 uppercase tracking-tight leading-tight">
-                                            hyde park new cairo, Cairo, Egypt</div>
-                                    </div>
-                                </div>
+
                             </div>
                         </div>
                     </div>
