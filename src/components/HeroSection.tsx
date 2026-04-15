@@ -180,7 +180,7 @@ export default function HeroSection() {
                 first_name: formData.firstName,
                 last_name: formData.lastName,
                 custom_service_enquired: "Business Setup",
-                custom_client_profile_and_requirement: `Business: ${businessType}${customActivity ? ` (${customActivity})` : ''} | Reason: ${setupReason} | Shareholders: ${shareholders ?? 'N/A'} | Visas: ${visas ?? 'N/A'} | Office: ${officeType} | Jurisdiction: ${jurisdiction} | In UAE: ${livingInUAE} | Start: ${startTimeline}`,
+                custom_client_profile_and_requirement: `Business: ${businessType}${customActivity ? ` (${customActivity})` : ''} <br> Reason: ${setupReason} <br> Shareholders: ${shareholders ?? 'N/A'} <br> Visas: ${visas ?? 'N/A'} <br> Office: ${officeType} <br> Jurisdiction: ${jurisdiction} <br> In UAE: ${livingInUAE} <br> Start: ${startTimeline}`,
                 email_id: formData.email,
                 mobile_no: formData.whatsapp,
                 country: countryName,
