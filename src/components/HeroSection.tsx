@@ -200,7 +200,7 @@ export default function HeroSection() {
     };
 
     return (
-        <section className="relative min-h-[92vh] bg-brand-navy overflow-hidden flex items-center">
+        <section className="relative min-h-[auto] lg:min-h-[92vh] bg-brand-navy overflow-hidden flex items-center">
             {/* Background Elements */}
             <div className="absolute inset-0">
                 <div
@@ -220,8 +220,8 @@ export default function HeroSection() {
                 </svg>
             </div>
 
-            <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-24 w-full">
-                <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-12 sm:pt-20 sm:pb-16 lg:pt-24 lg:pb-24 w-full">
+                <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 items-center">
                     {/* Left Content */}
                     <motion.div
                         initial={{ opacity: 0, x: -30 }}
@@ -229,14 +229,14 @@ export default function HeroSection() {
                         transition={{ duration: 0.8 }}
                         className="text-white"
                     >
-                        <div className="inline-flex items-center gap-2 bg-white/5 border border-brand-copper/20 rounded-full px-4 py-2 mb-8 shadow-sm">
-                            <span className="w-2 h-2 bg-brand-copper rounded-full animate-pulse" />
-                            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white/80">Authorized DED & Free Zone Channel Partner</span>
+                        <div className="inline-flex items-center gap-1.5 sm:gap-2 bg-white/5 border border-brand-copper/20 rounded-full px-3 py-1.5 sm:px-4 sm:py-2 mb-6 sm:mb-8 mt-6 sm:mt-0 shadow-sm">
+                            <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-brand-copper rounded-full animate-pulse" />
+                            <span className="text-[8px] sm:text-[10px] font-black uppercase tracking-[0.15em] sm:tracking-[0.2em] text-white/80">Authorized DED & Free Zone Channel Partner</span>
                         </div>
 
                         <h1
-                            className="mb-6 font-header text-white"
-                            style={{ fontSize: 'clamp(2.2rem, 5vw, 4rem)', fontWeight: 900, lineHeight: 1.05 }}
+                            className="mb-4 sm:mb-6 font-header text-white"
+                            style={{ fontSize: 'clamp(1.75rem, 5vw, 4rem)', fontWeight: 900, lineHeight: 1.08 }}
                         >
                             {utmService ? (
                                 <>
@@ -271,7 +271,7 @@ export default function HeroSection() {
                             )}
                         </h1>
 
-                        <p className="text-lg text-white/60 mb-10 leading-relaxed max-w-xl font-medium">
+                        <p className="text-sm sm:text-base lg:text-lg text-white/60 mb-6 sm:mb-10 leading-relaxed max-w-xl font-medium">
                             {utmService
                                 ? `Looking for ${utmService.toLowerCase()} in Dubai? We handle every signature, every submission, every government interaction — so you don't have to.`
                                 : 'You focus on your vision. We handle every signature, every submission, every government interaction. From first consultation to your first day of business.'}
@@ -297,7 +297,7 @@ export default function HeroSection() {
                                 50% { box-shadow: 0 0 0 8px rgba(194,134,103,0); }
                             }
                         `}</style>
-                        <div className="grid grid-cols-3 gap-5 mb-10">
+                        <div className="grid grid-cols-3 gap-2 sm:gap-5 mb-6 sm:mb-10">
                             {highlights.map((item, index) => (
                                 <motion.div
                                     key={index}
@@ -305,7 +305,7 @@ export default function HeroSection() {
                                     animate={{ opacity: 1, y: 0, scale: 1 }}
                                     transition={{ duration: 0.6, delay: 0.3 + index * 0.2 }}
                                     whileHover={{ scale: 1.06, y: -4 }}
-                                    className="relative group flex flex-col items-center gap-3 rounded-2xl px-5 py-6 cursor-default overflow-hidden"
+                                    className="relative group flex flex-col items-center gap-2 sm:gap-3 rounded-xl sm:rounded-2xl px-3 py-4 sm:px-5 sm:py-6 cursor-default overflow-hidden"
                                     style={{
                                         animation: `pillGlow 3s ease-in-out infinite`,
                                         animationDelay: `${index * 0.7}s`,
@@ -327,18 +327,18 @@ export default function HeroSection() {
                                     {/* Icon with pulse ring */}
                                     <div className="relative z-10">
                                         <div
-                                            className="w-11 h-11 rounded-xl bg-brand-copper/10 border border-brand-copper/25 flex items-center justify-center"
+                                            className="w-9 h-9 sm:w-11 sm:h-11 rounded-lg sm:rounded-xl bg-brand-copper/10 border border-brand-copper/25 flex items-center justify-center"
                                             style={{
                                                 animation: `iconPulse 2.5s ease-in-out infinite`,
                                                 animationDelay: `${index * 0.5}s`,
                                             }}
                                         >
-                                            <item.icon className="w-5 h-5 text-brand-copper" />
+                                            <item.icon className="w-4 h-4 sm:w-5 sm:h-5 text-brand-copper" />
                                         </div>
                                     </div>
 
                                     {/* Text */}
-                                    <span className="relative z-10 text-[11px] font-black uppercase tracking-[0.15em] text-white/90">
+                                    <span className="relative z-10 text-[9px] sm:text-[11px] font-black uppercase tracking-[0.1em] sm:tracking-[0.15em] text-white/90">
                                         {item.text}
                                     </span>
 
@@ -355,7 +355,7 @@ export default function HeroSection() {
                         </div>
 
                         {/* Live Ticker */}
-                        <div className="h-14 mb-12 relative overflow-hidden bg-brand-copper/5 border-l-4 border-brand-copper rounded-r-xl">
+                        <div className="h-12 sm:h-14 mb-8 sm:mb-12 relative overflow-hidden bg-brand-copper/5 border-l-4 border-brand-copper rounded-r-xl">
                             <AnimatePresence mode="wait">
                                 <motion.div
                                     key={tickerIndex}
@@ -363,19 +363,19 @@ export default function HeroSection() {
                                     animate={{ opacity: 1, y: 0 }}
                                     exit={{ opacity: 0, y: -20 }}
                                     transition={{ duration: 0.5 }}
-                                    className="absolute inset-0 flex items-center px-6"
+                                    className="absolute inset-0 flex items-center px-3 sm:px-6"
                                 >
                                     <div className="flex items-center gap-2">
-                                        <CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0" />
-                                        <p className="text-sm font-bold text-white tracking-tight italic">{tickerMessages[tickerIndex]}</p>
+                                        <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5 text-green-500 flex-shrink-0" />
+                                        <p className="text-xs sm:text-sm font-bold text-white tracking-tight italic">{tickerMessages[tickerIndex]}</p>
                                     </div>
                                 </motion.div>
                             </AnimatePresence>
                         </div>
 
                         {/* Free Zone Partners — dual row marquee */}
-                        <div className="pt-8 border-t border-white/5">
-                            <p className="text-white/20 text-[9px] font-black uppercase tracking-[0.3em] mb-5">Free Zones We Service</p>
+                        <div className="pt-6 sm:pt-8 border-t border-white/5 hidden sm:block">
+                            <p className="text-white/20 text-[8px] sm:text-[9px] font-black uppercase tracking-[0.2em] sm:tracking-[0.3em] mb-4 sm:mb-5">Free Zones We Service</p>
                             <div className="relative overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_8%,white_92%,transparent)]">
                                 <div className="fz-marquee">
                                     {[...Array(2)].map((_, i) => (
@@ -414,7 +414,12 @@ export default function HeroSection() {
                             {/* Decorative Glow */}
                             <div className="absolute -inset-4 bg-brand-copper/10 rounded-[40px] blur-3xl -z-10" />
 
-                            <div id="hero-form" className="relative bg-[#1a2b45]/80 backdrop-blur-xl border border-white/10 rounded-[32px] p-8 sm:p-10 shadow-2xl overflow-hidden">
+                            <div id="hero-form" className="relative bg-[#1a2b45]/80 backdrop-blur-xl border border-white/10 rounded-2xl sm:rounded-[32px] p-5 sm:p-8 lg:p-10 shadow-2xl overflow-hidden">
+
+                                <div className="text-center mb-4 sm:mb-5 pb-3 sm:pb-4 border-b border-white/5">
+                                    <h3 className="text-lg sm:text-2xl font-header font-black text-white tracking-tight uppercase">Cost Calculator</h3>
+                                    <p className="text-brand-copper text-[8px] sm:text-[10px] font-black uppercase tracking-widest mt-1">Free instant estimate for your business setup</p>
+                                </div>
 
                                 {submitted ? (
                                     <motion.div
@@ -431,8 +436,8 @@ export default function HeroSection() {
                                 ) : (
                                     <>
                                         {/* Creative Step Indicator */}
-                                        <div className="mb-5">
-                                            <div className="flex items-center justify-between mb-3">
+                                        <div className="mb-4 sm:mb-5">
+                                            <div className="flex items-center justify-between mb-2 sm:mb-3">
                                                 {step > 1 ? (
                                                     <button
                                                         type="button"
@@ -446,7 +451,7 @@ export default function HeroSection() {
                                                 <div className="flex items-center">
                                                     {[1, 2, 3, 4, 5].map((s) => (
                                                         <div key={s} className="flex items-center">
-                                                            <div className={`relative flex items-center justify-center w-6 h-6 rounded-full text-[9px] font-black transition-all duration-300 ${
+                                                            <div className={`relative flex items-center justify-center w-5 h-5 sm:w-6 sm:h-6 rounded-full text-[8px] sm:text-[9px] font-black transition-all duration-300 ${
                                                                 s < step
                                                                     ? 'bg-brand-copper text-white'
                                                                     : s === step
@@ -456,7 +461,7 @@ export default function HeroSection() {
                                                                 {s < step ? <Check className="w-2.5 h-2.5" /> : s}
                                                             </div>
                                                             {s < 5 && (
-                                                                <div className={`w-5 h-px transition-all duration-500 ${s < step ? 'bg-brand-copper' : 'bg-white/10'}`} />
+                                                                <div className={`w-3 sm:w-5 h-px transition-all duration-500 ${s < step ? 'bg-brand-copper' : 'bg-white/10'}`} />
                                                             )}
                                                         </div>
                                                     ))}
@@ -484,10 +489,10 @@ export default function HeroSection() {
                                                     exit={{ opacity: 0, x: -30 }}
                                                     transition={{ duration: 0.3 }}
                                                 >
-                                                    <p className="text-[10px] font-black uppercase tracking-widest text-brand-copper mb-1">Calculate Your Cost</p>
-                                                    <h3 className="text-xl font-header font-black text-white mb-1 tracking-tight">What type of business?</h3>
-                                                    <p className="text-white/40 text-xs mb-3">Select the category closest to your activity.</p>
-                                                    <div className="grid grid-cols-2 gap-1.5">
+                                                    {/* <p className="text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-brand-copper mb-1">Calculate Your Cost</p> */}
+                                                    <h3 className="text-lg sm:text-xl font-header font-black text-white mb-1 tracking-tight">What type of business?</h3>
+                                                    <p className="text-white/40 text-[11px] sm:text-xs mb-3">Select the category closest to your activity.</p>
+                                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 max-h-[45vh] sm:max-h-none overflow-y-auto sm:overflow-visible">
                                                         {businessCategories.map(({ label, subtitle, icon: Icon }) => (
                                                             <button
                                                                 key={label}
@@ -559,27 +564,27 @@ export default function HeroSection() {
                                                     exit={{ opacity: 0, x: -30 }}
                                                     transition={{ duration: 0.3 }}
                                                 >
-                                                    <p className="text-[10px] font-black uppercase tracking-widest text-brand-copper mb-1">{businessType}</p>
-                                                    <h3 className="text-xl font-header font-black text-white mb-1 tracking-tight">Why are you setting up in UAE?</h3>
-                                                    <p className="text-white/40 text-xs mb-5">Select your primary reason — we'll tailor your plan.</p>
-                                                    <div className="flex flex-col gap-3">
+                                                    <p className="text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-brand-copper mb-1">{businessType}</p>
+                                                    <h3 className="text-lg sm:text-xl font-header font-black text-white mb-1 tracking-tight">Why are you setting up in UAE?</h3>
+                                                    <p className="text-white/40 text-[11px] sm:text-xs mb-4 sm:mb-5">Select your primary reason — we'll tailor your plan.</p>
+                                                    <div className="flex flex-col gap-2 sm:gap-3">
                                                         {setupReasonOptions.map(({ label, icon: Icon }) => (
                                                             <button
                                                                 key={label}
                                                                 type="button"
                                                                 onClick={() => { setSetupReason(label); setStep(3); }}
-                                                                className={`group flex items-center gap-4 px-5 py-4 rounded-xl border text-left transition-all duration-300 ${
+                                                                className={`group flex items-center gap-3 sm:gap-4 px-3 py-3 sm:px-5 sm:py-4 rounded-xl border text-left transition-all duration-300 ${
                                                                     setupReason === label
                                                                         ? 'border-brand-copper bg-gradient-to-r from-brand-copper/20 to-transparent text-white shadow-[0_0_20px_rgba(194,134,103,0.18)]'
                                                                         : 'border-white/8 bg-white/[0.03] text-white/50 hover:border-brand-copper/40 hover:bg-brand-copper/5 hover:text-white hover:translate-x-1'
                                                                 }`}
                                                             >
-                                                                <div className={`flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 ${
+                                                                <div className={`flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl flex items-center justify-center transition-all duration-300 ${
                                                                     setupReason === label ? 'bg-brand-copper/25 shadow-[0_0_12px_rgba(194,134,103,0.3)]' : 'bg-white/5 group-hover:bg-brand-copper/10'
                                                                 }`}>
-                                                                    <Icon className="w-4 h-4 text-brand-copper" />
+                                                                    <Icon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-brand-copper" />
                                                                 </div>
-                                                                <span className="flex-1 text-[13px] font-bold">{label}</span>
+                                                                <span className="flex-1 text-[12px] sm:text-[13px] font-bold">{label}</span>
                                                                 <div className={`w-5 h-5 rounded-full border flex items-center justify-center transition-all duration-300 flex-shrink-0 ${
                                                                     setupReason === label ? 'border-brand-copper bg-brand-copper' : 'border-white/20'
                                                                 }`}>
@@ -601,8 +606,8 @@ export default function HeroSection() {
                                                     exit={{ opacity: 0, x: -30 }}
                                                     transition={{ duration: 0.3 }}
                                                 >
-                                                    <p className="text-[10px] font-black uppercase tracking-widest text-brand-copper mb-1">Team & Office</p>
-                                                    <h3 className="text-xl font-header font-black text-white mb-4 tracking-tight">Tell us about your setup</h3>
+                                                    <p className="text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-brand-copper mb-1">Team & Office</p>
+                                                    <h3 className="text-lg sm:text-xl font-header font-black text-white mb-3 sm:mb-4 tracking-tight">Tell us about your setup</h3>
                                                     <div className="space-y-4">
                                                         {/* Shareholders */}
                                                         <div>
@@ -613,7 +618,7 @@ export default function HeroSection() {
                                                                         key={n}
                                                                         type="button"
                                                                         onClick={() => setShareholders(n)}
-                                                                        className={`w-9 h-9 rounded-lg text-sm font-black transition-all duration-200 ${
+                                                                        className={`w-8 h-8 sm:w-9 sm:h-9 rounded-lg text-xs sm:text-sm font-black transition-all duration-200 ${
                                                                             shareholders === n
                                                                                 ? 'bg-brand-copper text-white shadow-[0_0_14px_rgba(194,134,103,0.4)] scale-110'
                                                                                 : 'bg-white/5 text-white/50 border border-white/8 hover:border-brand-copper/50 hover:text-white hover:scale-105'
@@ -631,7 +636,7 @@ export default function HeroSection() {
                                                                         key={n}
                                                                         type="button"
                                                                         onClick={() => setVisas(n)}
-                                                                        className={`w-9 h-9 rounded-lg text-sm font-black transition-all duration-200 ${
+                                                                        className={`w-8 h-8 sm:w-9 sm:h-9 rounded-lg text-xs sm:text-sm font-black transition-all duration-200 ${
                                                                             visas === n
                                                                                 ? 'bg-brand-copper text-white shadow-[0_0_14px_rgba(194,134,103,0.4)] scale-110'
                                                                                 : 'bg-white/5 text-white/50 border border-white/8 hover:border-brand-copper/50 hover:text-white hover:scale-105'
@@ -687,8 +692,8 @@ export default function HeroSection() {
                                                     exit={{ opacity: 0, x: -30 }}
                                                     transition={{ duration: 0.3 }}
                                                 >
-                                                    <p className="text-[10px] font-black uppercase tracking-widest text-brand-copper mb-1">Location & Timeline</p>
-                                                    <h3 className="text-xl font-header font-black text-white mb-4 tracking-tight">Where & when to start?</h3>
+                                                    <p className="text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-brand-copper mb-1">Location & Timeline</p>
+                                                    <h3 className="text-lg sm:text-xl font-header font-black text-white mb-3 sm:mb-4 tracking-tight">Where & when to start?</h3>
                                                     <div className="space-y-4">
                                                         {/* Jurisdiction */}
                                                         <div>
@@ -810,8 +815,8 @@ export default function HeroSection() {
                                                     exit={{ opacity: 0, x: -30 }}
                                                     transition={{ duration: 0.3 }}
                                                 >
-                                                    <h3 className="text-xl font-header font-black text-white mb-1 tracking-tight">{utmService ? `Get ${utmService} Help` : 'Get Expert Help Now'}</h3>
-                                                    <p className="text-brand-copper text-[10px] font-black uppercase tracking-widest mb-5">Your advisor will contact you in 10 minutes</p>
+                                                    <h3 className="text-lg sm:text-xl font-header font-black text-white mb-1 tracking-tight">{utmService ? `Get ${utmService} Help` : 'Get Expert Help Now'}</h3>
+                                                    <p className="text-brand-copper text-[9px] sm:text-[10px] font-black uppercase tracking-widest mb-4 sm:mb-5">Your advisor will contact you in 10 minutes</p>
                                                     {/* Summary pills of previous answers */}
                                                     <div className="flex flex-wrap gap-1.5 mb-5">
                                                         {[businessType, setupReason, officeType || null, jurisdiction || null].filter(Boolean).map((val) => (
@@ -828,7 +833,7 @@ export default function HeroSection() {
                                                                 value={formData.firstName}
                                                                 onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
                                                                 required
-                                                                className="w-1/2 h-13 px-4 bg-white/5 border border-white/10 text-white placeholder:text-white/20 rounded-xl outline-none focus:border-brand-copper transition-all text-sm font-medium"
+                                                                className="w-1/2 h-11 sm:h-13 px-3 sm:px-4 bg-white/5 border border-white/10 text-white placeholder:text-white/20 rounded-xl outline-none focus:border-brand-copper transition-all text-xs sm:text-sm font-medium"
                                                             />
                                                             <input
                                                                 type="text"
@@ -836,7 +841,7 @@ export default function HeroSection() {
                                                                 value={formData.lastName}
                                                                 onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
                                                                 required
-                                                                className="w-1/2 h-13 px-4 bg-white/5 border border-white/10 text-white placeholder:text-white/20 rounded-xl outline-none focus:border-brand-copper transition-all text-sm font-medium"
+                                                                className="w-1/2 h-11 sm:h-13 px-3 sm:px-4 bg-white/5 border border-white/10 text-white placeholder:text-white/20 rounded-xl outline-none focus:border-brand-copper transition-all text-xs sm:text-sm font-medium"
                                                             />
                                                         </div>
                                                         <input
@@ -845,7 +850,7 @@ export default function HeroSection() {
                                                             value={formData.email}
                                                             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                                                             required
-                                                            className="w-full h-13 px-5 bg-white/5 border border-white/10 text-white placeholder:text-white/20 rounded-xl outline-none focus:border-brand-copper transition-all text-sm font-medium"
+                                                            className="w-full h-11 sm:h-13 px-4 sm:px-5 bg-white/5 border border-white/10 text-white placeholder:text-white/20 rounded-xl outline-none focus:border-brand-copper transition-all text-xs sm:text-sm font-medium"
                                                         />
                                                         <div className="space-y-1">
                                                             <label className="text-[9px] font-black uppercase tracking-widest text-white/30 ml-1">WhatsApp Number</label>
@@ -854,7 +859,7 @@ export default function HeroSection() {
                                                                 defaultCountry="AE"
                                                                 value={formData.whatsapp}
                                                                 onChange={(value) => setFormData({ ...formData, whatsapp: value?.toString() || '' })}
-                                                                className="phone-input-custom-hero w-full h-13 px-5 bg-white/5 border border-white/10 rounded-xl focus-within:border-brand-copper transition-all text-sm font-medium text-white"
+                                                                className="phone-input-custom-hero w-full h-11 sm:h-13 px-4 sm:px-5 bg-white/5 border border-white/10 rounded-xl focus-within:border-brand-copper transition-all text-xs sm:text-sm font-medium text-white"
                                                                 placeholder="WhatsApp Number"
                                                             />
                                                         </div>
@@ -864,7 +869,7 @@ export default function HeroSection() {
                                                             whileHover={{ scale: 1.02, y: -2, boxShadow: '0 16px 40px rgba(255,190,163,0.45)' }}
                                                             whileTap={{ scale: 0.97, y: 0 }}
                                                             transition={{ type: 'spring', stiffness: 400, damping: 20 }}
-                                                            className="relative overflow-hidden w-full h-14 mt-2 rounded-xl font-black text-[15px] uppercase tracking-[0.2em] flex items-center justify-center gap-2 shadow-2xl group"
+                                                            className="relative overflow-hidden w-full h-12 sm:h-14 mt-2 rounded-xl font-black text-[13px] sm:text-[15px] uppercase tracking-[0.15em] sm:tracking-[0.2em] flex items-center justify-center gap-2 shadow-2xl group"
                                                             style={{ background: 'linear-gradient(135deg, #d4956f 0%, #C28667 50%, #a86c4f 100%)', color: '#ffffff' }}
                                                         >
                                                             <span className="absolute inset-0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 bg-gradient-to-r from-transparent via-white/40 to-transparent pointer-events-none" />
@@ -877,7 +882,7 @@ export default function HeroSection() {
                                             )}
                                         </AnimatePresence>
 
-                                        <div className="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-white/40 text-[9px] font-black uppercase tracking-widest border-t border-white/5 pt-6">
+                                        <div className="mt-4 sm:mt-6 flex flex-wrap items-center justify-center gap-x-4 sm:gap-x-6 gap-y-2 sm:gap-y-3 text-white/40 text-[8px] sm:text-[9px] font-black uppercase tracking-widest border-t border-white/5 pt-4 sm:pt-6">
                                             <a href="tel:+971522330011" className="flex items-center gap-2 hover:text-white transition-colors group">
                                                 <div className="w-5 h-5 rounded flex items-center justify-center bg-white/5 group-hover:bg-brand-copper/20 transition-colors">
                                                     <Phone className="w-2.5 h-2.5 text-brand-copper" />
@@ -898,7 +903,7 @@ export default function HeroSection() {
                         </div>
 
                         {/* Trust Indicators — below form */}
-                        <div className="mt-10 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+                        <div className="mt-6 sm:mt-10 grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 text-center">
                             {[
                                 { value: "5,000+", label: "Companies Formed" },
                                 { value: "23+", label: "Years Experience" },
@@ -906,8 +911,8 @@ export default function HeroSection() {
                                 { value: "3-5", label: "Days Setup" },
                             ].map((stat, index) => (
                                 <div key={index}>
-                                    <div className="text-xl font-header font-black text-white tracking-tighter">{stat.value}</div>
-                                    <div className="text-[8px] font-bold uppercase tracking-widest text-white/30 mt-1">{stat.label}</div>
+                                    <div className="text-lg sm:text-xl font-header font-black text-white tracking-tighter">{stat.value}</div>
+                                    <div className="text-[7px] sm:text-[8px] font-bold uppercase tracking-widest text-white/30 mt-1">{stat.label}</div>
                                 </div>
                             ))}
                         </div>
