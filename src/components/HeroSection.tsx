@@ -15,6 +15,51 @@ const highlights = [
 ];
 
 
+const dropdownOptions = [
+    "Set up an LLC for liability protection",
+    "Start a Free Zone company",
+    "Compare costs and options",
+    "Get a trade license / e-commerce license",
+    "I need expert guidance — not sure yet",
+] as const;
+
+const termToDropdown: Record<string, string> = {
+    'llc': dropdownOptions[0],
+    'limited liability': dropdownOptions[0],
+    'liability protection': dropdownOptions[0],
+    'free zone': dropdownOptions[1],
+    'freezone': dropdownOptions[1],
+    'free zone company': dropdownOptions[1],
+    'compare': dropdownOptions[2],
+    'cost comparison': dropdownOptions[2],
+    'trade license': dropdownOptions[3],
+    'e-commerce license': dropdownOptions[3],
+    'ecommerce license': dropdownOptions[3],
+    'trading license': dropdownOptions[3],
+};
+
+function getUTMData(): { service: string | null; dropdownMatch: string | null } {
+    if (typeof window === 'undefined') return { service: null, dropdownMatch: null };
+    const params = new URLSearchParams(window.location.search);
+    const source = params.get('utm_source')?.toLowerCase();
+    const term = params.get('utm_term');
+    if (source !== 'google' || !term) return { service: null, dropdownMatch: null };
+
+    const normalized = term.replace(/[_+\-]+/g, ' ').trim();
+    const service = normalized.replace(/\b\w/g, c => c.toUpperCase());
+
+    const lowerTerm = normalized.toLowerCase();
+    let dropdownMatch: string | null = null;
+    for (const [keyword, option] of Object.entries(termToDropdown)) {
+        if (lowerTerm.includes(keyword)) {
+            dropdownMatch = option;
+            break;
+        }
+    }
+
+    return { service, dropdownMatch };
+}
+
 export default function HeroSection() {
     const [formData, setFormData] = useState({
         firstName: '',
@@ -27,6 +72,15 @@ export default function HeroSection() {
     const [tickerIndex, setTickerIndex] = useState(0);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitted, setSubmitted] = useState(false);
+    const [utmService, setUtmService] = useState<string | null>(null);
+
+    useEffect(() => {
+        const { service, dropdownMatch } = getUTMData();
+        setUtmService(service);
+        if (dropdownMatch) {
+            setFormData(prev => ({ ...prev, lookingTo: dropdownMatch }));
+        }
+    }, []);
 
     const tickerMessages = [
         "78% of new investors use our guide before choosing a free zone.",
@@ -147,25 +201,43 @@ export default function HeroSection() {
                             className="mb-6 font-header text-white"
                             style={{ fontSize: 'clamp(2.2rem, 5vw, 4rem)', fontWeight: 900, lineHeight: 1.05 }}
                         >
-                            Your Business License in Dubai{' '}
-                            <span
-                                className="inline-block"
-                                style={{
-                                    background: 'linear-gradient(135deg, var(--color-brand-copper), #E8C97A)',
-                                    WebkitBackgroundClip: 'text',
-                                    WebkitTextFillColor: 'transparent',
-                                    backgroundClip: 'text'
-                                }}
-                            >
-                                Set Up & Protected.
-
-                            </span>
+                            {utmService ? (
+                                <>
+                                    {utmService} in Dubai{' '}
+                                    <span
+                                        className="inline-block"
+                                        style={{
+                                            background: 'linear-gradient(135deg, var(--color-brand-copper), #E8C97A)',
+                                            WebkitBackgroundClip: 'text',
+                                            WebkitTextFillColor: 'transparent',
+                                            backgroundClip: 'text'
+                                        }}
+                                    >
+                                        Made Simple.
+                                    </span>
+                                </>
+                            ) : (
+                                <>
+                                    Your Business License in Dubai{' '}
+                                    <span
+                                        className="inline-block"
+                                        style={{
+                                            background: 'linear-gradient(135deg, var(--color-brand-copper), #E8C97A)',
+                                            WebkitBackgroundClip: 'text',
+                                            WebkitTextFillColor: 'transparent',
+                                            backgroundClip: 'text'
+                                        }}
+                                    >
+                                        Set Up & Protected.
+                                    </span>
+                                </>
+                            )}
                         </h1>
 
                         <p className="text-lg text-white/60 mb-10 leading-relaxed max-w-xl font-medium">
-                            You focus on your vision. We handle every signature, every submission, every government interaction. From first consultation to your first day of business.
-
-
+                            {utmService
+                                ? `Looking for ${utmService.toLowerCase()} in Dubai? We handle every signature, every submission, every government interaction — so you don't have to.`
+                                : 'You focus on your vision. We handle every signature, every submission, every government interaction. From first consultation to your first day of business.'}
                         </p>
 
                         {/* Highlights Bar */}
@@ -339,7 +411,7 @@ export default function HeroSection() {
 
                             <div id="hero-form" className="relative bg-[#1a2b45]/80 backdrop-blur-xl border border-white/10 rounded-[32px] p-8 sm:p-10 shadow-2xl overflow-hidden">
                                 <div className="text-center mb-10 pb-6 border-b border-white/5">
-                                    <h3 className="text-2xl font-header font-black text-white mb-2 tracking-tight uppercase">Get Expert Help Now</h3>
+                                    <h3 className="text-2xl font-header font-black text-white mb-2 tracking-tight uppercase">{utmService ? `Get ${utmService} Help` : 'Get Expert Help Now'}</h3>
                                     <p className="text-brand-copper text-[10px] font-black uppercase tracking-widest">Your advisor will contact you in 10 minutes</p>
                                 </div>
 
@@ -432,7 +504,7 @@ export default function HeroSection() {
                                             {/* Shimmer sweep */}
                                             <span className="absolute inset-0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 bg-gradient-to-r from-transparent via-white/40 to-transparent pointer-events-none" />
                                             {isSubmitting ? 'Processing...' : (
-                                                <><span>Get My Setup Plan</span> <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" /></>
+                                                <><span>{utmService ? `Get My ${utmService} Plan` : 'Get My Setup Plan'}</span> <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" /></>
                                             )}
                                         </motion.button>
                                     </form>
