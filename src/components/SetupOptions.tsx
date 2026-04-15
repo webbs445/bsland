@@ -124,6 +124,7 @@ const options = [
 
 export default function SetupOptions() {
     const [hovered, setHovered] = useState<typeof options[number] | null>(null);
+    const [isMobile, setIsMobile] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [mounted, setMounted] = useState(false);
     const [formData, setFormData] = useState({
@@ -134,6 +135,17 @@ export default function SetupOptions() {
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitted, setSubmitted] = useState(false);
+
+    useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth < 1024);
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
+
+    useEffect(() => {
+        if (!isMobile) setHovered(options[0]);
+    }, [isMobile]);
 
     useEffect(() => {
         setMounted(true);
@@ -274,8 +286,14 @@ export default function SetupOptions() {
                             return (
                                 <div key={opt.id} className="flex flex-col">
                                     <motion.div
-                                        onHoverStart={() => { if (!hovered) setHovered(opt); }}
-                                        onClick={() => setHovered(prev => prev?.id === opt.id ? null : opt)}
+                                        onHoverStart={() => { if (!isMobile) setHovered(opt); }}
+                                        onClick={() => {
+                                            if (isMobile) {
+                                                setHovered(prev => prev?.id === opt.id ? null : opt);
+                                            } else {
+                                                setHovered(opt);
+                                            }
+                                        }}
                                         whileHover={{ y: -3 }}
                                         animate={{ scale: isActive ? 1.02 : 1 }}
                                         transition={{ type: 'spring', stiffness: 250 }}
