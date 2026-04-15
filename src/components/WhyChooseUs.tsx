@@ -88,7 +88,7 @@ export default function WhyChooseUs() {
                 first_name: formData.firstName,
                 last_name: formData.lastName,
                 custom_service_enquired: "Business Setup",
-                custom_client_profile_and_requirement: `[Why Choose Us] Service: ${selectedService || 'General'} | CTA: Start Your Business Today`,
+                custom_client_profile_and_requirement: `[Why Choose Us] Service: ${selectedService || 'General'} <br> CTA: Start Your Business Today`,
                 email_id: formData.email,
                 mobile_no: formData.whatsapp,
                 country: countryName,
