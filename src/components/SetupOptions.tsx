@@ -16,7 +16,11 @@ import {
     Star,
     MapPin,
     ChevronRight,
-    X
+    X,
+    Anchor,
+    Lock,
+    DollarSign,
+    FileText
 } from 'lucide-react';
 import 'react-phone-number-input/style.css';
 import PhoneInput, { parsePhoneNumber } from 'react-phone-number-input';
@@ -92,6 +96,29 @@ const options = [
         visas: '1–3 per license',
         ownership: '100% ownership',
         bestFor: 'Consultants, freelancers, IT services',
+    },
+    {
+        id: 4,
+        key: 'offshore',
+        title: 'Offshore Company',
+        subtitle: 'Asset protection & global holding',
+        description:
+            'Hold international assets, IP, or investments under a UAE-registered offshore entity. No office required, no annual audit, and complete confidentiality for shareholders.',
+        price: '8,500',
+        priceNote: 'All-inclusive / year',
+        badge: null,
+        icon: Anchor,
+        accentColor: '#2E7D6B',
+        features: [
+            { icon: Lock, text: 'Full shareholder confidentiality' },
+            { icon: DollarSign, text: '0% tax on profits & dividends' },
+            { icon: FileText, text: 'No annual audit required' },
+            { icon: Globe, text: 'Hold global assets & IP' },
+        ],
+        timeline: '5–10 business days',
+        visas: 'Not applicable',
+        ownership: '100% foreign',
+        bestFor: 'Holding companies, asset protection, IP',
     },
 ];
 
