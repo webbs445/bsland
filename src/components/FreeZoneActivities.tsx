@@ -74,7 +74,7 @@ export default function FreeZoneActivities() {
                 first_name: firstName,
                 last_name: lastName,
                 custom_service_enquired: "Business Setup",
-                custom_client_profile_and_requirement: `[Free Zone Finder Form] Activity: ${selectedInquiry.activity} | Location: ${selectedInquiry.zone}`,
+                custom_client_profile_and_requirement: `[Free Zone Finder Form] Activity: ${selectedInquiry.activity} <br> Location: ${selectedInquiry.zone}`,
                 email_id: email,
                 mobile_no: phone,
                 country: countryCode
