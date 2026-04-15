@@ -240,7 +240,7 @@ export default function HeroSection() {
                         >
                             {utmService ? (
                                 <>
-                                    {utmService} in Dubai{' '}
+                                    Best Solution For {' '}
                                     <span
                                         className="inline-block"
                                         style={{
@@ -250,12 +250,12 @@ export default function HeroSection() {
                                             backgroundClip: 'text'
                                         }}
                                     >
-                                        Made Simple.
+                                      {utmService}.  Made Simple.
                                     </span>
                                 </>
                             ) : (
                                 <>
-                                    Your Business License in Dubai{' '}
+                                    Best Solution For Your Business {' '}
                                     <span
                                         className="inline-block"
                                         style={{
@@ -265,7 +265,7 @@ export default function HeroSection() {
                                             backgroundClip: 'text'
                                         }}
                                     >
-                                        Set Up & Protected.
+                                      in Dubai.
                                     </span>
                                 </>
                             )}
