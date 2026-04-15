@@ -6,7 +6,7 @@ import { Menu, X } from 'lucide-react';
 
 const navLinks = [
     { label: 'MainLand & Freezone', href: '#options' },
-    { label: 'Cost Calculator', href: '#intelligence' },
+    { label: 'Find Activities', href: '#activity-finder' },
     { label: 'Contact', href: '#contact' },
 ];
 

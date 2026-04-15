@@ -36,14 +36,12 @@ export default function HomePage() {
         {/* Deep Dive: Liability & LLC */}
         <LiabilityFocus />
 
-        {/* Interactive Setup Intelligence (Quiz & Calculator) */}
-        <section id="intelligence">
-          <IntelligenceSection />
-        </section>
+     
 
         {/* Activity Finder */}
-        <FreeZoneActivities />
-
+        <section id="activity-finder">
+         <FreeZoneActivities />
+      </section> 
         {/* Geometric Pattern Separator */}
         <GeometricSeparator />
 
