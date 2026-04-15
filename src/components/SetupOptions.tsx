@@ -123,7 +123,7 @@ const options = [
 ];
 
 export default function SetupOptions() {
-    const [hovered, setHovered] = useState(options[1]);
+    const [hovered, setHovered] = useState<typeof options[number] | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [mounted, setMounted] = useState(false);
     const [formData, setFormData] = useState({
@@ -161,7 +161,7 @@ export default function SetupOptions() {
                 first_name: formData.firstName,
                 last_name: formData.lastName,
                 custom_service_enquired: "Business Setup",
-                custom_client_profile_and_requirement: `[Setup Options] Selected Path: ${hovered.title}`,
+                custom_client_profile_and_requirement: `[Setup Options] Selected Path: ${hovered?.title}`,
                 email_id: formData.email,
                 mobile_no: formData.whatsapp,
                 country: countryName,
@@ -269,13 +269,13 @@ export default function SetupOptions() {
                     <div className="lg:col-span-2 flex flex-col gap-4 lg:gap-5">
                         {options.map((opt) => {
                             const Icon = opt.icon;
-                            const isActive = hovered.id === opt.id;
+                            const isActive = hovered?.id === opt.id;
 
                             return (
                                 <div key={opt.id} className="flex flex-col">
                                     <motion.div
-                                        onHoverStart={() => setHovered(opt)}
-                                        onClick={() => setHovered(opt)}
+                                        onHoverStart={() => { if (!hovered) setHovered(opt); }}
+                                        onClick={() => setHovered(prev => prev?.id === opt.id ? null : opt)}
                                         whileHover={{ y: -3 }}
                                         animate={{ scale: isActive ? 1.02 : 1 }}
                                         transition={{ type: 'spring', stiffness: 250 }}
@@ -362,16 +362,18 @@ export default function SetupOptions() {
                     {/* RIGHT PANEL (Desktop) */}
                     <div className="hidden lg:block lg:col-span-3 lg:sticky lg:top-28">
                         <AnimatePresence mode="wait">
-                            <motion.div
-                                key={hovered.id}
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                exit={{ opacity: 0, y: -20 }}
-                                transition={{ duration: 0.3 }}
-                                className="rounded-3xl bg-white border border-[#14253E]/10 shadow-[0_40px_100px_rgba(0,0,0,0.06)] overflow-hidden"
-                            >
-                                {renderDetailView(hovered, false)}
-                            </motion.div>
+                            {hovered && (
+                                <motion.div
+                                    key={hovered.id}
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: -20 }}
+                                    transition={{ duration: 0.3 }}
+                                    className="rounded-3xl bg-white border border-[#14253E]/10 shadow-[0_40px_100px_rgba(0,0,0,0.06)] overflow-hidden"
+                                >
+                                    {renderDetailView(hovered, false)}
+                                </motion.div>
+                            )}
                         </AnimatePresence>
                     </div>
                 </div>
@@ -380,7 +382,7 @@ export default function SetupOptions() {
             {/* Popup Modal */}
             {mounted && createPortal(
                 <AnimatePresence>
-                    {isModalOpen && (
+                    {isModalOpen && hovered && (
                         <motion.div
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}

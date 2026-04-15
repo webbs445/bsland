@@ -203,6 +203,13 @@ export default function HeroSection() {
         <section className="relative min-h-[auto] lg:min-h-[92vh] bg-brand-navy overflow-hidden flex items-center">
             {/* Background Elements */}
             <div className="absolute inset-0">
+                {/* Background image */}
+                <div
+                    className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+                    style={{ backgroundImage: "url('/contact.png')" }}
+                />
+                {/* Dark overlay for readability */}
+                <div className="absolute inset-0 bg-brand-navy/85" />
                 <div
                     className="absolute inset-0"
                     style={{
