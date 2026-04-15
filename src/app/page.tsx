@@ -11,6 +11,7 @@ import TestimonialsSection from "@/components/TestimonialsSection";
 import Footer from "@/components/Footer";
 import StickyNav from "@/components/StickyNav";
 import GeometricSeparator from "@/components/GeometricSeparator";
+import BridgeCTA from "@/components/BridgeCTA";
 
 export default function HomePage() {
   return (
@@ -36,7 +37,8 @@ export default function HomePage() {
         {/* Deep Dive: Liability & LLC */}
         <LiabilityFocus />
 
-     
+        {/* Bridge CTA */}
+        <BridgeCTA />
 
         {/* Activity Finder */}
         <section id="activity-finder">

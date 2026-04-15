@@ -415,15 +415,8 @@ export default function HeroSection() {
                         {/* Free Zone Partners Marquee */}
                         <div className="pt-8 border-t border-white/5">
                             <p className="text-white/20 text-[9px] font-black uppercase tracking-[0.3em] mb-5">Free Zones We Service</p>
-                            <style>{`
-                                @keyframes scrollLeft { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-                                .fz-pill { position: relative; overflow: hidden; }
-                                .fz-pill::before { content: ''; position: absolute; inset: 0; border-radius: 9999px; padding: 1px; background: linear-gradient(135deg, rgba(194,134,103,0.4), rgba(255,255,255,0.05), rgba(194,134,103,0.2)); -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; }
-                                .fz-pill::after { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(194,134,103,0.15), transparent); animation: fzShimmer 4s ease-in-out infinite; }
-                                @keyframes fzShimmer { 0%, 100% { left: -100%; } 50% { left: 100%; } }
-                            `}</style>
-                            <div className="relative overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_5%,white_95%,transparent)]">
-                                <div className="flex items-center gap-3 w-max" style={{ animation: 'scrollLeft 35s linear infinite' }}>
+                            <div className="relative overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_8%,white_92%,transparent)]">
+                                <div className="fz-marquee">
                                     {[...Array(2)].map((_, i) => (
                                         [
                                             { name: 'DMCC', logo: '/logo/Dmcc.webp' },
@@ -435,15 +428,14 @@ export default function HeroSection() {
                                             { name: 'Ajman', logo: '/logo/Ajman.webp' },
                                             { name: 'SRTIP', logo: '/logo/Sharjah-Research-Technology-and-Innovation-Park.webp' },
                                             { name: 'DIFC', logo: '/logo/Difc.webp' },
-                                            { name: 'Dubai Economy', logo: '/logo/Dubai-Economy.webp' },
+                                            { name: 'DED', logo: '/logo/Dubai-Economy.webp' },
                                             { name: 'DWTC', logo: '/logo/Dubai-World-Trade-Center.webp' },
                                             { name: 'UAQ', logo: '/logo/UAQ.webp' },
                                         ].map(({ name, logo }) => (
-                                            <span key={`fz-${i}-${name}`} className="fz-pill group flex-shrink-0 px-4 py-2 rounded-full bg-white/[0.03] whitespace-nowrap backdrop-blur-sm hover:bg-brand-copper/[0.08] transition-all duration-400 cursor-default">
-                                                <span className="relative z-10 flex items-center gap-2">
-                                                    <img src={logo} alt={name} className="h-6 w-auto object-contain opacity-60 group-hover:opacity-100 transition-opacity duration-300" style={{ filter: 'brightness(0) invert(1)' }} />
-                                                </span>
-                                            </span>
+                                            <div key={`fz-${i}-${name}`} className="fz-card">
+                                                <img src={logo} alt={name} className="fz-card__logo" />
+                                                <span className="fz-card__name">{name}</span>
+                                            </div>
                                         ))
                                     ))}
                                 </div>
