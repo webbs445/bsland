@@ -191,7 +191,7 @@ export default function IntelligenceSection() {
                 first_name: formData.firstName,
                 last_name: formData.lastName,
                 custom_service_enquired: "Business Setup",
-                custom_client_profile_and_requirement: `[Cost Calculator] Type: ${companyType} | Auth: ${authName} | Visas: ${visaCount} | View: ${calcView} | Total: AED ${displayedTotal.toLocaleString()}`,
+                custom_client_profile_and_requirement: `[Cost Calculator] Type: ${companyType} <br> Auth: ${authName} <br> Visas: ${visaCount} <br> View: ${calcView} <br> Total: AED ${displayedTotal.toLocaleString()}`,
                 email_id: formData.email,
                 mobile_no: formData.whatsapp,
                 country: countryName,
