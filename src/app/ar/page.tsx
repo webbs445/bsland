@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import HeroSectionAR from "@/components/ar/HeroSectionAR";
 import SetupOptionsAR from "@/components/ar/SetupOptionsAR";
 import WhyChooseUsAR from "@/components/ar/WhyChooseUsAR";
@@ -9,6 +10,8 @@ import FreeZoneActivitiesAR from "@/components/ar/FreeZoneActivitiesAR";
 import TestimonialsSectionAR from "@/components/ar/TestimonialsSectionAR";
 import FooterAR from "@/components/ar/FooterAR";
 import StickyNavAR from "@/components/ar/StickyNavAR";
+import BridgeCTAAR from "@/components/ar/BridgeCTAAR";
+import GeometricSeparatorAR from "@/components/ar/GeometricSeparatorAR";
 
 export default function ArabicHomePage() {
     return (
@@ -16,46 +19,56 @@ export default function ArabicHomePage() {
             {/* Sticky Navigation */}
             <StickyNavAR />
 
-            {/* Hero Section with Lead Form */}
-            <section id="contact">
-                <HeroSectionAR />
-            </section>
+            <Suspense fallback={<div className="min-h-screen bg-brand-navy" />}>
+                {/* Hero Section with Lead Form */}
+                <section id="contact">
+                    <HeroSectionAR />
+                </section>
 
-            {/* Activity Finder */}
-            <FreeZoneActivitiesAR />
+                {/* License Options Comparison */}
+                <section id="options">
+                    <SetupOptionsAR />
+                </section>
 
-            {/* Interactive Setup Intelligence (Quiz & Calculator) */}
-            <section id="intelligence">
-                <IntelligenceSectionAR />
-            </section>
+                {/* Value Propositions */}
+                <section id="why-us">
+                    <WhyChooseUsAR />
+                </section>
 
-            {/* License Options Comparison */}
-            <section id="options">
-                <SetupOptionsAR />
-            </section>
+                {/* Deep Dive: Liability & LLC */}
+                <LiabilityFocusAR />
 
-            {/* Value Propositions */}
-            <section id="why-us">
-                <WhyChooseUsAR />
-            </section>
+                {/* Bridge CTA */}
+                <BridgeCTAAR />
 
-            {/* Deep Dive: Liability & LLC */}
-            <LiabilityFocusAR />
+                {/* Activity Finder */}
+                <section id="activity-finder">
+                    <FreeZoneActivitiesAR />
+                </section>
 
-            {/* Company Heritage & Team */}
-            <section id="team">
-                <TeamSectionAR />
-            </section>
+                {/* Geometric Pattern Separator */}
+                <GeometricSeparatorAR />
 
-            {/* Commercial Packages & FAQ */}
-            <section id="pricing">
-                <PricingFAQAR />
-            </section>
+                {/* Interactive Setup Intelligence (Quiz & Calculator) */}
+                {/* <section id="intelligence">
+                    <IntelligenceSectionAR />
+                </section> */}
 
-            {/* Testimonials */}
-            <TestimonialsSectionAR />
+                {/* Company Heritage & Team */}
+                {/* <section id="team">
+                    <TeamSectionAR />
+                </section> */}
 
-            <FooterAR />
+                {/* Commercial Packages & FAQ */}
+                <section id="pricing">
+                    <PricingFAQAR />
+                </section>
+
+                {/* Testimonials */}
+                <TestimonialsSectionAR />
+
+                <FooterAR />
+            </Suspense>
         </main>
     );
 }
