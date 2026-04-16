@@ -206,7 +206,7 @@ export default function HeroSection() {
                 {/* Background image */}
                 <div
                     className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-                    style={{ backgroundImage: "url('/contact.png')" }}
+                    style={{ backgroundImage: "url('/contact.webp')" }}
                 />
                 {/* Dark overlay for readability */}
                 <div className="absolute inset-0 bg-brand-navy/85" />
@@ -257,7 +257,7 @@ export default function HeroSection() {
                                             backgroundClip: 'text'
                                         }}
                                     >
-                                      {utmService}.  Made Simple.
+                                        {utmService}.
                                     </span>
                                 </>
                             ) : (
@@ -272,7 +272,7 @@ export default function HeroSection() {
                                             backgroundClip: 'text'
                                         }}
                                     >
-                                      in Dubai.
+                                        in Dubai.
                                     </span>
                                 </>
                             )}
@@ -280,7 +280,7 @@ export default function HeroSection() {
 
                         <p className="text-sm sm:text-base lg:text-lg text-white/60 mb-6 sm:mb-10 leading-relaxed max-w-xl font-medium">
                             {utmService
-                                ? `Looking for ${utmService.toLowerCase()} in Dubai? We handle every signature, every submission, every government interaction — so you don't have to.`
+                                ? `Are you looking for ${utmService.toLowerCase()}? We handle every signature, every submission, every government interaction — so you don't have to.`
                                 : 'You focus on your vision. We handle every signature, every submission, every government interaction. From first consultation to your first day of business.'}
                         </p>
 
@@ -458,13 +458,12 @@ export default function HeroSection() {
                                                 <div className="flex items-center">
                                                     {[1, 2, 3, 4, 5].map((s) => (
                                                         <div key={s} className="flex items-center">
-                                                            <div className={`relative flex items-center justify-center w-5 h-5 sm:w-6 sm:h-6 rounded-full text-[8px] sm:text-[9px] font-black transition-all duration-300 ${
-                                                                s < step
-                                                                    ? 'bg-brand-copper text-white'
-                                                                    : s === step
+                                                            <div className={`relative flex items-center justify-center w-5 h-5 sm:w-6 sm:h-6 rounded-full text-[8px] sm:text-[9px] font-black transition-all duration-300 ${s < step
+                                                                ? 'bg-brand-copper text-white'
+                                                                : s === step
                                                                     ? 'bg-brand-copper text-white shadow-[0_0_14px_rgba(194,134,103,0.7)] ring-2 ring-brand-copper/25 ring-offset-1 ring-offset-[#1a2b45]'
                                                                     : 'bg-white/5 text-white/20 border border-white/10'
-                                                            }`}>
+                                                                }`}>
                                                                 {s < step ? <Check className="w-2.5 h-2.5" /> : s}
                                                             </div>
                                                             {s < 5 && (
@@ -505,15 +504,13 @@ export default function HeroSection() {
                                                                 key={label}
                                                                 type="button"
                                                                 onClick={() => { setBusinessType(label); if (label !== 'Other / Not Sure') setStep(2); }}
-                                                                className={`group relative flex items-start gap-2 px-2.5 py-2.5 rounded-xl border text-left transition-all duration-200 ${
-                                                                    businessType === label
-                                                                        ? 'border-brand-copper bg-gradient-to-br from-brand-copper/20 to-amber-500/5 text-white shadow-[0_0_18px_rgba(194,134,103,0.2)]'
-                                                                        : 'border-white/8 bg-white/[0.03] text-white/60 hover:border-brand-copper/40 hover:bg-brand-copper/5 hover:text-white hover:scale-[1.02]'
-                                                                }`}
+                                                                className={`group relative flex items-start gap-2 px-2.5 py-2.5 rounded-xl border text-left transition-all duration-200 ${businessType === label
+                                                                    ? 'border-brand-copper bg-gradient-to-br from-brand-copper/20 to-amber-500/5 text-white shadow-[0_0_18px_rgba(194,134,103,0.2)]'
+                                                                    : 'border-white/8 bg-white/[0.03] text-white/60 hover:border-brand-copper/40 hover:bg-brand-copper/5 hover:text-white hover:scale-[1.02]'
+                                                                    }`}
                                                             >
-                                                                <div className={`flex-shrink-0 w-6 h-6 rounded-lg flex items-center justify-center transition-colors mt-0.5 ${
-                                                                    businessType === label ? 'bg-brand-copper/25' : 'bg-white/5 group-hover:bg-brand-copper/10'
-                                                                }`}>
+                                                                <div className={`flex-shrink-0 w-6 h-6 rounded-lg flex items-center justify-center transition-colors mt-0.5 ${businessType === label ? 'bg-brand-copper/25' : 'bg-white/5 group-hover:bg-brand-copper/10'
+                                                                    }`}>
                                                                     <Icon className="w-3 h-3 text-brand-copper" />
                                                                 </div>
                                                                 <div className="min-w-0">
@@ -546,11 +543,10 @@ export default function HeroSection() {
                                                                 type="button"
                                                                 onClick={() => { if (customActivity.trim()) setStep(2); }}
                                                                 disabled={!customActivity.trim()}
-                                                                className={`w-full h-11 rounded-xl font-black text-[12px] uppercase tracking-[0.15em] flex items-center justify-center gap-2 transition-all duration-200 ${
-                                                                    customActivity.trim()
-                                                                        ? 'bg-brand-copper text-white hover:opacity-90'
-                                                                        : 'bg-white/5 text-white/20 cursor-not-allowed'
-                                                                }`}
+                                                                className={`w-full h-11 rounded-xl font-black text-[12px] uppercase tracking-[0.15em] flex items-center justify-center gap-2 transition-all duration-200 ${customActivity.trim()
+                                                                    ? 'bg-brand-copper text-white hover:opacity-90'
+                                                                    : 'bg-white/5 text-white/20 cursor-not-allowed'
+                                                                    }`}
                                                             >
                                                                 Continue <ArrowRight className="w-4 h-4" />
                                                             </button>
@@ -580,21 +576,18 @@ export default function HeroSection() {
                                                                 key={label}
                                                                 type="button"
                                                                 onClick={() => { setSetupReason(label); setStep(3); }}
-                                                                className={`group flex items-center gap-3 sm:gap-4 px-3 py-3 sm:px-5 sm:py-4 rounded-xl border text-left transition-all duration-300 ${
-                                                                    setupReason === label
-                                                                        ? 'border-brand-copper bg-gradient-to-r from-brand-copper/20 to-transparent text-white shadow-[0_0_20px_rgba(194,134,103,0.18)]'
-                                                                        : 'border-white/8 bg-white/[0.03] text-white/50 hover:border-brand-copper/40 hover:bg-brand-copper/5 hover:text-white hover:translate-x-1'
-                                                                }`}
+                                                                className={`group flex items-center gap-3 sm:gap-4 px-3 py-3 sm:px-5 sm:py-4 rounded-xl border text-left transition-all duration-300 ${setupReason === label
+                                                                    ? 'border-brand-copper bg-gradient-to-r from-brand-copper/20 to-transparent text-white shadow-[0_0_20px_rgba(194,134,103,0.18)]'
+                                                                    : 'border-white/8 bg-white/[0.03] text-white/50 hover:border-brand-copper/40 hover:bg-brand-copper/5 hover:text-white hover:translate-x-1'
+                                                                    }`}
                                                             >
-                                                                <div className={`flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl flex items-center justify-center transition-all duration-300 ${
-                                                                    setupReason === label ? 'bg-brand-copper/25 shadow-[0_0_12px_rgba(194,134,103,0.3)]' : 'bg-white/5 group-hover:bg-brand-copper/10'
-                                                                }`}>
+                                                                <div className={`flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl flex items-center justify-center transition-all duration-300 ${setupReason === label ? 'bg-brand-copper/25 shadow-[0_0_12px_rgba(194,134,103,0.3)]' : 'bg-white/5 group-hover:bg-brand-copper/10'
+                                                                    }`}>
                                                                     <Icon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-brand-copper" />
                                                                 </div>
                                                                 <span className="flex-1 text-[12px] sm:text-[13px] font-bold">{label}</span>
-                                                                <div className={`w-5 h-5 rounded-full border flex items-center justify-center transition-all duration-300 flex-shrink-0 ${
-                                                                    setupReason === label ? 'border-brand-copper bg-brand-copper' : 'border-white/20'
-                                                                }`}>
+                                                                <div className={`w-5 h-5 rounded-full border flex items-center justify-center transition-all duration-300 flex-shrink-0 ${setupReason === label ? 'border-brand-copper bg-brand-copper' : 'border-white/20'
+                                                                    }`}>
                                                                     {setupReason === label && <Check className="w-2.5 h-2.5 text-white" />}
                                                                 </div>
                                                             </button>
@@ -625,11 +618,10 @@ export default function HeroSection() {
                                                                         key={n}
                                                                         type="button"
                                                                         onClick={() => setShareholders(n)}
-                                                                        className={`w-8 h-8 sm:w-9 sm:h-9 rounded-lg text-xs sm:text-sm font-black transition-all duration-200 ${
-                                                                            shareholders === n
-                                                                                ? 'bg-brand-copper text-white shadow-[0_0_14px_rgba(194,134,103,0.4)] scale-110'
-                                                                                : 'bg-white/5 text-white/50 border border-white/8 hover:border-brand-copper/50 hover:text-white hover:scale-105'
-                                                                        }`}
+                                                                        className={`w-8 h-8 sm:w-9 sm:h-9 rounded-lg text-xs sm:text-sm font-black transition-all duration-200 ${shareholders === n
+                                                                            ? 'bg-brand-copper text-white shadow-[0_0_14px_rgba(194,134,103,0.4)] scale-110'
+                                                                            : 'bg-white/5 text-white/50 border border-white/8 hover:border-brand-copper/50 hover:text-white hover:scale-105'
+                                                                            }`}
                                                                     >{n}</button>
                                                                 ))}
                                                             </div>
@@ -643,11 +635,10 @@ export default function HeroSection() {
                                                                         key={n}
                                                                         type="button"
                                                                         onClick={() => setVisas(n)}
-                                                                        className={`w-8 h-8 sm:w-9 sm:h-9 rounded-lg text-xs sm:text-sm font-black transition-all duration-200 ${
-                                                                            visas === n
-                                                                                ? 'bg-brand-copper text-white shadow-[0_0_14px_rgba(194,134,103,0.4)] scale-110'
-                                                                                : 'bg-white/5 text-white/50 border border-white/8 hover:border-brand-copper/50 hover:text-white hover:scale-105'
-                                                                        }`}
+                                                                        className={`w-8 h-8 sm:w-9 sm:h-9 rounded-lg text-xs sm:text-sm font-black transition-all duration-200 ${visas === n
+                                                                            ? 'bg-brand-copper text-white shadow-[0_0_14px_rgba(194,134,103,0.4)] scale-110'
+                                                                            : 'bg-white/5 text-white/50 border border-white/8 hover:border-brand-copper/50 hover:text-white hover:scale-105'
+                                                                            }`}
                                                                     >{n}</button>
                                                                 ))}
                                                             </div>
@@ -661,11 +652,10 @@ export default function HeroSection() {
                                                                         key={label}
                                                                         type="button"
                                                                         onClick={() => setOfficeType(label)}
-                                                                        className={`group flex items-center gap-2.5 px-3 py-2 rounded-xl border text-left transition-all duration-200 ${
-                                                                            officeType === label
-                                                                                ? 'border-brand-copper bg-gradient-to-r from-brand-copper/15 to-transparent text-white'
-                                                                                : 'border-white/8 bg-white/[0.03] text-white/60 hover:border-brand-copper/40 hover:bg-brand-copper/5 hover:text-white'
-                                                                        }`}
+                                                                        className={`group flex items-center gap-2.5 px-3 py-2 rounded-xl border text-left transition-all duration-200 ${officeType === label
+                                                                            ? 'border-brand-copper bg-gradient-to-r from-brand-copper/15 to-transparent text-white'
+                                                                            : 'border-white/8 bg-white/[0.03] text-white/60 hover:border-brand-copper/40 hover:bg-brand-copper/5 hover:text-white'
+                                                                            }`}
                                                                     >
                                                                         <div className={`flex-shrink-0 w-7 h-7 rounded-lg flex items-center justify-center transition-colors ${officeType === label ? 'bg-brand-copper/25' : 'bg-white/5 group-hover:bg-brand-copper/10'}`}>
                                                                             <Icon className="w-3.5 h-3.5 text-brand-copper" />
@@ -711,11 +701,10 @@ export default function HeroSection() {
                                                                         key={label}
                                                                         type="button"
                                                                         onClick={() => setJurisdiction(label)}
-                                                                        className={`group flex items-center gap-2.5 px-3 py-2.5 rounded-xl border text-left transition-all duration-200 ${
-                                                                            jurisdiction === label
-                                                                                ? 'border-brand-copper bg-gradient-to-r from-brand-copper/15 to-transparent text-white'
-                                                                                : 'border-white/8 bg-white/[0.03] text-white/60 hover:border-brand-copper/40 hover:bg-brand-copper/5 hover:text-white'
-                                                                        }`}
+                                                                        className={`group flex items-center gap-2.5 px-3 py-2.5 rounded-xl border text-left transition-all duration-200 ${jurisdiction === label
+                                                                            ? 'border-brand-copper bg-gradient-to-r from-brand-copper/15 to-transparent text-white'
+                                                                            : 'border-white/8 bg-white/[0.03] text-white/60 hover:border-brand-copper/40 hover:bg-brand-copper/5 hover:text-white'
+                                                                            }`}
                                                                     >
                                                                         <div className={`flex-shrink-0 w-6 h-6 rounded-lg flex items-center justify-center transition-colors ${jurisdiction === label ? 'bg-brand-copper/25' : 'bg-white/5 group-hover:bg-brand-copper/10'}`}>
                                                                             <Icon className="w-3 h-3 text-brand-copper" />
@@ -775,11 +764,10 @@ export default function HeroSection() {
                                                                         key={opt}
                                                                         type="button"
                                                                         onClick={() => setLivingInUAE(opt)}
-                                                                        className={`flex-1 h-10 rounded-xl border text-sm font-black transition-all duration-200 ${
-                                                                            livingInUAE === opt
-                                                                                ? 'border-brand-copper bg-brand-copper/15 text-white shadow-[0_0_12px_rgba(194,134,103,0.2)]'
-                                                                                : 'border-white/8 bg-white/[0.03] text-white/50 hover:border-brand-copper/50 hover:text-white'
-                                                                        }`}
+                                                                        className={`flex-1 h-10 rounded-xl border text-sm font-black transition-all duration-200 ${livingInUAE === opt
+                                                                            ? 'border-brand-copper bg-brand-copper/15 text-white shadow-[0_0_12px_rgba(194,134,103,0.2)]'
+                                                                            : 'border-white/8 bg-white/[0.03] text-white/50 hover:border-brand-copper/50 hover:text-white'
+                                                                            }`}
                                                                     >{opt}</button>
                                                                 ))}
                                                             </div>
@@ -793,11 +781,10 @@ export default function HeroSection() {
                                                                         key={opt}
                                                                         type="button"
                                                                         onClick={() => setStartTimeline(opt)}
-                                                                        className={`h-10 rounded-xl border text-[11px] font-black transition-all duration-200 ${
-                                                                            startTimeline === opt
-                                                                                ? 'border-brand-copper bg-brand-copper/15 text-white shadow-[0_0_12px_rgba(194,134,103,0.2)]'
-                                                                                : 'border-white/8 bg-white/[0.03] text-white/50 hover:border-brand-copper/50 hover:text-white'
-                                                                        }`}
+                                                                        className={`h-10 rounded-xl border text-[11px] font-black transition-all duration-200 ${startTimeline === opt
+                                                                            ? 'border-brand-copper bg-brand-copper/15 text-white shadow-[0_0_12px_rgba(194,134,103,0.2)]'
+                                                                            : 'border-white/8 bg-white/[0.03] text-white/50 hover:border-brand-copper/50 hover:text-white'
+                                                                            }`}
                                                                     >{opt}</button>
                                                                 ))}
                                                             </div>
